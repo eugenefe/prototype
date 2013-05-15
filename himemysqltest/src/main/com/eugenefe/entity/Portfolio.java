@@ -4,6 +4,7 @@ package com.eugenefe.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.drools.command.runtime.GetCalendarsCommand;
 import org.hibernate.annotations.FilterJoinTable;
 
 /**
@@ -47,7 +49,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	private List<Portfolio> childPortfolios = new ArrayList<Portfolio>(0);
 	
 	private List<PortfolioReturn> portfolioReturns = new ArrayList<PortfolioReturn>();
-//	private Set<PositionReturn> positions = new HashSet<PositionReturn>();
+//	private List<PositionReturn> positions = new ArrayList<PositionReturn>();
 	
 	public Portfolio() {
 	}
@@ -216,9 +218,11 @@ public class Portfolio implements IPortfolio, Serializable {
 
 	@Override
 	@Transient
-	public Set<IPortfolio> getChildren() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<IPortfolio> getChildren() {
+		List<IPortfolio> rst = new ArrayList<IPortfolio>();
+//		temp = getChildren();
+//		temp.addAll(this.getpo
+		return rst; 
 	}
 
 	@Override

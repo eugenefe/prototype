@@ -5,15 +5,15 @@
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 <!--   <p:tabView id="tabView">
     <p:tab id="portfolioTreeTable" title="Portfolio Info"> -->
-<h:form>
-      <p:treeTable value="#{portfolioTree.portfolioRoot}" var="node" resizableColumns="true" liveResize="true" >
+<h:form id="portfolioTreeTableForm">
+      <p:treeTable id="portfolioTreeTable" value="#{portfolioTree.portfolioRoot}" var="node" resizableColumns="true" liveResize="true" >
         <f:facet name="header"> Document Viewer</f:facet>
-        <p:column headerText="ID" resizable="true" >
-          <h:outputText value="#{node.stringId}" />
+        <p:column headerText="ID" resizable="true">
+          <h:outputText value="#{node.portId}" />
         </p:column>
 
         <p:column headerText="Name">
-          <h:outputText value="#{node.name}" />
+          <h:outputText value="#{node.portName}" />
         </p:column>
 
         <p:column headerText="GroupId">
@@ -34,6 +34,7 @@
         <p:column headerText="Level5">
           <h:outputText value="#{node.level5}" />
         </p:column>
+
 <!--         <p:column style="width:20px">
           <p:commandLink update="documentPanel" oncomplete="documentDialog.show()" title="View Detail"
             styleClass="ui-icon ui-icon-search">

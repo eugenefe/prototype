@@ -1,8 +1,10 @@
 package com.eugenefe.entity;
 
+import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
-public interface IPortfolio {
+public interface IPortfolio extends Serializable{
 	
 	public String getStringId();
 	public String getName();
@@ -10,7 +12,7 @@ public interface IPortfolio {
 	
 	public void add(IPortfolio port);
 	public void remove(IPortfolio port);
-	public Set<IPortfolio> getChildren();
+	public List<IPortfolio> getChildren();
 	public IPortfolio getChildren(String portId);
 	
 	public double getPresValue();
