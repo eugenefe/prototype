@@ -41,6 +41,17 @@ public class PortfolioReturnBean implements Serializable {
 	@In(create = true)
 	private PortfolioReturnList portfolioReturnList;
 	
+	
+	private PortfolioReturn selectedPort;
+	
+	public PortfolioReturn getSelectedPort() {
+		return selectedPort;
+	}
+
+	public void setSelectedPort(PortfolioReturn selectedPort) {
+		this.selectedPort = selectedPort;
+	}
+
 	List<PortfolioReturn> portReturns = new ArrayList<PortfolioReturn>();
 	
 	@Out

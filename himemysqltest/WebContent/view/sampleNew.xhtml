@@ -14,20 +14,25 @@
 
   </h:head>
   <h:body>
-
-    <h:form>
-   
-      <ui:include src="/fragment/portfolioReturnHis.xhtml" />
+      <p:tabView id="tabView" styleClass="horizontalTab">
+        <p:tab id="portfolioTab" title="Portfolio Info">
+          <ui:include src="/fragment/portfolioReturn.xhtml" />
+        </p:tab>
+        <p:tab id="portfolioTab2" title="Portfolio">
+        aasdf
+      </p:tab>
+      </p:tabView>
+      <!-- <ui:include src="/fragment/portfolioReturnHis.xhtml" /> -->
       <!--      <h:outputLink id="loginLink" value="javascript:void(0)" onclick="logDlg.show()" title="login">
         <p:graphicImage value="/img/primefaces/login.png" />
       </h:outputLink>
        <ui:include src="/fragment/portfolioTabView.xhtml" />
       <ui:include src="/fragment/loginDialog.xhtml" /> -->
-      
-      
+
+
       <ui:include src="/templates/footer.xhtml" />
       <h:outputStylesheet library="css" name="primetakion.css" />
-    </h:form>
+    
   </h:body>
   </h:html>
 </f:view>
