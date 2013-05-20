@@ -45,9 +45,13 @@ public class PortfolioBean implements Serializable {
 	private PortfolioReturnBssdList portfolioReturnBssdList;
 //	private PortfolioReturnList portfolioReturnList;
 
+//	private List<Portfolio> selectedHierarchies=new ArrayList<Portfolio>();
+
 	private List<Portfolio> selectedHierarchies ;
+	private List<Portfolio> hierarchies ;
 	
-//	@Out(required =false)
+
+
 	private TreeNode portfolioRoot;
 	private TreeNode portfolioSuperRoot;
 
@@ -63,14 +67,10 @@ public class PortfolioBean implements Serializable {
 	
 	private String searchString;
 	
+	private List<String> selectedHierarchyIds;
+	
 
-	public String getSearchString() {
-		return searchString;
-	}
 
-	public void setSearchString(String searchString) {
-		this.searchString = searchString;
-	}
 
 	public PortfolioBean() {
 		Portfolio superRoot = new Portfolio("superRoot", "SuperRoot");
@@ -86,51 +86,52 @@ public class PortfolioBean implements Serializable {
 	@Create
 	@Observer("changeBssd")
 	public void init() {
+		log.info("Start Initalizing PortfolioBean Creation with Given Bssd: #0");
+
+//		Initialize properties
+		
 		fullPortfolios=new ArrayList<Portfolio>();
 		subPortfolios=new ArrayList<Portfolio>();
+		selectedHierarchies = new ArrayList<Portfolio>();
+//		appliedHierarchies = new ArrayList<Portfolio>();
+		hierarchies = new ArrayList<Portfolio>();
 		searchString = null;
+		filterSubPorts =null;
 		
 		for (PortfolioReturn aa : portfolioReturnBssdList.getResultList()) {
-			log.info("Loop in Initalizing PortfolioBean Creation with Given Bssd: #0", aa.getBasedate().getBssd());
 			fullPortfolios.add(aa.getPortfolio());
-		}
-		log.info("End of Initalizing PortfolioBean Creation with Given Bssd: #0");
-		initTree();
-	}
-	
-//	@Factory(value="portfolioRoot" , autoCreate=true)
-//	@Factory(value="portfolioRoot" )
-	public void initTree() {
-		log.info("Start Initalizer PortfolioTree");
-
-		// Hierarchy º° Root Portfolio
-		selectedHierarchies =   new ArrayList<Portfolio>();
-
-		for (Portfolio aa : fullPortfolios) {
-			if (aa.getParentPortfolio() == null) {
-				selectedHierarchies.add(aa);
-//				rootPortString.add(aa.getPortName());
+			if (aa.getPortfolio().getParentPortfolio() == null) {
+				hierarchies.add(aa.getPortfolio());
+				
+				if(selectedHierarchyIds != null && !selectedHierarchyIds.isEmpty()){
+					if(selectedHierarchyIds.contains(aa.getPortfolio().getPortId())){
+						selectedHierarchies.add(aa.getPortfolio());
+					}
+				}
+				else { 
+					selectedHierarchies.add(aa.getPortfolio());
+				}
 			}
 		}
-
+		
 		portfolioRoot.getChildren().clear();
 		for (Portfolio bb : selectedHierarchies) {
 			TreeNode childNode = new DefaultTreeNode(bb, portfolioRoot);
 			childNode.setExpanded(true);
 			recursive(fullPortfolios, childNode);
+			log.info("Creation of Tree : #0", bb.getPortId());
 		}
-		
-		log.info("Initialize Portfolio Tree :#0" , portfolioRoot.getChildCount());
 		
 		if(portfolioRoot.getChildCount()!=0){
 			portfolioRoot.getChildren().get(0).setSelected(true);
 			selectedNode = portfolioRoot.getChildren().get(0);
 			selectedPortfolio= (Portfolio)(portfolioRoot.getChildren().get(0).getData());
 			subPortfolios= selectedPortfolio.getChildPortfolios();
-//			Events.instance().raiseEvent("changeTree", selectedPortfolio);
-			log.info("End of Raise Event : #0 , #1", selectedPortfolio.getPortId(),subPortfolios.size());
 		}
+		
+		log.info("End of Initalizing PortfolioBean Creation with Given Bssd: #0, #1, #2");
 	}
+	
 
 // --------------------------------Getter and Setter ---------------
 
@@ -205,6 +206,29 @@ public class PortfolioBean implements Serializable {
 	public void setSelectedHierarchies(List<Portfolio> selectedHierarchies) {
 		this.selectedHierarchies = selectedHierarchies;
 	}
+	public List<String> getSelectedHierarchyIds() {
+		return selectedHierarchyIds;
+	}
+
+	public void setSelectedHierarchyIds(List<String> selectedHierarchyIds) {
+		this.selectedHierarchyIds = selectedHierarchyIds;
+	}
+
+	public String getSearchString() {
+		return searchString;
+	}
+
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
+	public List<Portfolio> getHierarchies() {
+		return hierarchies;
+	}
+
+	public void setHierarchies(List<Portfolio> hierarchies) {
+		this.hierarchies = hierarchies;
+	}
+	
 	
 //----------------------Event Listener------------------
 	
@@ -212,6 +236,7 @@ public class PortfolioBean implements Serializable {
 		subPortfolios = new ArrayList<Portfolio>();
 		filterSubPorts = null;
 		searchString = null;
+		
 //		selectedPortfolio = (Portfolio) event.getTreeNode().getData();
 		selectedPortfolio = (Portfolio) selectedNode.getData();
 		subPortfolios = selectedPortfolio.getChildPortfolios();
@@ -219,20 +244,16 @@ public class PortfolioBean implements Serializable {
 					selectedPortfolio.getPortId(), selectedPortfolio.getChildPortfolios().size(), subPortfolios.size());
 		
 	}
+
+	//--------------------------Action Listener--------------------
+	public void expandAll(){
+		recursiveExpand(portfolioRoot.getChildren(), true);
+	}
 	
-//	@Observer("changeBssd")
-//	public void onDateSelect(String bssd){
-//		fullPortfolios.clear();
-//		log.info("Change BaseDate Event 1: #0, #1");
-//		for(PortfolioReturn aa: portfolioReturnBssdList.getResultList()){
-//			fullPortfolios.add(aa.getPortfolio());
-////			log.info("Change BaseDate Event 2: #0, #1");
-//		}
-//		
-//		log.info("Change BaseDate Event 3 : #0, #1" , fullPortfolios.size());
-//		initTree();
-//	}
-//	
+	public void collapseAll(){
+		recursiveExpand(portfolioRoot.getChildren(),false);
+	}
+	
 	
 	// ----------------------------- helper method----------------------------------------
 
@@ -260,8 +281,19 @@ public class PortfolioBean implements Serializable {
 				returnList.add(k);
 			}
 		}
-		
 		return returnList;
 	}
-
+	
+	private void recursiveExpand(List<TreeNode> node, boolean isExpand) {
+		for (TreeNode aa: node){
+			aa.setExpanded(isExpand);
+			recursiveExpand(aa.getChildren(), isExpand);
+		}
+	}
+//	private void recursiveCollapse(List<TreeNode> node) {
+//		for (TreeNode aa: node){
+//			aa.setExpanded(false);
+//			recursiveExpand(aa.getChildren());
+//		}
+//	}
 }
