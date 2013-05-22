@@ -11,7 +11,7 @@ public class PortfolioReturnBssdList extends EntityQuery<PortfolioReturn> {
 	private static final String EJBQL = "select portfolioReturn from PortfolioReturn portfolioReturn";
 
 	private static final String[] RESTRICTIONS = {
-		"portfolioReturn.id.bssd = #{basedateBean.bssd}",	
+			"portfolioReturn.id.bssd = #{basedateBean.bssd}",	
 			"lower(portfolioReturn.id.bssd) like lower(concat(#{portfolioReturnList.portfolioReturn.id.bssd},'%'))",
 			"lower(portfolioReturn.id.portId) like lower(concat(#{portfolioReturnList.portfolioReturn.id.portId},'%'))", };
 

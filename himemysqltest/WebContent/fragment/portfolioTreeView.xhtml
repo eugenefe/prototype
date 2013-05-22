@@ -8,18 +8,19 @@
 
     <p:toolbar styleClass="contextBar">
       <p:toolbarGroup align="right">
-        <h:commandLink id="expandMenu" value="" actionListener="#{portfolioBean.expandAll}" rendered="true">
+        <p:commandLink id="expandMenu"  update="accoId:portfolioTree" actionListener="#{portfolioBean.expandAll}" >
           <p:graphicImage value="/img/primefaces/add.png" />
-        </h:commandLink>
-        <h:commandLink id="collapseMenu" value="" actionListener="#{portfolioBean.collapseAll}" rendered="true">
+        </p:commandLink>
+        <p:commandLink id="collapseMenu" update="accoId:portfolioTree" action="#{portfolioBean.collapseAll}" >
           <p:graphicImage value="/img/primefaces/minus.png" />
-        </h:commandLink>
+        </p:commandLink>
         
         <p:menuButton id="treeMenu" value="" styleClass="contextButton">
           <p:menuitem value="Select Hierarchies..." onclick="portDialog.show();" icon="ui-icon-document" />
           <p:separator />
-          <p:menuitem value="Create Portfolio..." id="qqqa" icon="ui-icon-circle-plus" disabled="#{not identity.loggedIn}"/>
-          <p:menuitem value="Change Portfolio..." id="qqqaa"  disabled="#{not identity.loggedIn}"/>
+          <p:menuitem value="Create Portfolio..." id="qqqa" icon="ui-icon-circle-plus" 
+            rendered="#{portfolioBean.userDefined}" disabled="#{not identity.loggedIn}"/>
+          <p:menuitem value="Change Portfolio..." id="qqqaa"  rendered="#{portfolioBean.userDefined}" disabled="#{not identity.loggedIn}"/>
         </p:menuButton>
         <p:tooltip for="expandMenu"   showEffect="fade" value="#{messages.expandMenu}"  />
         <p:tooltip for="collapseMenu" showEffect="fade" value="#{messages.collapseMenu}"  />
@@ -32,15 +33,25 @@
       <p:separator />
       <p:menuitem value="Select Hierarchies..." onclick="portDialog.show()" icon="ui-icon-document"   />
       <p:separator />
-      <p:menuitem value="Create Portfolio..." id="qqq" icon="ui-icon-circle-plus" disabled="#{not identity.loggedIn}"  />
     </p:contextMenu>
 
+    <p:contextMenu for="accoId:portfolioTree2">
+      <p:menuitem value="View Detail" id="qqqqqbb" icon="ui-icon-circle-plus" />
+      <p:separator />
+      <p:menuitem value="Select Hierarchies..." onclick="portDialog.show()" icon="ui-icon-document"   />
+      <p:separator />
+      <p:menuitem value="Create Portfolio..." id="qqqzz" icon="ui-icon-circle-plus" 
+                   disabled="#{not identity.loggedIn}"  />
+    </p:contextMenu>
 
-    <p:accordionPanel id="accoId" value="#{messages.portfolio}" multiple="true">
+    <p:accordionPanel id="accoId" value="#{messages.portfolio}" multiple="false">
+
+      <p:growl id="messages" showDetail="true" />
+
+      <p:ajax event="tabChange" listener="#{portfolioBean.onTabChange}" update="@(.ui-toolbar)"/>  
+
       <p:tab id="zzzz" title="#{messages.hierarchy}">
-
-        <p:growl id="messages" showDetail="true" />
-
+        
         <p:tree id="portfolioTree" value="#{portfolioBean.portfolioRoot}" var="node" 
           selection="#{portfolioBean.selectedNode}"
           selectionMode="single" style="width:95%">
@@ -54,19 +65,30 @@
         </p:tree>
       </p:tab>
 
-      <p:tab title="#{messages.userDefined}" disabled="#{not identity.loggedIn}">
-        <p:commandButton type="button" update="messages" value="AAA222" onclick="portListDialog3.show();" />
+      <p:tab id="userDefined" title="#{messages.userDefined}" disabled="#{not identity.loggedIn}">
+
+        <p:tree id="portfolioTree2" value="#{portfolioBean.portfolioRoot}" var="node" 
+          selection="#{portfolioBean.selectedNode}"
+          selectionMode="single" style="width:95%">
+
+          <p:ajax event="select" listener="#{portfolioBean.onNodeSelect}" update="@(.ui-datatable)" />
+
+          <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+            <h:outputText value="#{node.portId}" />
+          </p:treeNode>
+
+        </p:tree>
       </p:tab>
 
-      <p:tab title="#{messages.virtual}" disabled="#{not identity.loggedIn}">
+<!--       <p:tab title="#{messages.virtual}" disabled="#{not identity.loggedIn}">
         <f:facet name="asdf" />
         <p:menubar>
           <p:menuitem value="aa" icon="ui-icon-disk">
           </p:menuitem>
         </p:menubar>
         <p:commandButton value="AAAa" />
-
-      </p:tab>
+ 
+      </p:tab>-->
 
     </p:accordionPanel>
   </h:form>
