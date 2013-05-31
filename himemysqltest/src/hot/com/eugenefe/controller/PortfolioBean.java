@@ -43,8 +43,7 @@ public class PortfolioBean implements Serializable {
 
 	@Logger
 	private Log log;
-	@In
-	FacesContext facesContext;
+
 	@In(create = true)
 	private PortfolioReturnBssdList portfolioReturnBssdList;
 	// private PortfolioReturnList portfolioReturnList;
@@ -63,9 +62,13 @@ public class PortfolioBean implements Serializable {
 		this.appliedHierarchies = appliedHierarchies;
 	}
 
+	
+	
+//	@In
+	@Out(required=false)
 	private TreeNode portfolioRoot;
 	private TreeNode portfolioSuperRoot;
-
+	
 	private TreeNode selectedNode;
 
 	private Portfolio selectedPortfolio;
@@ -101,6 +104,23 @@ public class PortfolioBean implements Serializable {
 	}
 
 	public PortfolioBean() {
+		
+//		Portfolio superRoot = new Portfolio("superRoot", "SuperRoot");
+//		Portfolio root = new Portfolio("root", "Root");
+//
+//		portfolioSuperRoot = new DefaultTreeNode(superRoot, null);
+//		portfolioRoot = new DefaultTreeNode(root, portfolioSuperRoot);
+//
+//		portfolioRoot.setExpanded(true);
+	}
+
+	// -----------------------Initalizer------------------------
+//	@Create
+	@Factory(value="portfolioRoot") 
+	@Observer("changeBssd")
+	public void init() {
+		log.info("Start Initalizing PortfolioBean Creation with Given Bssd: #0");
+		
 		Portfolio superRoot = new Portfolio("superRoot", "SuperRoot");
 		Portfolio root = new Portfolio("root", "Root");
 
@@ -108,20 +128,13 @@ public class PortfolioBean implements Serializable {
 		portfolioRoot = new DefaultTreeNode(root, portfolioSuperRoot);
 
 		portfolioRoot.setExpanded(true);
-	}
-
-	// -----------------------Initalizer------------------------
-	@Create
-	@Observer("changeBssd")
-	public void init() {
-		log.info("Start Initalizing PortfolioBean Creation with Given Bssd: #0");
 
 		// Initialize properties
 		log.info("In Init 0: #0");
 		fullPortfolios = new ArrayList<Portfolio>();
 		subPortfolios = new ArrayList<Portfolio>();
 		selectedHierarchies = new ArrayList<Portfolio>();
-		appliedHierarchies = new ArrayList<Portfolio>();
+//		appliedHierarchies = new ArrayList<Portfolio>();
 		hierarchies = new ArrayList<Portfolio>();
 		searchString = null;
 		filterSubPorts = null;
@@ -309,17 +322,17 @@ public class PortfolioBean implements Serializable {
 		filterSubPorts = null;
 		portfolioRoot.getChildren().clear();
 
-//		for (Portfolio aa : hierarchies) {
-//			if (selectedHierarchyIds != null && !selectedHierarchyIds.isEmpty()) {
-//				if (selectedHierarchyIds.contains(aa.getPortId())) {
-//					selectedHierarchies.add(aa);
-//				}
-//			} else {
-//				selectedHierarchies.add(aa);
-//			}
-//		}
-//		generateTree(selectedHierarchies);
-		generateTree(appliedHierarchies);
+		for (Portfolio aa : hierarchies) {
+			if (selectedHierarchyIds != null && !selectedHierarchyIds.isEmpty()) {
+				if (selectedHierarchyIds.contains(aa.getPortId())) {
+					selectedHierarchies.add(aa);
+				}
+			} else {
+				selectedHierarchies.add(aa);
+			}
+		}
+		generateTree(selectedHierarchies);
+//		generateTree(appliedHierarchies);
 
 		if (portfolioRoot.getChildCount() != 0) {
 			portfolioRoot.getChildren().get(0).setSelected(true);

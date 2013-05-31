@@ -1,15 +1,14 @@
 package com.eugenefe.converter;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.faces.convert.FacesConverter;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
@@ -17,6 +16,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.faces.Converter;
+import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.log.Log;
 
 import com.eugenefe.entity.Portfolio;
@@ -25,7 +26,9 @@ import com.eugenefe.session.PortfolioReturnBssdList;
 
 @Name("portfolioConverter")
 @Scope(ScopeType.CONVERSATION)
-public class PortfolioConverter implements Converter , Serializable{
+@Converter
+@BypassInterceptors
+public class PortfolioConverter implements javax.faces.convert.Converter , Serializable{
 	@Logger
 	private Log log;
 
@@ -84,5 +87,6 @@ public class PortfolioConverter implements Converter , Serializable{
             return String.valueOf(((Portfolio) value).getPortId());
         }
 	}
+	
 
 }

@@ -10,10 +10,10 @@
     resizable="true" width="300" height="400" 
     showEffect="fade" hideEffect="explode" style="border:none">
 
-    <p:selectManyMenu id="scroll" value="#{portfolioBean.appliedHierarchies}" var="_hier" 
+<!--     <p:selectManyMenu id="scroll" value="#{portfolioBean.appliedHierarchies}" var="_hier" 
       showCheckbox="true" converter="#{portfolioConverters}"
       style="width:100%;height:95%; border:none; box-shadow:none">
-      
+     
       <f:selectItems value="#{portfolioBean.hierarchies}" var="_hierarchy" 
         itemLabel="#{_hierarchy.portId}" itemValue="#{_hierarchy}" />
       <p:column headerText="Portfolio Id">  
@@ -22,9 +22,16 @@
       <p:column headerText="Portfolio Name">  
                 #{_hier.presValue}  
       </p:column>
-    </p:selectManyMenu>
+    </p:selectManyMenu> -->
+      
+    <!--  <h:selectManyMenu value="#{portfolioBean.appliedHierarchies}" var="_hier" >
+      <s:selectItems value="#{portfolioBean.hierarchies}" var="_hierarchy" label="#{_hierarchy.portName}"/>
+      <s:convertEntity />
+      <f:param name="conversationId" value="#{conversation.id}"/>
+     </h:selectManyMenu> -->
+     
    
- <!--        <p:selectManyMenu id="scroll" value="#{portfolioBean.selectedHierarchyIds}" var="_hier" 
+        <p:selectManyMenu id="scroll" value="#{portfolioBean.selectedHierarchyIds}" var="_hier" 
       showCheckbox="true" 
       style="width:100%;height:95%; border:none; box-shadow:none">
       
@@ -36,11 +43,14 @@
       <p:column headerText="Portfolio Name">  
                 #{_hier}  
       </p:column>
-    </p:selectManyMenu> -->
+    </p:selectManyMenu>
     
     <f:facet name="footer" >
       <p:commandButton value="Cancel" oncomplete="portDialog.hide()" style="float:right"/>
-      <p:commandButton value="OK" action="#{portfolioBean.onChangeHierarchies}" update=":portTreeForm:accoId:portfolioTree, @(.ui-datatable)" oncomplete="portDialog.hide()" style="float:right"/>
+      <p:commandButton id="portDialogOk" value="OK" action="#{portfolioBean.onChangeHierarchies}" update=":portTreeForm:accoId:portfolioTree, @(.ui-datatable)" oncomplete="portDialog.hide()" style="float:right">
+        <f:param name="conversationId" value="#{conversation.id}"/>
+      </p:commandButton>  
+<!--       <p:defaultCommand target="portDialogOk" /> -->  
     </f:facet>
   </p:dialog>
 
