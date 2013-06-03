@@ -6,23 +6,25 @@
   template="/templates/templatePrimeTop.xhtml">
 
   <ui:define name="layoutCenter">
-    <h:form id="xxxform">
+    <h:form id="formSettings">
 
-      <p:contextMenu for="tabxxx:acordionId:xxx">
-              <p:menuitem value="View" onclick="portListDialog3.show();" icon="ui-icon-search" />
-            </p:contextMenu>
-            
-      <p:tabView id="tabxxx" orientation="left" >
+      <!-- <p:contextMenu for="tabviewSettings:acordionId:xxx">
+        <p:menuitem value="View" onclick="portListDialog3.show();" icon="ui-icon-search" />
+      </p:contextMenu> -->
+
+      <p:tabView id="tabviewSettings" orientation="left">
         <p:tab title="#{messages.generalSettings} ">
           <p:panelGrid columns="2" cellpadding="100">
-            <h:outputText value="Default Switcher:" />
-            <p:themeSwitcher value="#{themeSwitcher.theme}" style="width:200px" id="defaultSwitcher">
-              <f:selectItem itemLabel="#{messages.SelectTheme}" itemValue="" />
-              <f:selectItems value="#{themeSwitcher.themes}" var="theme" itemLabel="#{theme.name}" itemValue="#{theme}" />
+
+            <h:outputText value="#{messages.theme}" />
+
+            <p:themeSwitcher id="defaultSwitcher" value="#{themeSwitcher.theme}" style="width:200px">
+              <f:selectItem itemLabel="#{messages.selectTheme}" itemValue="" />
+              <f:selectItems value="#{themeSwitcher.themes}" var="_theme" itemLabel="#{_theme.name}" itemValue="#{_theme}" />
               <p:ajax listener="#{themeSwitcher.saveTheme}" />
             </p:themeSwitcher>
 
-            <h:outputText value=" #{messages.Language} :" />
+            <h:outputText value=" #{messages.language} " />
             <p:selectOneMenu value="#{localeSelector.localeString}" style="width:200px">
               <f:selectItems value="#{localeSelector.supportedLocales}" />
             </p:selectOneMenu>
@@ -34,6 +36,7 @@
           </p:panelGrid>
         </p:tab>
 
+<!-- ********************************************************************** -->
         <p:tab title="#{messages.aaa}">
           <p:commandButton id="basiczzz" value="Basic" onclick="portListDialog3.show();" type="button" />
         </p:tab>
@@ -54,6 +57,7 @@
       <p:dialog header="Taaa" widgetVar="portListDialog3">
         <h:outputText value="AAA" />
       </p:dialog>
+
     </h:form>
   </ui:define>
 </ui:composition>
