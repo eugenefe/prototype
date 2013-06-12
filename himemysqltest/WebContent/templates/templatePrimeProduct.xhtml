@@ -28,7 +28,7 @@
         <ui:insert name="layoutTop" />
       </p:layoutUnit>
 
-      <p:layoutUnit position="west" header="#{messages.layoutPortfolio}" resizable="true" collapsible="false" size="200"
+      <p:layoutUnit position="west" header="#{messages.layoutPortfolio}" resizable="true" collapsible="false" size="400"
         gutter="4">
         <ui:insert name="layoutLeft" />
       </p:layoutUnit>
@@ -41,7 +41,7 @@
       <p:layoutUnit position="center" resizable="true">
         <p:layout collapseTitle="close" resizeTitle="resize">
           <p:layoutUnit header="bottom" position="south" resizable="true" collapsible="true" gutter="2" size="200"
-            rendered="#{layoutBottomClosed}">
+            visible="#{layoutBottomClosed}">
             <ui:insert name="layoutBottom" />
             <ui:include src="/templates/footer.xhtml" />
             <ui:include src="/templates/primeDock.xhtml" />

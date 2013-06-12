@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+  <h:form id="bondForm">
+    
+    <p:dataTable id="bondId" var="_bond" value="#{bonds}" widgetVar="bondsTable"
+      emptyMessage="No Portfolios found with given criteria" filterDelay="300" filterEvent="keyup"
+      resizableColumns="true" draggableColumns="true"
+      sortMode="multiple" 
+      paginator="true" paginatorPosition="bottom" rows="10" rowsPerPageTemplate="5,10,15"
+      style="height : 100%">
+
+      <p:column id="bondId" headerText="#{messages.bondId}" sortBy="#{_bond.mvId}"
+        filterBy="#{_bond.mvId}" filterMatchMode="contains" filterStyle="display:none; visibility:hidden">
+        <h:outputText value="#{_bond.mvId}" />
+      </p:column>
+
+      <!-- <p:column id=" bondType" headerText="#{messages.bondType}" sortBy="#{_bond.bondType}"
+        filterBy="#{_bond.bondType}" filterMatchMode="contains" filterStyle="display:none; visibility:hidden">
+        <h:outputText value="#{_bond.bondType}" />
+      </p:column> -->
+      
+      <p:column id="couponRate" headerText="#{messages.couponRate}" sortBy="#{_bond.couponRate}"
+        filterBy="#{_bond.couponRate}" filterMatchMode="contains" filterStyle="display:none; visibility:hidden">
+        <h:outputText value="#{_bond.couponRate}" />
+      </p:column>
+     </p:dataTable> 
+
+  </h:form>
+</ui:composition>

@@ -461,3 +461,44 @@ li.ui-tabs-selected a {
 	color: #cc9900;
 	font: bold;
 }
+/* ****************************************** */
+/* .form-label {
+	color: blue; 
+	font-weight:bold;
+	float:right;
+} */
+
+/* form.takionLabel {
+	color: blue ; 
+	font-weight:bold ;
+	float:right ;
+} */
+
+/* .takionLabel .ui-outputlabel{
+	color: blue ; 
+	font-weight:bold ;
+	float:right ;
+} */
+
+.takionLabel {
+	color: blue ; 
+	font-weight:bold ;
+	float:right ;
+}
+
+.takionLabelFor {
+	width :150px;
+}
+
+/* .ui-outputlabel.takionLabel {
+	color: blue ; 
+	font-weight:bold ;
+	float:right ;
+}
+.ui-outputlabel .takionLabel {
+	color: blue ; 
+	font-weight:bold ;
+	float:right ;
+} */
+
+	

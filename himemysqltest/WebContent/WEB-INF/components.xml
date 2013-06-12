@@ -62,5 +62,6 @@
       <bpm:pageflow-definitions></bpm:pageflow-definitions>
    </bpm:jbpm>
    -->
+    <factory name="selectBond" value="#{bondHome.instance}" />  
 
 </components>

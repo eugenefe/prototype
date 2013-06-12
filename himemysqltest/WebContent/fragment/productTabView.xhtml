@@ -1,0 +1,34 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+  <p:tabView id="tabViewProduct" styleClass="horizontalTab">
+    <p:ajax event="tabChange" listener="#{layoutBottomCloseAction.onProductTabChange}" 
+        update="@(.ui-layout)"/>
+    
+    
+    <p:tab id="tabProductChart" title="#{messages.tabProductChart}">
+      <!-- <ui:include src="/fragment/stockChart.xhtml" /> -->
+      <ui:include src="/fragment/productChart.xhtml" />
+      
+    </p:tab>
+    
+    <p:tab id="tabProductHis" title="#{messages.tabProductHis}" rendered="#{selectedProduct !=null}" >
+      <ui:include src="/fragment/productHis.xhtml" />
+      <!-- <ui:include src="#{config.productHisXhtml}" /> -->
+    </p:tab>
+
+    <p:tab id="tabBond" title="#{messages.tabBond}" rendered="#{selectedProduct.mvType=='BOND'}">
+      <ui:include src="/fragment/bondInfo.xhtml" />
+    </p:tab>
+    <p:tab id="tabFutures" title="#{messages.tabFutures}" rendered="#{selectedProduct.mvType=='FUTURES'}">
+        asdf
+      </p:tab>
+    <p:tab id="tabStock" title="#{messages.tabStock}" rendered="#{selectedProduct.mvType=='STOCK'}">
+        asdf
+      </p:tab>
+  </p:tabView>
+
+</ui:composition>
