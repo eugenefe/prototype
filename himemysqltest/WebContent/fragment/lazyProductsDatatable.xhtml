@@ -10,7 +10,7 @@
       var="_product" value="#{lazyProducts}" widgetVar="lazyProductsTable"
       lazy="true"
       selectionMode="single" selection="#{productSelectAction.selectedProduct}" rowKey="#{_product.mvId}"
-      emptyMessage="No Portfolios found with given criteria" 
+      emptyMessage="No Product found with given criteria" 
       resizableColumns="true" 
       sortMode="single" 
       paginator="true" 
@@ -18,12 +18,14 @@
       rows="15" rowsPerPageTemplate="15,25,50"
       style="height : 100%; width :100%;">
       <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
-                   update=":tabViewProduct :tabViewProduct:linearProduct" />  
+                   update=":tabViewProduct :tabViewProduct:linearProduct :positionForm" />  
+     <!--  <p:ajax event="rowSelect" listener="#{config.updateColumns()}"   
+                   update=":tabViewProduct :tabViewProduct:linearProduct" />   -->
       
       <p:column id="colProductType" headerText="#{messages.productType}" sortBy="#{_product.mvType}"
         filterBy="#{_product.mvType}" filterMatchMode="contains" 
         filterOptions="#{productTypeOption}" >
-        <h:outputText value="#{_product.mvType}" />
+        <h:outputText value="(#{_product.positions.size})#{_product.mvType}" />
       </p:column>
       
       <p:column id="colProductId" headerText="#{messages.productId}" sortBy="#{_product.mvId}"
@@ -36,7 +38,9 @@
         <h:outputText value="#{_product.mvName}" />
       </p:column> 
       
-      
+      <!-- <p:column id="colPositionSize" headerText="#{messages.positionSize}">
+        <h:outputText value="#{_product.positions.size}" />
+      </p:column>  -->
      </p:dataTable> 
      
   </h:form>

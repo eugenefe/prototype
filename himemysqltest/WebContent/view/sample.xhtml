@@ -13,7 +13,18 @@
       href="#{request.contextPath}/resources/css/syntaxhighlighter/syntaxhighlighter.css" />
   </h:head>
   <h:body>
-    <ui:include src="/templates/primeToolbar.xhtml" />
+  asdfasd
+  <p:layout collapseTitle="close" resizeTitle="resize">
+          <p:layoutUnit header="bottom" position="south" resizable="true" collapsible="true" gutter="2" size="200"
+            rendered="#{layoutBottomClosed}"   >
+            asdf
+          </p:layoutUnit>
+
+          <p:layoutUnit position="center" resizable="true" gutter="4" >
+          asdfa
+          </p:layoutUnit>
+        </p:layout>
+    <!-- <ui:include src="/templates/primeToolbar.xhtml" />
     <p:panel header="aaa"  >
     <p:outputLabel value="#{messages.faceAmt}" styleClass="takionLabel"/>
     </p:panel>
@@ -22,7 +33,7 @@
     <p:inplace effect="slide" label="Show" >
       <p:panel header="AAA">
       </p:panel>
-    </p:inplace>
+    </p:inplace> -->
   </h:body>
   </h:html>
 </f:view>

@@ -2,7 +2,9 @@ package com.eugenefe.entity;
 
 // Generated Apr 10, 2013 4:09:22 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,7 +53,7 @@ public class MarketVariable implements java.io.Serializable {
 //	private Bond bond;
 //	private Options optionsByMvId;
 //	private Set<Options> optionsesForUnderlyingId = new HashSet<Options>(0);
-//	private Set<Position> positions = new HashSet<Position>(0);
+	private List<Position> positions = new ArrayList<Position>();
 
 	public MarketVariable() {
 	}
@@ -309,13 +311,13 @@ public class MarketVariable implements java.io.Serializable {
 //		this.optionsesForUnderlyingId = optionsesForUnderlyingId;
 //	}
 //
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "marketVariable")
-//	public Set<Position> getPositions() {
-//		return this.positions;
-//	}
-//
-//	public void setPositions(Set<Position> positions) {
-//		this.positions = positions;
-//	}
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	public List<Position> getPositions() {
+		return this.positions;
+	}
+
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
 
 }

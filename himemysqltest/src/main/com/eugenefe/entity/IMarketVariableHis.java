@@ -21,6 +21,8 @@ public interface IMarketVariableHis extends Serializable{
 	public BigDecimal getVolume();
 	public BigDecimal getVolumeAmt();
 	
+	public BigDecimal getStockBeta();
+	
 	public BigDecimal getAdjDuration();
 	public BigDecimal getMdDuration();
 	public BigDecimal getEffectDuration();

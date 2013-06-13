@@ -11,14 +11,14 @@ public enum ProductType {
 	)
 	,FUTURES(
 			"FUTURES" 
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  FuturesHis a where a.id.futuresId=#{selectedProduct.mvId}"
 	)
 	,OPTION("OPTION"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  OptionHis a where a.id.optionId=#{selectedProduct.mvId}"
 	)
 	,ETF(
 			"ETF"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  EtfHis a where a.id.etfId=#{selectedProduct.mvId}"
 	)
 	,ELW(
 			"ELW"

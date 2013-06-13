@@ -240,5 +240,11 @@ public class StockHis implements java.io.Serializable, IMarketVariableHis {
 		return null;
 	}
 	
+	@Override
+	@Transient
+	public BigDecimal getStockBeta() {
+		return new BigDecimal(0);
+	}
+	
 
 }

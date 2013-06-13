@@ -11,7 +11,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -24,12 +27,15 @@ public class Position implements IPortfolio, Serializable {
 
 	private String posId;
 	private String posName;
+	private MarketVariable product;
+	private Counterparty counterparty;
 	private String initTxDate;
 	private String lastTxDate;
 	private BigDecimal initTxPrice;
 	private BigDecimal initFeeAmt;
 	private BigDecimal initTxAmt;
 	private BigDecimal holdingQty;
+	private BigDecimal posAmt;
 
 	public Position() {
 	}
@@ -67,6 +73,27 @@ public class Position implements IPortfolio, Serializable {
 
 	public void setPosName(String posName) {
 		this.posName = posName;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PROD_ID")
+	public MarketVariable getProduct() {
+		return product;
+	}
+
+	public void setProduct(MarketVariable product) {
+		this.product = product;
+	}
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COUNTERPARTY_ID")
+	public Counterparty getCounterparty() {
+		return counterparty;
+	}
+
+	public void setCounterparty(Counterparty counterparty) {
+		this.counterparty = counterparty;
 	}
 
 	@Column(name = "INIT_TX_DATE", length = 8)
@@ -122,7 +149,17 @@ public class Position implements IPortfolio, Serializable {
 	public void setHoldingQty(BigDecimal holdingQty) {
 		this.holdingQty = holdingQty;
 	}
+	
+	@Column(name = "POS_AMT", scale = 4)
+	public BigDecimal getPosAmt() {
+		return posAmt;
+	}
 
+	public void setPosAmt(BigDecimal posAmt) {
+		this.posAmt = posAmt;
+	}
+
+	//**************************************	
 	@Override
 	@Transient
 	public String getStringId() {

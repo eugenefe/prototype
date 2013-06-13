@@ -105,5 +105,13 @@ public class LazyModelMarketVariable  extends LazyDataModel<MarketVariable>{
             return data;  
         }  
     }
+    
+    @Override
+    public void setRowIndex(int rowIndex) {
+           if (getPageSize() == 0) {
+                rowIndex = -11;
+            }
+            super.setRowIndex(rowIndex);
+    }
 
 }
