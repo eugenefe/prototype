@@ -21,7 +21,12 @@
     <p:tab id="tabProductHis" title="#{messages.tabProductHis}" rendered="#{selectedProduct !=null}" >
       <ui:include src="/fragment/productHis.xhtml" /> 
     </p:tab>
-      
+    
+    <p:tab id="tabRiskFactor" title="#{messages.tabRiskFactor}" rendered="#{selectedProduct.mvType!=null}">
+    </p:tab>
+    <p:tab id="tabPricingModel" title="#{messages.tabPricingModel}" rendered="#{selectedProduct.mvType!=null}">
+    </p:tab>  
+    
     <p:tab id="tabBond" title="#{messages.tabBond}" rendered="#{selectedProduct.mvType=='BOND'}">
     </p:tab>
 
