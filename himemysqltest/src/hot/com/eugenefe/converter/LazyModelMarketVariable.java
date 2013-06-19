@@ -46,7 +46,8 @@ public class LazyModelMarketVariable  extends LazyDataModel<MarketVariable>{
     public Object getRowKey(MarketVariable marketVariable) {  
         return marketVariable.getMvId();  
     }  
-  
+    
+    
     @Override  
     public List<MarketVariable> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,String> filters) {  
         List<MarketVariable> data = new ArrayList<MarketVariable>();  
@@ -106,12 +107,26 @@ public class LazyModelMarketVariable  extends LazyDataModel<MarketVariable>{
         }  
     }
     
-    @Override
+    /*@Override
     public void setRowIndex(int rowIndex) {
            if (getPageSize() == 0) {
                 rowIndex = -11;
             }
             super.setRowIndex(rowIndex);
+    }*/
+    @Override
+    public void setRowIndex(int rowIndex) {
+        /*
+         * The following is in ancestor (LazyDataModel):
+         * this.rowIndex = rowIndex == -1 ? rowIndex : (rowIndex % pageSize);
+         */
+        if (rowIndex == -1 || getPageSize() == 0) {
+//        	System.out.println("Row Index : " + rowIndex +":"+ getPageSize());
+            super.setRowIndex(-1);
+        }
+        else{
+//        	System.out.println("Row Index1 : " + rowIndex +":"+ getPageSize());
+            super.setRowIndex(rowIndex % getPageSize());
+        }    
     }
-
 }

@@ -14,11 +14,16 @@
       resizableColumns="true" 
       sortMode="single" 
       paginator="true" 
+      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
       paginatorPosition="bottom" 
-      rows="15" rowsPerPageTemplate="15,25,50"
+      rows="15" 
       style="height : 100%; width :100%;">
       <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
-                   update=":tabViewProduct :tabViewProduct:linearProduct :positionForm" />  
+                   update="@(form) :tabViewProduct" />
+      <!-- <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
+                   update=":tabViewProduct :tabViewProduct:linearProduct" /> -->
+      <!-- <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
+                   update=":tabViewProduct :tabViewProduct:linearProduct :formPosition" /> -->                     
      <!--  <p:ajax event="rowSelect" listener="#{config.updateColumns()}"   
                    update=":tabViewProduct :tabViewProduct:linearProduct" />   -->
       

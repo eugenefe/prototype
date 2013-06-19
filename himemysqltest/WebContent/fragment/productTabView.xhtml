@@ -5,11 +5,13 @@
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
   <p:tabView id="tabViewProduct" >
-    <p:ajax event="tabChange" listener="#{layoutBottomCloseAction.onProductTabChange}" 
-        update="@(.ui-layout)"/>
+    <!-- <p:ajax event="tabChange" listener="#{layoutBottomCloseAction.onProductTabChange}" 
+        update="@(.ui-layout)"/> -->
     
+    
+     
     <p:tab id="tabProductDashboard" title="#{messages.tabProductDashboard}" rendered="#{selectedProduct ==null}">
-      
+      <ui:include src="/fragment/productDashboardChart.xhtml" />    
     </p:tab>
 
     <p:tab id="tabProductChart" title="#{messages.tabProductChart}" rendered="#{selectedProduct !=null}">
@@ -17,26 +19,12 @@
     </p:tab>
     
     <p:tab id="tabProductHis" title="#{messages.tabProductHis}" rendered="#{selectedProduct !=null}" >
-      <ui:include src="/fragment/productHis.xhtml" />
+      <ui:include src="/fragment/productHis.xhtml" /> 
+    </p:tab>
+      
+    <p:tab id="tabBond" title="#{messages.tabBond}" rendered="#{selectedProduct.mvType=='BOND'}">
     </p:tab>
 
-    <p:tab id="tabBond" title="#{messages.tabBond}" rendered="#{selectedProduct.mvType=='BOND'}">
-      <ui:include src="/fragment/bondInfo.xhtml" />
-      
-      <!-- <ui:include src="#{configAction.productInfoXhtml}" /> -->
-    </p:tab>
-    
-    <p:tab id="tabFutures" title="#{messages.tabFutures}" rendered="#{selectedProduct.mvType=='FUTURES'}">
-        asdf
-      </p:tab>
-      
-    <p:tab id="tabStock" title="#{messages.tabStock}" rendered="#{selectedProduct.mvType=='STOCK'}">
-        asdf
-      </p:tab>
-    <p:tab id="tabPosition" title="#{messages.tabProductPosition}" rendered="#{selectedProduct!= null}">
-        <ui:include src="/fragment/position.xhtml" />
-     </p:tab>  
-     
   </p:tabView>
 
 </ui:composition>

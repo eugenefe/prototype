@@ -36,6 +36,10 @@ public class BaseDateBean implements Serializable {
 	private BasedateList basedateList;
 
 	private Date date1;
+	private Date stDate;
+	private Date endDate;
+	private String stBssd;
+	private String endBssd;
 	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");  
 	
@@ -48,8 +52,12 @@ public class BaseDateBean implements Serializable {
 	@Create
 	public void init(){
 		date1 = Calendar.getInstance().getTime();
+		stDate = Calendar.getInstance().getTime();
+		endDate =Calendar.getInstance().getTime();
 //		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");  
 	    bssd = format.format(date1);
+	    stBssd = format.format(stDate);
+	    endBssd = format.format(endDate);
 //	    bssd =  "20130304";
 					
 	}
@@ -68,6 +76,39 @@ public class BaseDateBean implements Serializable {
 
 	public void setBssd(String bssd) {
 		this.bssd = bssd;
+	}
+	
+
+	public Date getStDate() {
+		return stDate;
+	}
+
+	public void setStDate(Date stDate) {
+		this.stDate = stDate;
+	}
+
+	public String getStBssd() {
+		return stBssd;
+	}
+
+	public void setStBssd(String stBssd) {
+		this.stBssd = stBssd;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getEndBssd() {
+		return endBssd;
+	}
+
+	public void setEndBssd(String endBssd) {
+		this.endBssd = endBssd;
 	}
 
 	public void handleDateSelect(SelectEvent event) {

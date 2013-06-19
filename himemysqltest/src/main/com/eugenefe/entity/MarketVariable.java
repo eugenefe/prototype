@@ -34,6 +34,8 @@ public class MarketVariable implements java.io.Serializable {
 	public String mvId;
 	public String mvName;
 	public ProductType mvType;
+	public String productYN;
+	public String riskFactorYN;
 //	private Synthetics synthetics;
 //	private StockIndex stockIndex;
 //	private Stock stock;
@@ -128,6 +130,24 @@ public class MarketVariable implements java.io.Serializable {
 //	public void setMvType(String mvType) {
 //		this.mvType = mvType;
 //	}
+
+	@Column(name = "PRODUCT_YN")
+	public String getProductYN() {
+		return productYN;
+	}
+
+	public void setProductYN(String productYN) {
+		this.productYN = productYN;
+	}
+	
+	@Column(name = "RF_YN")
+	public String getriskFactorYN() {
+		return riskFactorYN;
+	}
+
+	public void setriskFactorYN(String riskFactorYN) {
+		this.riskFactorYN = riskFactorYN;
+	}
 
 	//
 //	@OneToOne(fetch = FetchType.LAZY, mappedBy = "marketVariable")

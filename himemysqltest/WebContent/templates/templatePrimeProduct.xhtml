@@ -1,8 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:f="http://java.sun.com/jsf/core" 
-  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
   xmlns:s="http://jboss.org/schema/seam/taglib" contentType="text/html">
   <h:html>
   <h:head>
@@ -15,7 +14,7 @@
     <link type="text/css" rel="stylesheet"
       href="#{request.contextPath}/resources/css/syntaxhighlighter/syntaxhighlighter.css" />
   </h:head>
-  
+
   <h:body style="background:grey">
     <p:layout fullPage="true">
       <p:layoutUnit position="north" resizable="true" size="60" collapsible="true" gutter="3"
@@ -23,14 +22,14 @@
         <!--         <h:graphicImage value="/img/inkwell.jpg" height="20" width="100%" /> -->
         <!-- <ui:include src="localeMenuAlt.xhtml" />
         <ui:include src="primeToolbarOld.xhtml" /> -->
-        
+
         <ui:include src="primeToolbar.xhtml" />
         <ui:insert name="layoutTop" />
       </p:layoutUnit>
 
-      <p:layoutUnit position="west" header="#{messages.layoutPortfolio}" resizable="true" collapsible="false" size="400"
-        gutter="4">
+      <p:layoutUnit position="west" resizable="true" collapsible="false" size="350" gutter="4">
         <ui:insert name="layoutLeft" />
+        <ui:include src="/templates/primeDock.xhtml" />
       </p:layoutUnit>
 
       <p:layoutUnit position="east" header="#{messages.layoutScenario}" resizable="true" collapsible="true" size="150"
@@ -38,29 +37,38 @@
         <ui:insert name="layoutRight" />
       </p:layoutUnit>
 
-      <p:layoutUnit position="center" resizable="true">
+      <p:layoutUnit position="center" resizable="true" style="background:grey">
         <p:layout collapseTitle="close" resizeTitle="resize">
-          <p:layoutUnit header="bottom" position="south" resizable="true" collapsible="true" gutter="2" size="200"
-            visible="#{layoutBottomClosed}">
-            <ui:insert name="layoutBottom" />
-            <ui:include src="/templates/footer.xhtml" />
-            <ui:include src="/templates/primeDock.xhtml" />
+          <p:layoutUnit position="east" header="#{messages.productInfo}" resizable="true" collapsible="true" size="280"
+            gutter="4">
+            <ui:insert name="layoutInnerRight" />
           </p:layoutUnit>
 
-          <p:layoutUnit position="center" resizable="true" gutter="4" >
+          <p:layoutUnit position="center" resizable="true" gutter="4">
             <ui:insert name="layoutCenter" />
-<!--             <ui:include src="/dialog/dialogLogin.xhtml" /> -->
+            <!--<ui:include src="/dialog/dialogLogin.xhtml" /> -->
+            <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
 
-            <p:ajaxStatus style="width:64px;height:64px;" id="ajaxStatusPanel">
+            <p:dialog modal="false" widgetVar="statusDialog" header="Status" draggable="false" closable="false">
+              <p:graphicImage value="/img/ajaxloadingbar.gif" />
+            </p:dialog>
+
+<!--             <p:ajaxStatus style="width:64px;height:64px;" id="ajaxStatusPanel">
               <f:facet name="start">
                 <h:graphicImage value="/img/primefaces/ajaxloading.gif" />
               </f:facet>
               <f:facet name="complete">
                 <h:outputText value="" />
               </f:facet>
-            </p:ajaxStatus>
+            </p:ajaxStatus> -->
           </p:layoutUnit>
 
+          <p:layoutUnit header="#{messages.positionInfo}" position="north" resizable="true" collapsible="true"
+            gutter="2" size="200" visible="#{layoutBottomClosed}">
+            <ui:insert name="layoutBottom" />
+            <!-- <ui:include src="/templates/footer.xhtml" /> -->
+            <!-- <ui:include src="/templates/primeDock.xhtml" /> -->
+          </p:layoutUnit>
         </p:layout>
       </p:layoutUnit>
 

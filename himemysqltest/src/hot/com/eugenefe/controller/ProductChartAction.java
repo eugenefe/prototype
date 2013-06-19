@@ -59,10 +59,14 @@ public class ProductChartAction {
 			log.info("in the load chart Event Null port ");
 			series1.set("0", 0);
 		}
+		int cnt=0;
+		String temp;
 		for(IMarketVariableHis aa : marketVariableHisList){
 			log.info("in the load chart11 :#0 ", aa.getBssd());
+			temp = aa.getBssd().substring(4);
 //			series1.set(aa.getBasedate().getBssd(), aa.getClosePrice());
-			series1.set(aa.getBssd(), aa.getCurrentPrice());
+//			series1.set(aa.getBssd(), aa.getCurrentPrice());
+			series1.set(temp, aa.getCurrentPrice());
 		}
 		
 		linearModel.addSeries(series1);

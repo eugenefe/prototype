@@ -500,5 +500,7 @@ li.ui-tabs-selected a {
 	font-weight:bold ;
 	float:right ;
 } */
-
+.ui-layout-resizer {
+	color : grey;
+}
 	

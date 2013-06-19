@@ -12,11 +12,15 @@ public enum NamedQuery {
 	
 	,Bonds ("select a from Bond a")
 	
-	,MarketVariables ("select a from MarketVariable a")
+//	,Products ("select a from MarketVariable a where a.productYN ='Y'")
+	
+	,MarketVariables ("select a from MarketVariable a ")
 	
 	,BondHisList("select a from BondHis a")
 	
 	,StockHisList("select a from StockHis a")
+	
+	,StockIndexHisList("select a from StockIndexHis a")
 	;
 	
 	private String query;

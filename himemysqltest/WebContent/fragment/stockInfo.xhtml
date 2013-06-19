@@ -4,13 +4,13 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
-  <!-- <p:panel id="panelProductChart" toggleable="true" header="#{messages.productPriceChart}"> -->
-  <p:panel id="panelProductChart" >
-      <p:lineChart id="linearProduct" title="#{messages.productPriceChart}" 
-        value="#{productChartAction.linearModel}"   
-        showMarkers="false"
-        zoom="true"
-        legendPosition="ne"  xaxisAngle="-45"
-        style="height:100%;" />
-  </p:panel>
+  
+  <h:form id="formStockInfo" >
+  <!-- <p:panel> -->
+
+    <p:panelGrid id="panelGridBondInfo" columns="2" rendered="#{selectedProduct.mvType =='STOCK'}">
+        aasdfasd
+    </p:panelGrid>
+    <!-- </p:panel> -->
+  </h:form>
 </ui:composition>

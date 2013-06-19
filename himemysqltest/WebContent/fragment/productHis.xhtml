@@ -6,7 +6,15 @@
 
   <h:form id="formProductHis">
     <p:dataTable id="dataTableProductHis" value="#{marketVariableHisList}" var="_productHis"
-      rows="10">
+      emptyMessage="No History Data found with given criteria"
+      resizableColumns="true"
+      paginator="true" 
+      paginatorPosition="bottom" 
+      rows="15" 
+      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+      rowsPerPageTemplate="15,25,50"
+      style="height : 100%; width :100%;"
+      >
       <p:column id="colBssd" headerText="#{messages.bssd}" sortBy="#{_productHis.bssd}">
         <h:outputText value="#{_productHis.bssd}" />
       </p:column>
@@ -68,6 +76,23 @@
         </h:outputText>
       </p:columns>
       
+      
+      <f:facet name="header">
+        <p:calendar id="popupButtonCal1" value="#{basedateBean.stDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
+          navigator="true"   style="float: left">
+          <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form)" />
+        </p:calendar>
+        <h:outputText value="~" style="float: left"/>
+        <p:calendar id="popupButtonCal2" value="#{basedateBean.endDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
+          navigator="true"   style="float: left">
+        <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form)" />
+        </p:calendar>
+
+        <h:commandLink style="float: right">
+          <p:graphicImage value="/img/primefaces/csv.png" />
+          <p:dataExporter type="csv" target="dataTableProductHis" fileName="ProductHis" />
+        </h:commandLink>
+      </f:facet>
     </p:dataTable>
   </h:form>
 </ui:composition>

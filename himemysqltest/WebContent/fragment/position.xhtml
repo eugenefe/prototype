@@ -4,14 +4,14 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
-  <h:form id="positionForm">
+  <h:form id="formPosition">
     <p:dataTable id="dataTablePosition" var="_position" value="#{selectedProduct.positions}" widgetVar="positionTable"
-      selectionMode="single" selection="#{portfolioBean.selectedSubPortfolio}" rowKey="#{_position.posId}"
+      selectionMode="single" 
+      rowKey="#{_position.posId}"
       emptyMessage="No Position found with given criteria" 
       filterDelay="300" filterEvent="keyup"
       resizableColumns="true"
       draggableColumns="true"
-      paginator="true" paginatorPosition="bottom" rows="10" rowsPerPageTemplate="5,10,15"
       style="height : 100%">
 
         <!-- <p:ajax event="rowSelect" update=":#{p:component('takiondisplay')}"  oncomplete="portDialog.show()" /> -->
@@ -42,7 +42,7 @@
         </h:outputText>
       </p:column>
        
-      <f:facet name="footer">
+      <f:facet name="header">
         <h:commandLink style="float: right">
           <p:graphicImage value="/img/primefaces/csv.png" />
           <p:dataExporter type="csv" target="dataTablePosition" fileName="Position" />

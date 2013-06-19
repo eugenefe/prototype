@@ -38,6 +38,7 @@ public class Position implements IPortfolio, Serializable {
 	private BigDecimal posAmt;
 
 	public Position() {
+		System.out.println("In the Position Creation");
 	}
 
 	public Position(String posId) {
@@ -78,6 +79,7 @@ public class Position implements IPortfolio, Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROD_ID")
 	public MarketVariable getProduct() {
+//		System.out.println("In the GetProduct");
 		return product;
 	}
 

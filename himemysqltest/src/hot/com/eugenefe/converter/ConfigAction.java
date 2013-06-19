@@ -27,6 +27,7 @@ public class ConfigAction {
 	private List<ColumnModel> productHisColumns = new ArrayList<ColumnModel>();
 	
 	public ConfigAction(){
+//		productInfoXhtml = "/fragment/bondInfo.xhtml";
 		
 	}
 	public String getProductInfoXhtml() {
@@ -73,16 +74,20 @@ public class ConfigAction {
 	public void updateColumns(MarketVariable marketVariable) {  
         //reset table state  
         UIComponent table = FacesContext.getCurrentInstance().getViewRoot().findComponent(":tabViewProduct:formProductHis:dataTableProductHis");  
-        table.setValueExpression("sortBy", null);  
+//        table.setValueExpression("sortBy", null);  
           
         //update columns  
         createDynamicColumns(marketVariable);  
         
     }  
     
-//	@Observer("selectProduct")
+	@Observer("selectProduct")
     public void createDynamicColumns(MarketVariable marketVariable) {  
     	productHisColumns.clear();     
+//    	if(marketVariable==null){
+//    		productInfoXhtml = "/fragment/bondInfo.xhtml";
+//    		return;
+//    	}
     	switch (marketVariable.getMvType()) {
 		case BOND:
 			productInfoXhtml = "/fragment/bondInfo.xhtml";
