@@ -5,4 +5,4 @@
  * @author takion77
  *
  */
-package com.eugenfe.util;
+package com.eugenefe.util;

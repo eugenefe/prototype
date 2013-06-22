@@ -2,7 +2,7 @@ package com.eugenefe.entityinterface;
 
 import java.math.BigDecimal;
 
-import com.eugenfe.util.ProductType;
+import com.eugenefe.util.ProductType;
 
 public class ProductDashboard {
 //	private String mvType;

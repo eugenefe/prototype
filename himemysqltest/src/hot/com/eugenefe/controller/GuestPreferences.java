@@ -18,7 +18,7 @@ public class GuestPreferences implements Serializable {
 	private String theme ;
 	@Create()
 	public void init() {
-		theme = "bluesky";
+		theme = "sunny";
 	}    	
 
 	public GuestPreferences(){

@@ -6,29 +6,21 @@
   template="/templates/templatePrimeProduct.xhtml">
 
   <ui:define name="layoutLeft">
-    <!-- <ui:include src="/fragment/bond.xhtml" /> -->
-    <!-- <ui:include src="/fragment/products.xhtml" /> -->
     <ui:include src="/fragment/lazyProductsDatatable.xhtml" />
   </ui:define>
 
-  <ui:define name="layoutInnerRight">
-    <!-- <p:panel>
-        <ui:include src="#{configAction.productInfoXhtml}" />
-    </p:panel> -->
-      <ui:include src="/fragment/bondInfo.xhtml" />
-      <ui:include src="/fragment/stockInfo.xhtml" />
-  </ui:define>
-  
-  
-  <ui:define name="layoutCenter">
-    <ui:include src="/fragment/productTabView.xhtml" />
+  <ui:define name="layoutInnerTop">
+    <ui:include src="/fragment/position.xhtml" />
   </ui:define>
 
-  <ui:define name="layoutBottom">
-    <ui:include src="/fragment/position.xhtml" />
-    <!-- <p:panel id="panelProductInfo2" rendered="#{selectedProduct.mvType== 'BOND' }">
-      <ui:include src="/fragment/bondInfo.xhtml" />
-    </p:panel> -->
+  <ui:define name="layoutInnerRight">
+    <ui:include src="/fragment/bondInfo.xhtml" />
+    <ui:include src="/fragment/stockInfo.xhtml" />
+  </ui:define>
+
+
+  <ui:define name="layoutInnerCenter">
+    <ui:include src="/fragment/productTabView.xhtml" />
   </ui:define>
 
 </ui:composition>

@@ -12,10 +12,10 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Out;
 
-import com.eugenefe.converter.NamedQuery;
 import com.eugenefe.entity.BondExt;
 import com.eugenefe.entity.MarketVariableExt;
 import com.eugenefe.entity.Portfolio;
+import com.eugenefe.util.NamedQuery;
 
 @Name("bondSelectAction")
 public class BondSelectAction {

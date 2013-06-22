@@ -7,28 +7,36 @@
   <p:tabView id="tabViewProduct" >
     <!-- <p:ajax event="tabChange" listener="#{layoutBottomCloseAction.onProductTabChange}" 
         update="@(.ui-layout)"/> -->
-    
-    
      
-    <p:tab id="tabProductDashboard" title="#{messages.tabProductDashboard}" rendered="#{selectedProduct ==null}">
+    <!-- <p:tab id="tabProductDashboard" title="#{messages.tabProductDashboard}" rendered="#{selectedProduct ==null}">
       <ui:include src="/fragment/productDashboardChart.xhtml" />    
-    </p:tab>
+    </p:tab> -->
 
-    <p:tab id="tabProductChart" title="#{messages.tabProductChart}" rendered="#{selectedProduct !=null}">
+    <p:tab id="tabProductChart" title="#{messages.tabProductChart}" 
+      rendered="#{selectedProduct !=null}" titleStyleClass="takionProdChart">
       <ui:include src="/fragment/productChart.xhtml" />
     </p:tab>
     
-    <p:tab id="tabProductHis" title="#{messages.tabProductHis}" rendered="#{selectedProduct !=null}" >
+    <p:tab id="tabProductHis" title="#{messages.tabProductHis}" 
+      rendered="#{selectedProduct !=null}" >
+      <!-- <p:panel  styleClass="prodChart"  >
+        <p:panelGrid columns="2">
+            asdfasd
+        </p:panelGrid>
+      </p:panel> -->
       <ui:include src="/fragment/productHis.xhtml" /> 
     </p:tab>
     
-    <p:tab id="tabRiskFactor" title="#{messages.tabRiskFactor}" rendered="#{selectedProduct.mvType!=null}">
+    <p:tab id="tabRiskFactor" title="#{messages.tabRiskFactor}" 
+      rendered="#{selectedProduct.productYN == 'Y'}">
     </p:tab>
-    <p:tab id="tabPricingModel" title="#{messages.tabPricingModel}" rendered="#{selectedProduct.mvType!=null}">
+    
+    <p:tab id="tabPricingModel" title="#{messages.tabPricingModel}" 
+      rendered="#{selectedProduct.productYN == 'Y'}">
     </p:tab>  
     
-    <p:tab id="tabBond" title="#{messages.tabBond}" rendered="#{selectedProduct.mvType=='BOND'}">
-    </p:tab>
+    <!-- <p:tab id="tabBond" title="#{messages.tabBond}" rendered="#{selectedProduct.mvType=='BOND'}">
+    </p:tab> -->
 
   </p:tabView>
 

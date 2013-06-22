@@ -246,3 +246,10 @@ div.jqplot-noData-container {
 .jqplot-series-canvas{
 	color:red;
 } */
+
+.prodChart {
+	background-image: url(../img/false.png);
+	font-style: italic;
+	font-weight: bolder;
+}	
+

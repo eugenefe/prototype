@@ -1,4 +1,4 @@
-package com.eugenefe.converter;
+package com.eugenefe.util;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -24,7 +24,7 @@ import org.jboss.seam.log.Log;
 import org.primefaces.event.SelectEvent;
 
 import com.eugenefe.session.BasedateList;
-import com.eugenfe.util.ProductType;
+import com.eugenefe.util.ProductType;
 
 
 @Name("productTypeOptionAction")

@@ -5,48 +5,108 @@
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
   <h:form id="formLazyProducts">
-    
-    <p:dataTable id="datatableLazyProducts" 
-      var="_product" value="#{lazyProducts}" widgetVar="lazyProductsTable"
-      lazy="true"
-      selectionMode="single" selection="#{productSelectAction.selectedProduct}" rowKey="#{_product.mvId}"
-      emptyMessage="No Product found with given criteria" 
-      resizableColumns="true" 
-      sortMode="single" 
-      paginator="true" 
-      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-      paginatorPosition="bottom" 
-      rows="15" 
-      style="height : 100%; width :100%;">
-      <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
-                   update="@(form) :tabViewProduct" />
+
+    <p:contextMenu for="formLazyProducts:datatableLazyProducts">
+      <p:menuitem value="#{messages.showFullProduct}" action="#{productSelectAction.onViewFullProduct()}"
+        icon="ui-icon-circle-plus" update="formLazyProducts" />
+      <p:menuitem value="#{messages.showHoldingProduct}" action="#{productSelectAction.onViewHoldingProduct()}"
+        icon="ui-icon-document" update="formLazyProducts" />
+      <p:separator />
+    </p:contextMenu>
+
+    <!-- <p:accordionPanel rendered="#{selectedProduct!=null}">
+      <p:tab title="#{messages.searchDetail}" titleStyle="width:100%; border-width: 0px;">
+          <p:selectOneRadio id="options" value="1" layout="pageDirection" plain="true" required="true" >
+        <f:selectItem itemLabel="Option 1" itemValue="1" />
+        <f:selectItem itemLabel="Option 2" itemValue="2" />
+      </p:selectOneRadio>
+        <p:panelGrid columns="2" rendered="#{selectedProduct.mvType=='BOND'}">
+          <h:outputText value="asdfasd" />
+          <h:outputText value="asdfasdasdf" />
+        </p:panelGrid>
+
+        <p:panelGrid columns="2" rendered="#{selectedProduct.mvType=='STOCK'}">
+          <h:outputText value="asdfasdASDFASD" />
+          <h:outputText value="asdfasdasdf" />
+        </p:panelGrid>
+
+        <p:panelGrid columns="2" rendered="#{selectedProduct.mvType=='OPTION'}">
+          <h:outputText value="asdfasdASDFASDasdf" />
+          <h:outputText value="asdfasdasdf" />
+        </p:panelGrid>
+      </p:tab>
+    </p:accordionPanel> -->
+
+    <p:dataTable id="datatableLazyProducts" var="_product" value="#{lazyProducts}" widgetVar="lazyProductsTable"
+      lazy="true" selectionMode="single" selection="#{productSelectAction.selectedProduct}" rowKey="#{_product.mvId}"
+      emptyMessage="No Product found with given criteria" resizableColumns="true" sortMode="single" paginator="true"
+      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+      paginatorPosition="bottom" rows="15" style="height : 100%; width :100%;">
+      
+      <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}" 
+          update="@(.ui-datatable) @(.ui-panel) " />
+      
+      <!-- <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
+                   update="@(form) " oncomplete="#{selectedProduct.productYN=='Y' ? innerLayout.show('north'):innerLayout.hide('north')}"/> -->
+      <!-- <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
+                   update="@(form) :tabViewProduct" oncomplete="innerLayout.hide('north')"/> -->
       <!-- <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
                    update=":tabViewProduct :tabViewProduct:linearProduct" /> -->
       <!-- <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
-                   update=":tabViewProduct :tabViewProduct:linearProduct :formPosition" /> -->                     
-     <!--  <p:ajax event="rowSelect" listener="#{config.updateColumns()}"   
+                   update=":tabViewProduct :tabViewProduct:linearProduct :formPosition" /> -->
+      <!--  <p:ajax event="rowSelect" listener="#{config.updateColumns()}"   
                    update=":tabViewProduct :tabViewProduct:linearProduct" />   -->
-      
+
       <p:column id="colProductType" headerText="#{messages.productType}" sortBy="#{_product.mvType}"
         filterBy="#{_product.mvType}" filterMatchMode="contains" 
         filterOptions="#{productTypeOption}" >
         <h:outputText value="(#{_product.positions.size})#{_product.mvType}" />
       </p:column>
       
+      <!-- <p:column id="colPositionCount" style="width:2px" >
+        <h:outputText value="#{_product.positions.size}" />
+      </p:column> -->
+      <!-- <p:column id="colProductType" headerText="#{messages.productType}" sortBy="#{_product.mvType}"
+        filterBy="#{_product.mvType}" filterMatchMode="contains" filterOptions="#{productTypeOption}">
+        <h:outputText value="#{_product.mvType}" />
+      </p:column> -->
+
       <p:column id="colProductId" headerText="#{messages.productId}" sortBy="#{_product.mvId}"
-        filterBy="#{_product.mvId}" filterMatchMode="contains" >
+        filterBy="#{_product.mvId}" filterMatchMode="contains">
         <h:outputText value="#{_product.mvId}" />
       </p:column>
 
       <p:column id="colProductName" headerText="#{messages.productName}" sortBy="#{_product.mvName}"
-       filterBy="#{_product.mvName}" filterMatchMode="contains" >
+        filterBy="#{_product.mvName}" filterMatchMode="contains">
         <h:outputText value="#{_product.mvName}" />
-      </p:column> 
-      
+      </p:column>
+
       <!-- <p:column id="colPositionSize" headerText="#{messages.positionSize}">
         <h:outputText value="#{_product.positions.size}" />
       </p:column>  -->
-     </p:dataTable> 
-     
+    </p:dataTable>
+
   </h:form>
+  <!-- <script type="text/javascript">
+            var colapsed = false;
+            function doCollapsed(){
+                if(!colapsed){
+                    layoutV.toggle('west');
+                }
+            }
+
+            function doExpand(){
+                if(colapsed){
+                    layoutV.toggle('west');
+                }
+            }
+
+            function toggleLayout(){
+                if(colapsed){
+                    colapsed = false;
+                } else {
+                    colapsed = true;
+                }
+            }
+        </script> -->
 </ui:composition>

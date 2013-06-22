@@ -1,4 +1,4 @@
-package com.eugenefe.converter;
+package com.eugenefe.util;
 
 public enum NamedQuery {
 	PortfolioJoinReturnBssd(

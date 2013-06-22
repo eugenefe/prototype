@@ -3,7 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
-
+  
   <h:form id="formPosition">
     <p:dataTable id="dataTablePosition" var="_position" value="#{selectedProduct.positions}" widgetVar="positionTable"
       selectionMode="single" 
@@ -12,15 +12,15 @@
       filterDelay="300" filterEvent="keyup"
       resizableColumns="true"
       draggableColumns="true"
-      style="height : 100%">
+      style="height : 100%; width: 100%">
 
         <!-- <p:ajax event="rowSelect" update=":#{p:component('takiondisplay')}"  oncomplete="portDialog.show()" /> -->
       
-      <p:column id="colPositionId" headerText="#{messages.positionId}" sortBy="#{_position.posId}" >
+      <p:column id="colPositionId" headerText="#{messages.positionId}" sortBy="#{_position.posId}" width="100">
         <h:outputText value="#{_position.posId}" />
       </p:column>
 
-      <p:column id="colPositionName" headerText="#{messages.positionName}" sortBy="#{_position.posName}" >
+      <p:column id="colPositionName" headerText="#{messages.positionName}" sortBy="#{_position.posName}" width="100">
         <h:outputText value="#{_position.posName}" />
       </p:column>
 
@@ -29,29 +29,82 @@
         <h:outputText value="#{_position.presValue}" />
       </p:column> -->
       
-      <p:column id="colCountPartyId" headerText="#{messages.countPartyId}" sortBy="#{_position.counterparty.counterpartyId}">
+      <p:column id="colCountPartyId" headerText="#{messages.countPartyId}" 
+        sortBy="#{_position.counterparty.counterpartyId}" width="100">
         <h:outputText value="#{_position.counterparty.counterpartyId}" />
       </p:column>
 
-      <p:column id="colHoldingQy" headerText="#{messages.holdingQty}" sortBy="#{_position.holdingQty}">
+      <p:column id="colHoldingQy" headerText="#{messages.holdingQty}" sortBy="#{_position.holdingQty}" width="100">
         <h:outputText value="#{_position.holdingQty}" style="float:right"/>
       </p:column>
-      <p:column id="colPosAmt" headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+      <p:column id="colPosAmt" headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}" width="100">
         <h:outputText value="#{_position.posAmt}" style="float:right">
           <f:convertNumber pattern="#,###"/>
         </h:outputText>
       </p:column>
+      
+<!--       <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column>
+      <p:column  headerText="#{messages.positionAmt}" sortBy="#{_position.posAmt}">
+        <h:outputText value="#{_position.posAmt}" style="float:right">
+          <f:convertNumber pattern="#,###"/>
+        </h:outputText>
+      </p:column> -->
+       
        
       <f:facet name="header">
-        <h:commandLink style="float: right">
+        <h:commandLink style="float: left">
           <p:graphicImage value="/img/primefaces/csv.png" />
           <p:dataExporter type="csv" target="dataTablePosition" fileName="Position" />
         </h:commandLink>
-        <h:commandLink style="float: right">
+        <h:commandLink style="float: left">
           <p:graphicImage value="/img/primefaces/pdf.png" />
           <p:dataExporter type="pdf" target="dataTablePosition" fileName="Position" />
         </h:commandLink>
-        <h:commandLink style="float: right">
+        <h:commandLink style="float: left">
           <p:graphicImage value="/img/primefaces/excel.png" />
           <p:dataExporter type="xls" target="dataTablePosition" fileName="Position" />
         </h:commandLink>

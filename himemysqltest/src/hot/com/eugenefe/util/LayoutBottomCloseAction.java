@@ -1,44 +1,42 @@
-package com.eugenefe.converter;
+package com.eugenefe.util;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.Factory;
-import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.core.Events;
-import org.jboss.seam.framework.CurrentDate;
-import org.jboss.seam.log.Log;
-import org.primefaces.event.SelectEvent;
+import org.jboss.seam.annotations.Startup;
 import org.primefaces.event.TabChangeEvent;
 
-import com.eugenefe.session.BasedateList;
-import com.eugenfe.util.ProductType;
+import com.eugenefe.entity.MarketVariable;
 
 
 @Name("layoutBottomCloseAction")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.CONVERSATION)
+//@AutoCreate
+//@Startup
 //@Scope(ScopeType.CONVERSATION)
 public class LayoutBottomCloseAction implements Serializable {
 
+//	@In
 	@Out
-	private boolean layoutBottomClosed = false;
+	private boolean layoutBottomClosed ;
 	
 	public LayoutBottomCloseAction() {
+//		System.out.println("Layout Bottom Constructor");
+//		layoutBottomClosed = true;
 	}
 	
+	@Create
+	public void init(){
+		System.out.println("Layout Bottom initalize");
+		layoutBottomClosed = true;
+	}
 	
 	public boolean isLayoutBottomClosed() {
 		return layoutBottomClosed;
@@ -50,6 +48,7 @@ public class LayoutBottomCloseAction implements Serializable {
 	
 	@Factory(value="layoutBottomClosed")
 	public boolean initClose(){
+		System.out.println("Layout Bottom Factory");
 		return false;
 	}
 	
@@ -58,6 +57,16 @@ public class LayoutBottomCloseAction implements Serializable {
 		layoutBottomClosed = event.getTab().getTitle().equals("tabStock");
 	}
 	
+
+	@Observer("selectProduct")
+	public void changeCollapsed(MarketVariable selectedProduct){
+		if(selectedProduct.productYN.equals("N")){
+			layoutBottomClosed = true;
+		}
+		else {
+			layoutBottomClosed = false;
+		}
+	}
 	
 	
 }

@@ -10,7 +10,7 @@
         <p:separator />
         <s:link id="toolbarHome" view="/view/home.xhtml" value="#{messages.Home}" propagation="none" />
         <p:separator />
-        <s:link id="toolbarMaketVariable" view="/view/v100MarketVariable.xhtml" value="#{messages.toolbarMarketVariable}" propagation="none"  />
+        <s:link id="toolbarMaketVariable" view="#{configAction.viewUrl.MarketVariable}" value="#{messages.toolbarMarketVariable}" propagation="none"  />
         <p:separator />
         <s:link id="toolbarRiskComponent" view="/view/v200RiskComponent.xhtml" value="#{messages.toolbarRiskComponent}" propagation="none"  />
         <p:separator />
@@ -27,7 +27,7 @@
         <p:separator />
         <s:link id="toolbarSettings" view="/view/v800Settings.xhtml" value="#{messages.toolbarSettings}" />
         <p:separator />
-        <s:link id="toolbarTest" view="/view/sample.xhtml" value="#{messages.toolbarSample}" />
+        <s:link id="toolbarTest" view="/view/sample.xhtml" value="#{messages.toolbarSample}" propagation="none" />
       </p:toolbarGroup>
 
       <p:toolbarGroup align="right">

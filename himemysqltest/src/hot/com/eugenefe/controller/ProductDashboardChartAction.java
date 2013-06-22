@@ -4,31 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder.Case;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Observer;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
-import org.primefaces.component.chart.line.LineChart;
-import org.primefaces.model.chart.CartesianChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
-import com.eugenefe.converter.NamedQuery;
-import com.eugenefe.entity.IMarketVariableHis;
-import com.eugenefe.entity.MarketVariable;
-import com.eugenefe.entity.Portfolio;
-import com.eugenefe.entity.Stock;
-import com.eugenefe.entity.StockHis;
 import com.eugenefe.entityinterface.ProductDashboard;
-import com.eugenfe.util.ProductType;
 
 @Name("productDashboardChartAction")
 @Scope(ScopeType.CONVERSATION)

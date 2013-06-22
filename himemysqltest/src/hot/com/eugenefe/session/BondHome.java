@@ -3,7 +3,7 @@ package com.eugenefe.session;
 import java.util.List;
 
 import com.eugenefe.entity.*;
-import com.eugenfe.util.ProductType;
+import com.eugenefe.util.ProductType;
 
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;

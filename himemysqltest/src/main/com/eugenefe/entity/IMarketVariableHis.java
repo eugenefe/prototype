@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
-import com.eugenfe.util.ProductType;
+import com.eugenefe.util.ProductType;
 
 public interface IMarketVariableHis extends Serializable{
 	

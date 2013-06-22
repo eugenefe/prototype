@@ -1,4 +1,4 @@
-package com.eugenefe.converter;
+package com.eugenefe.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 
 import com.eugenefe.entity.MarketVariable;
+import com.eugenefe.util.RiskMeasureGroup;
 
 @Name("configAction")
 @Scope(ScopeType.CONVERSATION)
@@ -24,7 +25,12 @@ public class ConfigAction {
 	private Map<String, String> messages;
 	 
 	private String productInfoXhtml;
+	private RiskMeasureGroup selectRiskMeasureGroup;
+	
 	private List<ColumnModel> productHisColumns = new ArrayList<ColumnModel>();
+	
+//	private List<EView> viewUrl ;
+	private EView viewUrl;
 	
 	public ConfigAction(){
 //		productInfoXhtml = "/fragment/bondInfo.xhtml";
@@ -45,8 +51,24 @@ public class ConfigAction {
 	public void setProductHisColumns(List<ColumnModel> productHisColumns) {
 		this.productHisColumns = productHisColumns;
 	}
-
-
+	
+//	public List<EView> getViewUrl() {
+//		return viewUrl;
+//	}
+//	public void setViewUrl(List<EView> viewUrl) {
+//		this.viewUrl = viewUrl;
+//	}
+	public void setViewUrl(EView viewUrl) {
+		this.viewUrl = viewUrl;
+	}
+	public RiskMeasureGroup getSelectRiskMeasureGroup() {
+		return selectRiskMeasureGroup;
+	}
+	public void setSelectRiskMeasureGroup(RiskMeasureGroup selectRiskMeasureGroup) {
+		this.selectRiskMeasureGroup = selectRiskMeasureGroup;
+	}
+	
+	
 //***********************************************
 
 
@@ -81,7 +103,7 @@ public class ConfigAction {
         
     }  
     
-	@Observer("selectProduct")
+//	@Observer("selectProduct")
     public void createDynamicColumns(MarketVariable marketVariable) {  
     	productHisColumns.clear();     
 //    	if(marketVariable==null){

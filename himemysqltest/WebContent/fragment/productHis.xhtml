@@ -5,52 +5,143 @@
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
   <h:form id="formProductHis">
+    
+      <p:panelGrid columns="6">
+          <p:calendar id="popupButtonCal1" value="#{basedateBean.stDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
+            navigator="true">
+            <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form)" />
+          </p:calendar>
+          <h:outputText value="~" />
+          <p:calendar id="popupButtonCal2" value="#{basedateBean.endDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
+            navigator="true">
+            <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form)" />
+          </p:calendar>
+        <p:outputLabel value="#{messages.viewDetailColumn}" />  
+        <p:selectOneMenu value="#{configAction.selectRiskMeasureGroup}" style="width:200px" onchange="" >
+              <s:selectItems value="#{riskMeasureGroupMap.keySet()}" var="_group" label="#{riskMeasureGroupMap.get(_group)}"/>
+              <s:convertEnum/>
+        </p:selectOneMenu>  
+        <h:commandLink style="float:right;">
+          <p:graphicImage value="/img/primefaces/csv.png" />
+          <p:dataExporter type="csv" target="dataTableProductHis" fileName="ProductHis" />
+        </h:commandLink>
+      </p:panelGrid>
+    
+
     <p:dataTable id="dataTableProductHis" value="#{marketVariableHisList}" var="_productHis"
-      emptyMessage="No History Data found with given criteria"
-      resizableColumns="true"
-      paginator="true" 
-      paginatorPosition="bottom" 
-      rows="15" 
+      emptyMessage="No History Data found with given criteria" resizableColumns="true" paginator="true"
+      paginatorPosition="bottom" rows="15"
       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-      rowsPerPageTemplate="15,25,50"
-      style="height : 100%; width :100%;"
-      >
-      <p:column id="colBssd" headerText="#{messages.bssd}" sortBy="#{_productHis.bssd}">
+      rowsPerPageTemplate="15,25,50">
+      <p:column id="colBssd" headerText="#{messages.bssd}" sortBy="#{_productHis.bssd}" width="100">
         <h:outputText value="#{_productHis.bssd}" />
       </p:column>
-      
+
       <!-- <p:column id="colMvId" headerText="#{messages.productId}" sortBy="#{_productHis.mvId}">
         <h:outputText value="#{_productHis.mvId}" />
       </p:column> -->
-<!--        <p:column id="colMvType" headerText="#{messages.productType}" sortBy="#{_productHis.mvType}">
+      <!--        <p:column id="colMvType" headerText="#{messages.productType}" sortBy="#{_productHis.mvType}">
         <h:outputText value="#{_productHis.mvType}" />
       </p:column> -->
 
-      <p:column id="colMvName" headerText="#{messages.productName}" sortBy="#{_productHis.mvName}">
+      <p:column id="colMvName" headerText="#{messages.productName}" sortBy="#{_productHis.mvName}" width="100">
         <h:outputText value="#{_productHis.mvName}" />
       </p:column>
-      
-      <p:column id="colCurrentPrice" headerText="#{messages.currentPrice}" sortBy="#{_productHis.currentPrice}">
-        <h:outputText value="#{_productHis.currentPrice}" style="float:right" >
-         <f:convertNumber  pattern="#,###.##"/> 
-        <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+
+      <p:column id="colCurrentPrice" headerText="#{messages.currentPrice}" sortBy="#{_productHis.currentPrice}"
+        width="100">
+        <h:outputText value="#{_productHis.currentPrice}" style="float:right">
+          <f:convertNumber pattern="#,###.##" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
         </h:outputText>
       </p:column>
-      
-      <p:column id="colVolume" headerText="#{messages.volume}" sortBy="#{_productHis.volume}">
-        <h:outputText value="#{_productHis.volume}" style="float:right" >
-         <f:convertNumber  pattern="#,###"/> 
-        <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+
+      <p:column id="colVolume" headerText="#{messages.volume}" sortBy="#{_productHis.volume}" width="100">
+        <h:outputText value="#{_productHis.volume}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
         </h:outputText>
       </p:column>
-      
-      <p:column id="colVolumeAmt" headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}">
-        <h:outputText value="#{_productHis.volumeAmt}" style="float:right" >
-         <f:convertNumber  pattern="#,###"/> 
-        <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+
+      <p:column id="colVolumeAmt" headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
         </h:outputText>
       </p:column>
-      
+
+
+
+
+
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+      <p:column headerText="#{messages.volumeAmount}" sortBy="#{_productHis.volumeAmt}" width="100">
+        <h:outputText value="#{_productHis.volumeAmt}" style="float:right">
+          <f:convertNumber pattern="#,###" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:column>
+
+
       <!-- <p:column id="colAdjDuration" headerText="#{messages.adjustDuration}"  >
         <h:outputText value="#{_productHis.adjDuration}" style="float:right" >
          <f:convertNumber  pattern="#,###.##"/> 
@@ -64,21 +155,21 @@
         <f:convertNumber  pattern="\u00A4#,##0"/>
         </h:outputText>
       </p:column> -->
-      
-      <p:columns value="#{configAction.productHisColumns}" var="column" columnIndexVar="colIndex"  
+
+      <p:columns value="#{configAction.productHisColumns}" var="column" columnIndexVar="colIndex"
         sortBy="#{_productHis[column.property]}">
         <f:facet name="header">  
                 #{column.header}  
-         </f:facet>  
+         </f:facet>
         <h:outputText value="#{_productHis[column.property]}" style="float:right">
-         <f:convertNumber  pattern="#,###.##"/> 
-        <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+          <f:convertNumber pattern="#,###.##" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
         </h:outputText>
       </p:columns>
-      
-      
+
+
       <f:facet name="header">
-        <p:calendar id="popupButtonCal1" value="#{basedateBean.stDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
+        <!--         <p:calendar id="popupButtonCal1" value="#{basedateBean.stDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
           navigator="true"   style="float: left">
           <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form)" />
         </p:calendar>
@@ -91,7 +182,7 @@
         <h:commandLink style="float: right">
           <p:graphicImage value="/img/primefaces/csv.png" />
           <p:dataExporter type="csv" target="dataTableProductHis" fileName="ProductHis" />
-        </h:commandLink>
+        </h:commandLink> -->
       </f:facet>
     </p:dataTable>
   </h:form>

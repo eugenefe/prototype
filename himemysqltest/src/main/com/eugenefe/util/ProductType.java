@@ -1,4 +1,4 @@
-package com.eugenfe.util;
+package com.eugenefe.util;
 
 public enum ProductType {
 	BOND(
@@ -73,10 +73,14 @@ public enum ProductType {
 		this.rfType =rfType;
 		this.query =query;
 	}
+	
 	public String getType() {
 		return this.type;
 	}
 	public String getQuery(){
 		return this.query;
+	}
+	public String getRfType() {
+		return rfType;
 	}
 }
