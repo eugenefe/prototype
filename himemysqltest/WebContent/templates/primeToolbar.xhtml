@@ -8,24 +8,24 @@
     <p:toolbar style="color:rgb(190, 214, 248); border:none"  >
       <p:toolbarGroup align="left" styleClass="tak">
         <p:separator />
-        <s:link id="toolbarHome" view="/view/home.xhtml" value="#{messages.Home}" propagation="none" />
+        <s:link id="toolbarHome" view="#{configAction.getViewUrl('Home')}" value="#{messages.Home}" propagation="none" />
         <p:separator />
-        <s:link id="toolbarMaketVariable" view="#{configAction.viewUrl.MarketVariable}" value="#{messages.toolbarMarketVariable}" propagation="none"  />
+        <s:link id="toolbarMaketVariable" view="#{configAction.getViewUrl('MarketVariable')}" value="#{messages.toolbarMarketVariable}" propagation="none"  />
         <p:separator />
-        <s:link id="toolbarRiskComponent" view="/view/v200RiskComponent.xhtml" value="#{messages.toolbarRiskComponent}" propagation="none"  />
+        <s:link id="toolbarRiskComponent" view="#{configAction.getViewUrl('RiskComponent')}" value="#{messages.toolbarRiskComponent}" propagation="none"  />
         <p:separator />
-        <s:link id="toolbarReturnRisk" view="/view/v300ReturnRisk.xhtml" value="#{messages.toolbarReturnRisk}" propagation="none"  />
+        <s:link id="toolbarReturnRisk" view="#{configAction.getViewUrl('RiskAnalysis')}" value="#{messages.toolbarReturnRisk}" propagation="none"  />
         <p:separator />
-        <s:link id="toolbarWhatIf" view="/view/v400WhatIf.xhtml" value="#{messages.toolbarWhatIf}" propagation="none"  />
+        <s:link id="toolbarWhatIf" view="#{configAction.getViewUrl('WhatIf')}" value="#{messages.toolbarWhatIf}" propagation="none"  />
         <p:separator />
-        <s:link id="toolbarStressTest" view="/view/v500StressTest.xhtml" value="#{messages.toolbarStressTest}" propagation="none"  />
+        <s:link id="toolbarStressTest" view="#{configAction.getViewUrl('StressTest')}" value="#{messages.toolbarStressTest}" propagation="none"  />
         <p:separator />
         
-        <s:link id="toolbarBackTest" view="/view/v600BackTest.xhtml" value="#{messages.toolbarBackTest}" propagation="none"  />
+        <s:link id="toolbarBackTest" view="#{configAction.getViewUrl('BackTest')}" value="#{messages.toolbarBackTest}" propagation="none"  />
         <p:separator />
-        <s:link id="toolbarLimit" view="/view/v700Limit.xhtml" value="#{messages.toolbarLimit}"  propagation="none" />
+        <s:link id="toolbarLimit" view="#{configAction.getViewUrl('LimitManagement')}" value="#{messages.toolbarLimit}"  propagation="none" />
         <p:separator />
-        <s:link id="toolbarSettings" view="/view/v800Settings.xhtml" value="#{messages.toolbarSettings}" />
+        <s:link id="toolbarSettings" view="#{configAction.getViewUrl('Settings')}" value="#{messages.toolbarSettings}" />
         <p:separator />
         <s:link id="toolbarTest" view="/view/sample.xhtml" value="#{messages.toolbarSample}" propagation="none" />
       </p:toolbarGroup>

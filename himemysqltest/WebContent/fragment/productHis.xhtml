@@ -8,7 +8,7 @@
     
       <p:panelGrid columns="6">
           <p:calendar id="popupButtonCal1" value="#{basedateBean.stDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
-            navigator="true">
+            navigator="true" styleClass="dateTimeField">
             <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form)" />
           </p:calendar>
           <h:outputText value="~" />
@@ -17,7 +17,8 @@
             <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form)" />
           </p:calendar>
         <p:outputLabel value="#{messages.viewDetailColumn}" />  
-        <p:selectOneMenu value="#{configAction.selectRiskMeasureGroup}" style="width:200px" onchange="" >
+        
+        <p:selectOneMenu value="#{configAction.selectRiskMeasureGroup}" style="width:100px" onchange="" >
               <s:selectItems value="#{riskMeasureGroupMap.keySet()}" var="_group" label="#{riskMeasureGroupMap.get(_group)}"/>
               <s:convertEnum/>
         </p:selectOneMenu>  
@@ -29,7 +30,9 @@
     
 
     <p:dataTable id="dataTableProductHis" value="#{marketVariableHisList}" var="_productHis"
-      emptyMessage="No History Data found with given criteria" resizableColumns="true" paginator="true"
+      emptyMessage="No History Data found with given criteria" resizableColumns="true" 
+      
+      paginator="true"
       paginatorPosition="bottom" rows="15"
       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
       rowsPerPageTemplate="15,25,50">

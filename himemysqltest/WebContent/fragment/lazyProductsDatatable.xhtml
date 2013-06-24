@@ -11,6 +11,8 @@
         icon="ui-icon-circle-plus" update="formLazyProducts" />
       <p:menuitem value="#{messages.showHoldingProduct}" action="#{productSelectAction.onViewHoldingProduct()}"
         icon="ui-icon-document" update="formLazyProducts" />
+      <p:menuitem value="#{messages.showRiskFactor}" action="#{productSelectAction.onViewRiskFactor()}"
+        icon="ui-icon-document" update="formLazyProducts" />  
       <p:separator />
     </p:contextMenu>
 
@@ -44,7 +46,9 @@
       paginatorPosition="bottom" rows="15" style="height : 100%; width :100%;">
       
       <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}" 
-          update="@(.ui-datatable) @(.ui-panel) " />
+          update="@(form)" />
+      <!-- <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}" 
+          update="@(.ui-datatable)" /> -->    
       
       <!-- <p:ajax event="rowSelect" listener="#{productSelectAction.onRowSelect}"   
                    update="@(form) " oncomplete="#{selectedProduct.productYN=='Y' ? innerLayout.show('north'):innerLayout.hide('north')}"/> -->

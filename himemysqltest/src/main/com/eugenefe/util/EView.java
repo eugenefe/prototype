@@ -4,17 +4,17 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
-@Name("viewUrl")
-@Scope(ScopeType.SESSION)
 public enum EView {
 	 Home("/view/home.xhtml")
-	,MarketVarialbe("/view/v100MarketVariableInit.xhtml")
-	,RiskComponent("/view/v100MarketVariableInit.xhtml")
-	,RiskAnalysis("/view/v100MarketVariableInit.xhtml")
-	,WhatIf("/view/v100MarketVariableInit.xhtml")
-	,StressTest("/view/v100MarketVariableInit.xhtml")
-	,BackTest("/view/v100MarketVariableInit.xhtml")
-	,Settings("/view/v100MarketVariableInit.xhtml")
+	,MarketVariable("/view/v100MarketVariableInit.xhtml")
+	,MarketVariableSelect("/view/v100MarketVariable.xhtml")
+	,RiskComponent("/view/v200RiskComponent.xhtml")
+	,RiskAnalysis("/view/v300ReturnRisk.xhtml")
+	,WhatIf("/view/v400WhatIf.xhtml")
+	,StressTest("/view/v500StressTest.xhtml")
+	,BackTest("/view/v600BackTest.xhtml")
+	,LimitManagement("/view/v700Limit.xhtml")
+	,Settings("/view/v800Settings.xhtml")
 	;
 	
 	public final String url;

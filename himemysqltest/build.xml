@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="himemysqltest">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../eclipse"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="JBoss 7.1 Runtime [JBoss 7.1 Runtime].libraryclasspath">
+        <pathelement location="../../../../JBOSS7/modules/javax/activation/api/main/activation-1.1.1.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/annotation/api/main/jboss-annotations-api_1.1_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/ejb/api/main/jboss-ejb-api_3.1_spec-1.0.1.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/el/api/main/jboss-el-api_2.2_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/enterprise/api/main/cdi-api-1.0-SP4.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/enterprise/deploy/api/main/jboss-jad-api_1.2_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/faces/api/main/jboss-jsf-api_2.1_spec-2.0.1.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/inject/api/main/javax.inject-1.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/interceptor/api/main/jboss-interceptors-api_1.1_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/jms/api/main/jboss-jms-api_1.1_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/jws/api/main/jsr181-api-1.0-MR1.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/mail/api/main/mail-1.4.4.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/management/j2ee/api/main/jboss-j2eemgmt-api_1.1_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/persistence/api/main/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/resource/api/main/jboss-connector-api_1.6_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/rmi/api/main/jboss-rmi-api_1.0_spec-1.0.4.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/security/auth/message/api/main/jboss-jaspi-api_1.0_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/security/jacc/api/main/jboss-jacc-api_1.4_spec-1.0.1.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/servlet/jsp/api/main/jboss-jsp-api_2.2_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/servlet/jstl/api/main/jboss-jstl-api_1.2_spec-1.0.2.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/transaction/api/main/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/validation/api/main/validation-api-1.0.0.GA.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/ws/rs/api/main/jboss-jaxrs-api_1.1_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/wsdl4j/api/main/wsdl4j-1.6.2.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/xml/bind/api/main/jboss-jaxb-api_2.2_spec-1.0.3.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/xml/registry/api/main/jboss-jaxr-api_1.0_spec-1.0.1.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/xml/rpc/api/main/jboss-jaxrpc-api_1.1_spec-1.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/xml/soap/api/main/jboss-saaj-api_1.3_spec-1.0.1.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/javax/xml/ws/api/main/jboss-jaxws-api_2.2_spec-2.0.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/hibernate/validator/main/hibernate-validator-4.2.0.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/picketbox/main/picketbox-4.0.7.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/picketbox/main/picketbox-commons-1.0.0.final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/picketbox/main/picketbox-infinispan-4.0.7.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/as/controller-client/main/jboss-as-controller-client-7.1.1.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/dmr/main/jboss-dmr-1.1.1.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/logging/main/jboss-logging-3.1.0.GA.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/resteasy/resteasy-jaxb-provider/main/resteasy-jaxb-provider-2.3.2.Final-jandex.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/resteasy/resteasy-jaxb-provider/main/resteasy-jaxb-provider-2.3.2.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/resteasy/resteasy-jaxrs/main/async-http-servlet-3.0-2.3.2.Final-jandex.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/resteasy/resteasy-jaxrs/main/async-http-servlet-3.0-2.3.2.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-jaxrs-2.3.2.Final-jandex.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-jaxrs-2.3.2.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/resteasy/resteasy-multipart-provider/main/resteasy-multipart-provider-2.3.2.Final-jandex.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/resteasy/resteasy-multipart-provider/main/resteasy-multipart-provider-2.3.2.Final.jar"/>
+        <pathelement location="../../../../JBOSS7/modules/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.0.0.jar"/>
+    </path>
+    <path id="Web App Libraries.libraryclasspath">
+        <pathelement location="WebContent/WEB-INF/lib/all-themes-1.0.9.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/antlr-runtime.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/aopalliance.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/bsh.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/commons-beanutils.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/commons-codec.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/concurrent.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/cssparser.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/derby.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/drools-compiler.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/drools-core.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/drools-decisiontables.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/drools-templates.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/ehcache-core.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/el-api.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/fontbox.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/groovy-all.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/guava.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/guice.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/hibernate-commons-annotations-4.0.1.Final.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/hibernate-core-4.2.0.Final.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/hibernate-ehcache.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/httpclient.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/httpcore.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/itext-rtf.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/itext.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jackrabbit-api.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jackrabbit-jcr-commons.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jackrabbit-spi-commons.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jackrabbit-spi.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jackrabbit-text-extractors.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jboss-el.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jboss-seam-debug.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jboss-seam-excel.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jboss-seam-ioc.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jboss-seam-mail.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jboss-seam-pdf.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jboss-seam-ui.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jboss-seam.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jbpm-jpdl.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jcip-annotations.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jcommon.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jempbox.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jfreechart.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jgroups.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jxl.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/knowledge-api.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/mvel2.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/nekohtml.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/pdfbox.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/poi-scratchpad.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/poi.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/primefaces-3.5.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/primefaces_takionskin.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/quartz.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/sac.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/urlrewritefilter.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/xercesImpl.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/xml-apis.jar"/>
+        <pathelement location="WebContent/WEB-INF/classes"/>
+    </path>
+    <path id="EAR Libraries.libraryclasspath"/>
+    <path id="himemysqltest.classpath">
+        <pathelement location="WebContent/WEB-INF/dev"/>
+        <pathelement location="build/classes"/>
+        <path refid="JBoss 7.1 Runtime [JBoss 7.1 Runtime].libraryclasspath"/>
+        <path refid="Web App Libraries.libraryclasspath"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="WebContent/WEB-INF/dev"/>
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="WebContent/WEB-INF/dev">
+            <fileset dir="src/hot">
+                <exclude name="**/*.uad"/>
+                <exclude name="**/*.ucd"/>
+                <exclude name="**/*.uld"/>
+                <exclude name="**/*.upd"/>
+                <exclude name="**/*.udd"/>
+                <exclude name="**/*.uod"/>
+                <exclude name="**/*.usd"/>
+                <exclude name="**/*.utd"/>
+                <exclude name="**/*.uud"/>
+                <exclude name="**/*.odd"/>
+                <exclude name="**/*.ead"/>
+                <exclude name="**/*.ecd"/>
+                <exclude name="**/*.eld"/>
+                <exclude name="**/*.epd"/>
+                <exclude name="**/*.edd"/>
+                <exclude name="**/*.eod"/>
+                <exclude name="**/*.esd"/>
+                <exclude name="**/*.etd"/>
+                <exclude name="**/*.eud"/>
+                <exclude name="**/*.urd"/>
+                <exclude name="**/*.uml"/>
+                <exclude name="**/*.ecore"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="build/classes">
+            <fileset dir="src/main">
+                <exclude name="**/*.uad"/>
+                <exclude name="**/*.ucd"/>
+                <exclude name="**/*.uld"/>
+                <exclude name="**/*.upd"/>
+                <exclude name="**/*.udd"/>
+                <exclude name="**/*.uod"/>
+                <exclude name="**/*.usd"/>
+                <exclude name="**/*.utd"/>
+                <exclude name="**/*.uud"/>
+                <exclude name="**/*.odd"/>
+                <exclude name="**/*.ead"/>
+                <exclude name="**/*.ecd"/>
+                <exclude name="**/*.eld"/>
+                <exclude name="**/*.epd"/>
+                <exclude name="**/*.edd"/>
+                <exclude name="**/*.eod"/>
+                <exclude name="**/*.esd"/>
+                <exclude name="**/*.etd"/>
+                <exclude name="**/*.eud"/>
+                <exclude name="**/*.urd"/>
+                <exclude name="**/*.uml"/>
+                <exclude name="**/*.ecore"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="WebContent/WEB-INF/dev"/>
+        <delete dir="build/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build">
+    	<war destfile="takion.war">
+    		<fileset dir="WebContent"/>
+    	</war>
+    </target>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="WebContent/WEB-INF/dev" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/hot"/>
+            <classpath refid="himemysqltest.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/main"/>
+            <classpath refid="himemysqltest.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+</project>

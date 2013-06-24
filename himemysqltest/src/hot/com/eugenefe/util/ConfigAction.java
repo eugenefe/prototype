@@ -30,7 +30,7 @@ public class ConfigAction {
 	private List<ColumnModel> productHisColumns = new ArrayList<ColumnModel>();
 	
 //	private List<EView> viewUrl ;
-	private EView viewUrl;
+	private String viewUrl;
 	
 	public ConfigAction(){
 //		productInfoXhtml = "/fragment/bondInfo.xhtml";
@@ -58,9 +58,14 @@ public class ConfigAction {
 //	public void setViewUrl(List<EView> viewUrl) {
 //		this.viewUrl = viewUrl;
 //	}
-	public void setViewUrl(EView viewUrl) {
+	
+	public String getViewUrl(String url) {
+		return EView.valueOf(url).url;
+	}
+	public void setViewUrl(String viewUrl) {
 		this.viewUrl = viewUrl;
 	}
+	
 	public RiskMeasureGroup getSelectRiskMeasureGroup() {
 		return selectRiskMeasureGroup;
 	}

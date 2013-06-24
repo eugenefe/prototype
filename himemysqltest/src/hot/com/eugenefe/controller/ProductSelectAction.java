@@ -23,6 +23,7 @@ import org.primefaces.model.LazyDataModel;
 
 import com.eugenefe.converter.LazyModelMarketVariable;
 import com.eugenefe.entity.MarketVariable;
+import com.eugenefe.util.EView;
 import com.eugenefe.util.NamedQuery;
 import com.eugenefe.util.ProductType;
 import com.eugenefe.util.RiskMeasure;
@@ -40,6 +41,7 @@ public class ProductSelectAction {
 	private List<MarketVariable> products;
 
 	private List<MarketVariable> holdingProducts = new ArrayList<MarketVariable>();
+	private List<MarketVariable> riskFactors = new ArrayList<MarketVariable>();
 
 	@Out(scope = ScopeType.CONVERSATION, required = false)
 	private MarketVariable selectedProduct;
@@ -106,14 +108,23 @@ public class ProductSelectAction {
 		lazyProducts = new LazyModelMarketVariable(holdingProducts);
 		log.info("In the Holding Product1: #0" , lazyProducts.getRowCount());
 	}
+	public void onViewRiskFactor() {
+		String qr = "select a from MarketVariable a where a.riskFactorYN ='Y'";
+		riskFactors =entityManager.createQuery(qr).getResultList();
+
+		lazyProducts = new LazyModelMarketVariable(riskFactors);
+		log.info("In the riskFactors1: #0" , lazyProducts.getRowCount());
+	}
 
 	public void onRowSelect(SelectEvent event) {
 		log.info("On Row Selection : #0", selectedProduct.getMvId());
 
 		FacesContext fc = FacesContext.getCurrentInstance();
-		if ("/view/v100MarketVariableInit.xhtml".equals(fc.getViewRoot().getViewId())) {
+		System.out.println("in the redirect1"+fc.getViewRoot().getViewId()+EView.MarketVariableSelect.url);
+		if (EView.MarketVariable.url.equals(fc.getViewRoot().getViewId())) {
+			System.out.println("In the redirect");
 			fc.getApplication().getNavigationHandler()
-					.handleNavigation(fc, "null", "/view/v100MarketVariable.xhtml?faces-redirect=true");
+					.handleNavigation(fc, "null", EView.MarketVariableSelect.url+"?faces-redirect=true");
 		}
 
 		// Events.instance().raiseEvent("selectProduct",

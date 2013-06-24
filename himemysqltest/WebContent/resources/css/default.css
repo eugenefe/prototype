@@ -513,4 +513,8 @@ li.ui-tabs-selected a {
 	background-image: url("./../../img/path.jpg");
 	font-style: italic;
 	font-weight: bolder;
-}	
+}
+.dateTimeField input{
+	width :70px;
+	margin: 0 auto;
+}

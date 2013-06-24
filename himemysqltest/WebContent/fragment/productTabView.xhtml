@@ -4,7 +4,7 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
-  <p:tabView id="tabViewProduct" >
+  <p:tabView id="tabViewProduct" dynamic="true">
     <!-- <p:ajax event="tabChange" listener="#{layoutBottomCloseAction.onProductTabChange}" 
         update="@(.ui-layout)"/> -->
      
@@ -27,13 +27,16 @@
       <ui:include src="/fragment/productHis.xhtml" /> 
     </p:tab>
     
+    <p:tab id="tabPricingModel" title="#{messages.tabPricingModel}" 
+      rendered="#{selectedProduct.productYN == 'Y'}">
+      <ui:include src="/fragment/pricingModelInfo.xhtml" /> 
+    </p:tab>  
+    
     <p:tab id="tabRiskFactor" title="#{messages.tabRiskFactor}" 
       rendered="#{selectedProduct.productYN == 'Y'}">
     </p:tab>
     
-    <p:tab id="tabPricingModel" title="#{messages.tabPricingModel}" 
-      rendered="#{selectedProduct.productYN == 'Y'}">
-    </p:tab>  
+    
     
     <!-- <p:tab id="tabBond" title="#{messages.tabBond}" rendered="#{selectedProduct.mvType=='BOND'}">
     </p:tab> -->
