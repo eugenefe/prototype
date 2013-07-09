@@ -20,4 +20,8 @@
         <converter-class>com.eugenefe.converter.PortfolioConverter</converter-class>
     </converter>
  -->
+ <!--  <converter>
+        <converter-id>marketVariableConverter</converter-id>
+        <converter-class>com.eugenefe.converter.MarketVariableConverter</converter-class>
+    </converter> -->
 </faces-config>

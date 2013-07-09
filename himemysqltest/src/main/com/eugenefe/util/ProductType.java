@@ -29,12 +29,12 @@ public enum ProductType {
 	,ELW(
 			"ELW"
 			,"NONE"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  OptionHis a where a.id.optionId=#{selectedProduct.mvId}"
 	)
 	,ELS(
 			"ELS"
 			,"NONE"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from BondHis a where a.id.bondId=#{selectedProduct.mvId}"
 	)
 	,SWAP(
 			"SWAP"
@@ -48,14 +48,14 @@ public enum ProductType {
 	)
 	
 	,FX_RATE(
-			"FX RATE"
+			"FX_RATE"
 			,"NONE"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  FxRateHis a where a.id.fxId=#{selectedProduct.mvId}"
 	)
 	,INT_RATE(
-			"INT RATE"
+			"INT_RATE"
 			,"NONE"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  IntRateHis a where a.id.irId=#{selectedProduct.mvId}"
 	)
 	,S_INDEX(
 			"S_INDEX"

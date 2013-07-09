@@ -46,7 +46,7 @@ public class LayoutBottomCloseAction implements Serializable {
 		this.layoutBottomClosed = layoutBottomClosed;
 	}
 	
-	@Factory(value="layoutBottomClosed")
+//	@Factory(value="layoutBottomClosed")
 	public boolean initClose(){
 		System.out.println("Layout Bottom Factory");
 		return false;
@@ -58,7 +58,7 @@ public class LayoutBottomCloseAction implements Serializable {
 	}
 	
 
-	@Observer("selectProduct")
+//	@Observer("selectProduct")
 	public void changeCollapsed(MarketVariable selectedProduct){
 		if(selectedProduct.productYN.equals("N")){
 			layoutBottomClosed = true;

@@ -112,11 +112,16 @@ public class BaseDateBean implements Serializable {
 	}
 
 	public void handleDateSelect(SelectEvent event) {
+		log.info("Start ChangeBssd Event");
 		FacesContext facesContext = FacesContext.getCurrentInstance();  
         bssd = format.format(event.getObject());
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", bssd));
         
-        Events.instance().raiseEvent("changeBssd", bssd);
+        String eventName = "changeBssd_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        log.info("View ID : #0",eventName);
+        
+        Events.instance().raiseEvent(eventName, bssd);
+        log.info("End of ChangeBssd Event");
 	}
 
 	

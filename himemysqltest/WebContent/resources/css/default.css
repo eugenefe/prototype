@@ -518,3 +518,6 @@ li.ui-tabs-selected a {
 	width :70px;
 	margin: 0 auto;
 }
+.ui-layout-pane-north .ui-layout-unit-content {
+overflow: visible;
+}

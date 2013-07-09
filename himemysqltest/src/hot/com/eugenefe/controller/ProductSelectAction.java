@@ -45,8 +45,17 @@ public class ProductSelectAction {
 
 	@Out(scope = ScopeType.CONVERSATION, required = false)
 	private MarketVariable selectedProduct;
+	
+	private MarketVariable secondProd;
+	public MarketVariable getSecondProd() {
+		return secondProd;
+	}
 
-	 @Out(scope=ScopeType.CONVERSATION)
+	public void setSecondProd(MarketVariable secondProd) {
+		this.secondProd = secondProd;
+	}
+
+	@Out(scope=ScopeType.CONVERSATION)
 	private LazyDataModel<MarketVariable> lazyProducts;
 
 	public MarketVariable getSelectedProduct() {
@@ -67,9 +76,19 @@ public class ProductSelectAction {
 		this.lazyProducts = lazyProducts;
 	}
 
-	public ProductSelectAction() {
+	public List<MarketVariable> getProducts() {
+		return products;
 	}
 
+	public void setProducts(List<MarketVariable> products) {
+		this.products = products;
+	}
+	
+	public ProductSelectAction() {
+		System.out.println("Construction ProductSelectionAction");
+	}
+
+	
 	// @Factory(value="products" )
 	// public void initBonds(){
 	// init();
@@ -79,6 +98,8 @@ public class ProductSelectAction {
 	// entityManager.createQuery(NamedQuery.MarketVariables.getQuery()).getResultList();
 	//
 	// }
+
+
 
 	@Factory(value = "lazyProducts")
 	public void initModel() {
@@ -120,17 +141,18 @@ public class ProductSelectAction {
 		log.info("On Row Selection : #0", selectedProduct.getMvId());
 
 		FacesContext fc = FacesContext.getCurrentInstance();
-		System.out.println("in the redirect1"+fc.getViewRoot().getViewId()+EView.MarketVariableSelect.url);
+		
+//		System.out.println("in the redirect1"+fc.getViewRoot().getViewId()+EView.MarketVariableSelect.url);
 		if (EView.MarketVariable.url.equals(fc.getViewRoot().getViewId())) {
-			System.out.println("In the redirect");
 			fc.getApplication().getNavigationHandler()
 					.handleNavigation(fc, "null", EView.MarketVariableSelect.url+"?faces-redirect=true");
 		}
 
-		// Events.instance().raiseEvent("selectProduct",
-		// (MarketVariable)event.getObject());
+		// Events.instance().raiseEvent("selectProduct",(MarketVariable)event.getObject());
 		Events.instance().raiseEvent("selectProduct", selectedProduct);
-
+//		String eventName = "selectProduct_"+ selectedProduct.mvType;
+//		Events.instance().raiseEvent(eventName, selectedProduct);
+		
 		RequestContext requestContext = RequestContext.getCurrentInstance();
 		if (selectedProduct.getPositions() == null || selectedProduct.getPositions().size() > 0) {
 			requestContext.execute("wgInnerLayout.show('north')");
@@ -138,7 +160,8 @@ public class ProductSelectAction {
 			requestContext.execute("wgInnerLayout.hide('north')");
 		}
 
-		if (selectedProduct.mvType == ProductType.BOND || selectedProduct.mvType == ProductType.STOCK) {
+		if (selectedProduct.mvType == ProductType.BOND || selectedProduct.mvType == ProductType.STOCK
+				|| selectedProduct.mvType == ProductType.INT_RATE) {
 			requestContext.execute("wgInnerLayout.show('east')");
 		} else {
 			requestContext.execute("wgInnerLayout.hide('east')");
@@ -168,4 +191,17 @@ public class ProductSelectAction {
 		System.out.println("initLayout1");
 	}
 
+	
+	
+//***************************************************************
+	public List<MarketVariable> complete(String query){
+		List<MarketVariable> suggetions = new ArrayList<MarketVariable>();
+
+		for( MarketVariable aa : products){
+			if(aa.mvId.contains(query)){
+				suggetions.add(aa);
+			}
+		}
+		return suggetions;
+	}
 }

@@ -1,222 +1,74 @@
 package com.eugenefe.controller;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
 
-import com.eugenefe.entity.IPortfolio;
-import com.eugenefe.entity.Portfolio;
-import com.eugenefe.entity.PortfolioReturn;
-import com.eugenefe.session.PortfolioReturnBssdList;
-import com.eugenefe.session.PortfolioReturnList;
-
-import org.hibernate.validator.constraints.CreditCardNumber;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
-import org.jboss.seam.annotations.Create;
-import org.jboss.seam.annotations.Factory;
+import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Events;
 import org.jboss.seam.log.Log;
+import org.primefaces.component.wizard.Wizard;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.event.NodeSelectEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
-import org.primefaces.event.TabCloseEvent;
-import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.DualListModel;
 import org.primefaces.model.TreeNode;
 
-import com.sun.xml.internal.ws.wsdl.writer.document.Port;
+import com.eugenefe.entity.IPortfolio;
+import com.eugenefe.entity.Portfolio;
+import com.eugenefe.entity.PortfolioReturn;
+import com.eugenefe.session.PortfolioHome;
+import com.eugenefe.session.PortfolioReturnBssdList;
 
 @Name("portfolioBean")
 @Scope(ScopeType.CONVERSATION)
 public class PortfolioBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@Logger
 	private Log log;
-
+	
 	@In(create = true)
 	private PortfolioReturnBssdList portfolioReturnBssdList;
-	// private PortfolioReturnList portfolioReturnList;
+	
 
-	// private List<Portfolio> selectedHierarchies=new ArrayList<Portfolio>();
-
-	private List<Portfolio> selectedHierarchies;
+	private List<Portfolio> fullPortfolios;
 	private List<Portfolio> hierarchies;
-	private List<Portfolio> appliedHierarchies;
-
-	public List<Portfolio> getAppliedHierarchies() {
-		return appliedHierarchies;
-	}
-
-	public void setAppliedHierarchies(List<Portfolio> appliedHierarchies) {
-		this.appliedHierarchies = appliedHierarchies;
-	}
-
-	
-	
-//	@In
-	@Out(required=false)
-	private TreeNode portfolioRoot;
-	private TreeNode portfolioSuperRoot;
-	
-	private TreeNode selectedNode;
-
-	private Portfolio selectedPortfolio;
-	private Portfolio selectedSubPortfolio;
-
-	private List<Portfolio> fullPortfolios = new ArrayList<Portfolio>();
-
-	private List<Portfolio> subPortfolios = new ArrayList<Portfolio>();
-	private List<Portfolio> filterSubPorts;
-
-	private String searchString;
+	private List<Portfolio> selectedHierarchies;
 
 	private List<String> selectedHierarchyIds;
+	
+	private TreeNode portfolioRoot;
+	private TreeNode selectedNode;
+	private Portfolio parentPortfolio;
+	private List<Portfolio> portfolios;
 
 	private Boolean userDefined;
-
-	public Boolean getUserDefined() {
-		return userDefined;
-	}
-
-	public void setUserDefined(Boolean userDefined) {
-		this.userDefined = userDefined;
-	}
-
 	private String activeAccordionTab;
+	
+	private Portfolio selectedPortfolio;
+	private List<Portfolio> filterPorts ;
 
-	public String getActiveAccordionTab() {
-		return activeAccordionTab;
-	}
-
-	public void setActiveAccordionTab(String activeAccordionTab) {
-		this.activeAccordionTab = activeAccordionTab;
-	}
-
+	private String searchString;
+	
 	public PortfolioBean() {
-		
-//		Portfolio superRoot = new Portfolio("superRoot", "SuperRoot");
-//		Portfolio root = new Portfolio("root", "Root");
-//
-//		portfolioSuperRoot = new DefaultTreeNode(superRoot, null);
-//		portfolioRoot = new DefaultTreeNode(root, portfolioSuperRoot);
-//
-//		portfolioRoot.setExpanded(true);
+		System.out.println("In PortfolioBean Creation");
+	
 	}
-
-	// -----------------------Initalizer------------------------
-//	@Create
-	@Factory(value="portfolioRoot") 
-	@Observer("changeBssd")
-	public void init() {
-		log.info("Start Initalizing PortfolioBean Creation with Given Bssd: #0");
-		
-		Portfolio superRoot = new Portfolio("superRoot", "SuperRoot");
-		Portfolio root = new Portfolio("root", "Root");
-
-		portfolioSuperRoot = new DefaultTreeNode(superRoot, null);
-		portfolioRoot = new DefaultTreeNode(root, portfolioSuperRoot);
-
-		portfolioRoot.setExpanded(true);
-
-		// Initialize properties
-		log.info("In Init 0: #0");
-		fullPortfolios = new ArrayList<Portfolio>();
-		subPortfolios = new ArrayList<Portfolio>();
-		selectedHierarchies = new ArrayList<Portfolio>();
-//		appliedHierarchies = new ArrayList<Portfolio>();
-		hierarchies = new ArrayList<Portfolio>();
-		searchString = null;
-		filterSubPorts = null;
-		selectedHierarchyIds = new ArrayList<String>();
-
-		for (PortfolioReturn aa : portfolioReturnBssdList.getResultList()) {
-			fullPortfolios.add(aa.getPortfolio());
-			log.info("In Init 1: #0");
-			if (aa.getPortfolio().getParentPortfolio() == null) {
-				hierarchies.add(aa.getPortfolio());
-				log.info("In Init 2: #0");
-				if (selectedHierarchyIds != null && !selectedHierarchyIds.isEmpty()) {
-					if (selectedHierarchyIds.contains(aa.getPortfolio().getPortId())) {
-						selectedHierarchies.add(aa.getPortfolio());
-					}
-				} else {
-					selectedHierarchies.add(aa.getPortfolio());
-				}
-			}
-		}
-
-//		if (appliedHierarchies == null) {
-//			appliedHierarchies = new ArrayList<Portfolio>();
-//			appliedHierarchies.addAll(hierarchies);
-//			log.info("In Init 4: #0");
-//		}
-
-		 generateTree(selectedHierarchies);
-//		generateTree(appliedHierarchies);
-
-		if (portfolioRoot.getChildCount() != 0) {
-			portfolioRoot.getChildren().get(0).setSelected(true);
-			selectedNode = portfolioRoot.getChildren().get(0);
-			selectedPortfolio = (Portfolio) (portfolioRoot.getChildren().get(0).getData());
-			subPortfolios = selectedPortfolio.getChildPortfolios();
-		}
-
-		log.info("End of Initalizing PortfolioBean Creation with Given Bssd: #0, #1, #2", FacesContext
-				.getCurrentInstance().getViewRoot().getViewId());
-	}
-
-	// --------------------------------Getter and Setter ---------------
-
-	public TreeNode getPortfolioRoot() {
-		return portfolioRoot;
-	}
-
-	public void setPortfolioRoot(TreeNode portfolioRoot) {
-		this.portfolioRoot = portfolioRoot;
-	}
-
-	public TreeNode getPortfolioSuperRoot() {
-		return portfolioSuperRoot;
-	}
-
-	public void setPortfolioSuperRoot(TreeNode portfolioSuperRoot) {
-		this.portfolioSuperRoot = portfolioSuperRoot;
-	}
-
-	public TreeNode getSelectedNode() {
-		return selectedNode;
-	}
-
-	public void setSelectedNode(TreeNode selectedNode) {
-		this.selectedNode = selectedNode;
-	}
-
-	public Portfolio getSelectedPortfolio() {
-		return selectedPortfolio;
-	}
-
-	public void setSelectedPortfolio(Portfolio selectedPortfolio) {
-		this.selectedPortfolio = selectedPortfolio;
-	}
-
-	public Portfolio getSelectedSubPortfolio() {
-		return selectedSubPortfolio;
-	}
-
-	public void setSelectedSubPortfolio(Portfolio selectedSubPortfolio) {
-		this.selectedSubPortfolio = selectedSubPortfolio;
-	}
+// --------------------------------Getter and Setter ---------------
 
 	public List<Portfolio> getFullPortfolios() {
 		return fullPortfolios;
@@ -225,21 +77,13 @@ public class PortfolioBean implements Serializable {
 	public void setFullPortfolios(List<Portfolio> fullPortfolios) {
 		this.fullPortfolios = fullPortfolios;
 	}
-
-	public List<Portfolio> getSubPortfolios() {
-		return subPortfolios;
+	
+	public List<Portfolio> getHierarchies() {
+		return hierarchies;
 	}
 
-	public void setSubPortfolios(List<Portfolio> subPortfolios) {
-		this.subPortfolios = subPortfolios;
-	}
-
-	public List<Portfolio> getFilterSubPorts() {
-		return filterSubPorts;
-	}
-
-	public void setFilterSubPorts(List<Portfolio> filterSubPorts) {
-		this.filterSubPorts = filterSubPorts;
+	public void setHierarchies(List<Portfolio> hierarchies) {
+		this.hierarchies = hierarchies;
 	}
 
 	public List<Portfolio> getSelectedHierarchies() {
@@ -258,6 +102,70 @@ public class PortfolioBean implements Serializable {
 		this.selectedHierarchyIds = selectedHierarchyIds;
 	}
 
+	public TreeNode getPortfolioRoot() {
+		return portfolioRoot;
+	}
+
+	public void setPortfolioRoot(TreeNode portfolioRoot) {
+		this.portfolioRoot = portfolioRoot;
+	}
+
+	public TreeNode getSelectedNode() {
+		return selectedNode;
+	}
+
+	public void setSelectedNode(TreeNode selectedNode) {
+		this.selectedNode = selectedNode;
+	}
+
+	public Portfolio getParentPortfolio() {
+		return parentPortfolio;
+	}
+
+	public void setParentPortfolio(Portfolio parentPortfolio) {
+		this.parentPortfolio = parentPortfolio;
+	}
+
+	public List<Portfolio> getPortfolios() {
+		return portfolios;
+	}
+
+	public void setPortfolios(List<Portfolio> portfolios) {
+		this.portfolios = portfolios;
+	}
+
+	public Boolean getUserDefined() {
+		return userDefined;
+	}
+
+	public void setUserDefined(Boolean userDefined) {
+		this.userDefined = userDefined;
+	}
+
+	public String getActiveAccordionTab() {
+		return activeAccordionTab;
+	}
+
+	public void setActiveAccordionTab(String activeAccordionTab) {
+		this.activeAccordionTab = activeAccordionTab;
+	}
+
+	public Portfolio getSelectedPortfolio() {
+		return selectedPortfolio;
+	}
+
+	public void setSelectedPortfolio(Portfolio selectedPortfolio) {
+		this.selectedPortfolio = selectedPortfolio;
+	}
+
+	public List<Portfolio> getFilterPorts() {
+		return filterPorts;
+	}
+
+	public void setFilterPorts(List<Portfolio> filterPorts) {
+		this.filterPorts = filterPorts;
+	}
+
 	public String getSearchString() {
 		return searchString;
 	}
@@ -266,29 +174,54 @@ public class PortfolioBean implements Serializable {
 		this.searchString = searchString;
 	}
 
-	public List<Portfolio> getHierarchies() {
-		return hierarchies;
+	//----------------------Event Listener------------------
+	@Begin(join=true)
+	@Observer("changeBssdAllInOne")
+	public void init() {
+	    log.info("In the Tree0:  #0", portfolioReturnBssdList.getEjbql());
+	    
+		loadFullPortfolios();
+		generateTree(hierarchies);
+		
+		init(portfolioRoot, portfolios);
+		log.info("In the Tree1:  #0", portfolioReturnBssdList.getEjbql());
+	}	
+	
+	public void onChangeHierarchy() {
+		log.info("Change Hierarchy : #0");
+
+		selectedHierarchies = new ArrayList<Portfolio>();
+
+		for (Portfolio aa : hierarchies) {
+			log.info("Change Hierarchy11 : #0");
+			if (selectedHierarchyIds != null && !selectedHierarchyIds.isEmpty()) {
+				log.info("Change Hierarchy1 : #0");
+				if (selectedHierarchyIds.contains(aa.getPortId())) {
+					log.info("Change Hierarchy2 : #0");
+					selectedHierarchies.add(aa);
+				}
+			} else {
+				
+				selectedHierarchies.add(aa);
+			}
+		}
+		generateTree(selectedHierarchies);
+		init(portfolioRoot, portfolios);
 	}
 
-	public void setHierarchies(List<Portfolio> hierarchies) {
-		this.hierarchies = hierarchies;
-	}
-
-	// ----------------------Event Listener------------------
-
+	
 	public void onNodeSelect(NodeSelectEvent event) {
-		subPortfolios = new ArrayList<Portfolio>();
-		filterSubPorts = null;
 		searchString = null;
-
-		// selectedPortfolio = (Portfolio) event.getTreeNode().getData();
-
-		selectedPortfolio = (Portfolio) selectedNode.getData();
-		subPortfolios = selectedPortfolio.getChildPortfolios();
-		// log.info("Call Node Select Event: #0, #1, #2",
-		// selectedPortfolio.getPortId(),
-		// selectedPortfolio.getChildPortfolios().size(), subPortfolios.size());
-
+		filterPorts = null;
+		pvTemp =0;
+				
+		parentPortfolio = (Portfolio)event.getTreeNode().getData();
+//		parentPortfolio = (Portfolio) selectedNode.getData();
+		portfolios = parentPortfolio.getChildPortfolios();
+		
+		Events.instance().raiseEvent("enterChart", parentPortfolio);
+//		log.info("Call Node Select Event: #0, #1, #2");
+		log.info("Call Node Select Event: #0, #1, #2", parentPortfolio.getPortId(), portfolios.size());
 	}
 
 	public void onTabChange(TabChangeEvent event) {
@@ -305,7 +238,10 @@ public class PortfolioBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	// --------------------------Action Listener--------------------
+
+
+	//--------------------------Action Listener--------------------
+	
 	public void expandAll() {
 		recursiveExpand(portfolioRoot.getChildren(), true);
 	}
@@ -313,45 +249,69 @@ public class PortfolioBean implements Serializable {
 	public void collapseAll() {
 		recursiveExpand(portfolioRoot.getChildren(), false);
 	}
-
-	public void onChangeHierarchies() {
-		subPortfolios = new ArrayList<Portfolio>();
-		selectedHierarchies = new ArrayList<Portfolio>();
-
+	
+	// ----------------------------- helper method----------------------------------------
+	private void init(TreeNode portRoot, List<Portfolio> sub){
+		log.info("Observer initPortfolioTree In Table0");
 		searchString = null;
-		filterSubPorts = null;
-		portfolioRoot.getChildren().clear();
-
-		for (Portfolio aa : hierarchies) {
-			if (selectedHierarchyIds != null && !selectedHierarchyIds.isEmpty()) {
-				if (selectedHierarchyIds.contains(aa.getPortId())) {
-					selectedHierarchies.add(aa);
-				}
-			} else {
-				selectedHierarchies.add(aa);
-			}
-		}
-		generateTree(selectedHierarchies);
-//		generateTree(appliedHierarchies);
-
+		filterPorts =null;
+		this.portfolioRoot = portRoot;
+		this.portfolios = sub;
+		
 		if (portfolioRoot.getChildCount() != 0) {
 			portfolioRoot.getChildren().get(0).setSelected(true);
-			selectedPortfolio = (Portfolio) (portfolioRoot.getChildren().get(0).getData());
-			subPortfolios = selectedPortfolio.getChildPortfolios();
+			parentPortfolio = (Portfolio) (portfolioRoot.getChildren().get(0).getData());
+			portfolios = parentPortfolio.getChildPortfolios();
 		}
+		log.info("Observer initPortfolioTree1");
+	}
+	
+	public void loadFullPortfolios() {
+		log.info("In the port Factory1");
+		fullPortfolios = new ArrayList<Portfolio>();
+		hierarchies = new ArrayList<Portfolio>();
+		for (PortfolioReturn aa : portfolioReturnBssdList.getResultList()) {
+			fullPortfolios.add(aa.getPortfolio());
+			log.info("In the port Factory2 :#0", fullPortfolios.size());
+			if (aa.getPortfolio().getParentPortfolio() == null) {
+				hierarchies.add(aa.getPortfolio());
+			}
+		}
+		log.info("In the port Factory2");
 	}
 
-	// ----------------------------- helpermethod----------------------------
+	
+	public void generateTree(List<Portfolio> rootPorts) {
+		portfolios = new ArrayList<Portfolio>();
+		Portfolio root = new Portfolio("root", "Root");
+		portfolioRoot = new DefaultTreeNode(root, null);
+		portfolioRoot.setExpanded(true);
 
+		for (Portfolio bb : rootPorts) {
+			TreeNode childNode = new DefaultTreeNode(bb, portfolioRoot);
+			childNode.setExpanded(true);
+			recursive(fullPortfolios, childNode);
+			log.info("Creation of Tree : #0", bb.getPortId());
+		}
+		if (portfolioRoot.getChildCount() != 0) {
+			portfolioRoot.getChildren().get(0).setSelected(true);
+			parentPortfolio = (Portfolio) (portfolioRoot.getChildren().get(0).getData());
+			portfolios = parentPortfolio.getChildPortfolios();
+			log.info("In the Tree Generation1:#0");
+		}
+		
+//		Events.instance().raiseEvent("changeTree", parentPortfolio);
+
+//		log.info("In the Tree Generation:#0", subPortfolios.size());
+		log.info("In the Tree Generation:#0");
+	}
+	
 	private void recursive(List<Portfolio> port, TreeNode node) {
 		List<IPortfolio> tempList = new ArrayList<IPortfolio>();
-		// Portfolio tempPort = (Portfolio)node.getData();
-		// tempList = tempPort.getChildren();
 
 		String parentId = ((Portfolio) node.getData()).getPortId();
 		tempList = getSubPortfolios(parentId, port);
-		// log.info("ParentId in SubPort : #0,#1,#2", parentId, tempList.size(),
-		// node);
+		// log.info("ParentId in SubPort : #0,#1,#2", parentId, tempList.size(),node);
 
 		for (IPortfolio k : tempList) {
 			TreeNode childNode = new DefaultTreeNode(k, node);
@@ -363,34 +323,149 @@ public class PortfolioBean implements Serializable {
 	private List<IPortfolio> getSubPortfolios(String parentId, List<Portfolio> port) {
 		List<IPortfolio> returnList = new ArrayList<IPortfolio>();
 		for (Portfolio k : port) {
+			
 			if (k.getParentPortfolio() != null && k.getParentPortfolio().getPortId().equals(parentId)) {
 				returnList.add(k);
 			}
 		}
 		return returnList;
 	}
-
 	private void recursiveExpand(List<TreeNode> node, boolean isExpand) {
 		for (TreeNode aa : node) {
 			aa.setExpanded(isExpand);
 			recursiveExpand(aa.getChildren(), isExpand);
 		}
 	}
+	 private boolean ignoreCompare;
+	 
+	 public boolean isIgnoreCompare() {
+		return ignoreCompare;
+	}
 
-	// private void recursiveCollapse(List<TreeNode> node) {
-	// for (TreeNode aa: node){
-	// aa.setExpanded(false);
-	// recursiveExpand(aa.getChildren());
-	// }
-	// }
+	public void setIgnoreCompare(boolean ignoreCompare) {
+		this.ignoreCompare = ignoreCompare;
+	}
+	private String newPortName;
+	
+	public String getNewPortName() {
+		return newPortName;
+	}
 
-	private void generateTree(List<Portfolio> hierarchy) {
-		portfolioRoot.getChildren().clear();
-		for (Portfolio bb : hierarchy) {
-			TreeNode childNode = new DefaultTreeNode(bb, portfolioRoot);
-			childNode.setExpanded(true);
-			recursive(fullPortfolios, childNode);
-			log.info("Creation of Tree : #0", bb.getPortId());
+	public void setNewPortName(String newPortName) {
+		this.newPortName = newPortName;
+	}
+	private DualListModel<String> ports ;
+	
+	public DualListModel<String> getPorts() {
+		return ports;
+	}
+
+	public void setPorts(DualListModel<String> ports) {
+		this.ports = ports;
+	}
+	
+	@Begin(join=true)
+	public String onFlowProcess(FlowEvent event) {  
+		log.info("Current wizard step:" + event.getOldStep());  
+        log.info("Next step:" + event.getNewStep());  
+        
+    	log.info("Next step1 #0,#1:" , event.getNewStep(), fullPortfolios.size());
+    	log.info("Next step2 #0,#1:" , event.getNewStep(), userDefined);
+        for(Portfolio aa : fullPortfolios){
+//        	log.info("Next step3 #0,#1:" , event.getNewStep());
+        	if(newPortName!= null && aa.getPortId().equals(newPortName)){
+        		FacesContext facesContext = FacesContext.getCurrentInstance();  
+        		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error : Portfolio Name is Duplicated", newPortName));
+////        		FacesMessage msg = new FacesMessage("Portfolio Name Error", "asdfadf" + newPortName);
+        		return event.getOldStep();
+        	}
+        }	
+        if(event.getOldStep()!=null && event.getOldStep().equals("loadPorts")){
+        		loadPickList();
+        }
+        if(event.getOldStep()!=null && event.getOldStep().equals("pickPorts")){
+//    		loadPickList();
+        }
+        log.info("Next step4 #0,#1:" );
+//        log.info("Next step5 #0,#1:" , myWizard.getWizard().getStep());
+        return event.getNewStep();  
+	}
+
+	public void loadPickList(){
+		 List<String> citiesSource = new ArrayList<String>();  
+	     List<String> citiesTarget = new ArrayList<String>();
+	     if(!ignoreCompare){
+	    	 for(Portfolio bb : parentPortfolio.getChildPortfolios()){
+	    		 citiesTarget.add(bb.getPortName());
+	    	 }
+	     }
+	     for(Portfolio aa: fullPortfolios){
+	    	if(!citiesTarget.contains(aa.getPortName())){
+	    		citiesSource.add(aa.getPortName());
+	    	}
+//	    	 log.info("pickList:#0", aa.getPortName());
+	     }
+	     ports = new DualListModel<String>(citiesSource, citiesTarget);  
+	}
+	
+	@In(create=true)
+	private PortfolioHome portfolioHome;
+	
+	@End
+	public  void save(){
+		portfolioHome.getInstance().setPortId(newPortName);
+		log.info("Save1 :#0", portfolioHome.getPortfolioPortId());
+		portfolioHome.persist();
+		portfolioHome.clearInstance();
+		log.info("Save3");
+
+		newPortName =null;
+		
+
+	}
+	
+	@End
+	public  void delete(){
+		portfolioHome.setInstance(parentPortfolio);
+		log.info("Delete 1 :#0", portfolioHome.getPortfolioPortId());
+//		portfolioHome.remove();
+		portfolioHome.clearInstance();
+	}
+	
+	
+	private double pvTemp =0;
+
+	public double getPvTemp() {
+		pvTemp =0;
+		for (PortfolioReturn aa : portfolioReturnBssdList.getResultList()) {
+			if(portfolios.contains(aa.getPortfolio())){
+				pvTemp = pvTemp + aa.getDailyReturn().doubleValue();
+			}
+		}
+		return pvTemp;
+	}
+
+	public void setPvTemp(double pvTemp) {
+		this.pvTemp = pvTemp;
+	}
+	
+	public void onTabViewChange(TabChangeEvent event) {
+		log.info("Tab View Change :#0", event.getTab().getId());
+		if(event.getTab().getId().equals("portfolioTab3")){
+			Events.instance().raiseEvent("enterChart", parentPortfolio);
 		}
 	}
+//	@In(create=true)
+//	private NewPortfolioWizard myWizard;
+//
+//	public NewPortfolioWizard getMyWizard() {
+//		return myWizard;
+//	}
+//
+//	public void setMyWizard(NewPortfolioWizard myWizard) {
+//		this.myWizard = myWizard;
+//	}
+
+	
+	
 }

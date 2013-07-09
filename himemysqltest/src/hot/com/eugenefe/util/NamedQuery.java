@@ -4,7 +4,8 @@ public enum NamedQuery {
 	PortfolioJoinReturnBssd(
 			"select a from Portfolio a " 
 			+ "join fetch a.portfolioReturns b "
-			+ "where b.id.bssd = #{basedateBean.bssd} ")
+			+ "where b.id.bssd = #{basedateBean.bssd} " 
+			+ "order by a.portId" )
 	
 	,Position("select a from Position a ")
 
@@ -21,6 +22,9 @@ public enum NamedQuery {
 	,StockHisList("select a from StockHis a")
 	
 	,StockIndexHisList("select a from StockIndexHis a")
+	
+	,IrCuverHisList("select a from IrCurveHis a")
+	;
 	;
 	
 	private String query;

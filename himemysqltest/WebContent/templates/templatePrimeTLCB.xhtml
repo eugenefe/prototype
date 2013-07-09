@@ -40,8 +40,7 @@
 
       <p:layoutUnit position="center" resizable="true">
         <p:layout collapseTitle="close" resizeTitle="resize">
-          <p:layoutUnit header="bottom" position="south" resizable="true" collapsible="true" gutter="2" size="200"
-            rendered="#{layoutBottomClosed}"   >
+          <p:layoutUnit header="bottom" position="south" resizable="true" collapsible="true" gutter="2" size="200">
             <ui:insert name="layoutBottom" />
             <ui:include src="/templates/footer.xhtml" />
             <ui:include src="/templates/primeDock.xhtml" />
@@ -49,7 +48,7 @@
 
           <p:layoutUnit position="center" resizable="true" gutter="4" >
             <ui:insert name="layoutCenter" />
-<!--             <ui:include src="/dialog/dialogLogin.xhtml" /> -->
+<!--             <ui:include src="/popup/dialogLogin.xhtml" /> -->
 
             <p:ajaxStatus style="width:64px;height:64px;" id="ajaxStatusPanel">
               <f:facet name="start">
