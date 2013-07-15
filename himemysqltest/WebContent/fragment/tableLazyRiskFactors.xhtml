@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+  <h:form id="formLazyRiskFactors">
+
+   <p:dataTable id="tableLazyRiskFactors" var="_rf" value="#{lazyRiskFactors}" 
+      widgetVar="wgTableLazyRiskFactors"
+      lazy="true" 
+      selectionMode="single" 
+      selection="#{rfSelectAction.selectedRiskFactor}" 
+      rowKey="#{_rf.mvId}"
+      emptyMessage="#{messages.noDataFound}" 
+      resizableColumns="true" sortMode="single" paginator="true"
+      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+      paginatorPosition="bottom" rows="15" style="height : 100%; width :100%;">
+      
+      <p:ajax event="rowSelect" listener="#{rfSelectAction.onRowSelect}" update="@(form)" />
+      
+      <p:column id="colMvType" headerText="#{messages.marketVariableType}" sortBy="#{_rf.mvType}"
+        filterBy="#{_rf.mvType}" filterMatchMode="contains" 
+        filterOptions="#{allMvTypeOption}" >
+        <h:outputText value="#{_rf.mvType}" />
+      </p:column>
+      
+
+      <p:column id="colMvId" headerText="#{messages.marketVariableId}" sortBy="#{_rf.mvId}"
+        filterBy="#{_rf.mvId}" filterMatchMode="contains">
+        <h:outputText value="#{_rf.mvId}" />
+      </p:column>
+
+      <p:column id="colMvName" headerText="#{messages.marketVariableName}" sortBy="#{_rf.mvName}"
+        filterBy="#{_rf.mvName}" filterMatchMode="contains">
+        <h:outputText value="#{_rf.mvName}" />
+      </p:column>
+
+    </p:dataTable>
+
+  </h:form>
+</ui:composition>

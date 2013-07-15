@@ -3,25 +3,22 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich" xmlns:p="http://primefaces.org/ui"
-  template="/templates/templatePrimeProduct.xhtml">
+  template="/templates/templatePrimeTLC.xhtml">
 
   <ui:define name="layoutLeft">
-    <ui:include src="/fragment/lazyProductsDatatable.xhtml" />
+    <ui:include src="/fragment/tableLazyMarketVariables.xhtml" />
+    <!-- <f:param name="lazyModels" value="#{lazyMarketVariables}"/> -->
+  </ui:define>
+    <ui:define name="layoutCenter">
+
   </ui:define>
 
-  <ui:define name="layoutInnerTop">
-    <ui:include src="/fragment/position.xhtml" />
-  </ui:define>
-
-  <ui:define name="layoutInnerRight">
-    <ui:include src="/fragment/bondInfo.xhtml" />
-    <ui:include src="/fragment/stockInfo.xhtml" />
+<!--   <ui:define name="layoutInnerRight">
     <ui:include src="/fragment/irCurveInfo.xhtml" />
   </ui:define>
 
-
   <ui:define name="layoutInnerCenter">
-    <ui:include src="/fragment/productTabView.xhtml" />
-  </ui:define>
+
+  </ui:define> -->
 
 </ui:composition>

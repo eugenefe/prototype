@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+  <h:form id="formTableVcvMatrix">
+
+    <p:panelGrid columns="6">
+      <p:outputLabel value="vcvMethod"/>
+      
+      <p:outputLabel value="matrixType"/>
+      
+    </p:panelGrid>
+    
+    <p:contextMenu for="formTableVcvMatrix">
+      <p:menuitem value="#{messages.selectRiskFactors}" oncomplete="wgDlgRfSelect.show()"  action="#{riskFactorPickAction.loadPickList()}"  />
+      <p:menuitem value="#{messages.exportVcvMatrix}">
+        <!-- <p:dataExporter type="csv" target="tableVcvMatrix" fileName="VcvMatrix" /> -->
+      </p:menuitem>
+    </p:contextMenu>
+    
+    <p:dataTable id="tableVcvMatrix"  var="_vcv" value="#{pivotList}" 
+      widgetVar="wgTableVcvMatrix"
+      emptyMessage="#{messages.noDataFound}" 
+      resizableColumns="true" 
+      draggableColumns="true"
+      sortMode="multiple" 
+      paginator="true" paginatorPosition="bottom" 
+      rows="10"
+      rowsPerPageTemplate="5,10,15"  
+      style="height : 100%">
+
+ 
+      <p:column id="colRfId" headerText="#{messages.colRiskFactorId}" sortBy="#{_vcv.label}" >
+        <h:outputText value="#{_vcv.label}" />
+      </p:column>
+      
+      <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex" 
+       sortBy="#{_vcv.contentMap[column.property]}"  >
+        <f:facet name="header">  
+                #{column.header}  
+         </f:facet>
+        <h:outputText value="#{_vcv.contentMap[column.property]}" style="float:right">
+          <f:convertNumber pattern="#,###.##" />
+          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
+        </h:outputText>
+      </p:columns>
+  
+      
+      
+      <f:facet name="footer">
+        <h:commandLink style="float: right">
+          <p:graphicImage value="/img/primefaces/csv.png" />
+          <p:dataExporter type="csv" target="tableVcvMatrix" fileName="PortfolioReturn" />
+        </h:commandLink>
+        <h:commandLink style="float: right">
+          <p:graphicImage value="/img/primefaces/pdf.png" />
+          <p:dataExporter type="pdf" target="tableVcvMatrix" fileName="PortfolioReturn" />
+        </h:commandLink>
+        <h:commandLink style="float: right">
+          <p:graphicImage value="/img/primefaces/excel.png" />
+          <p:dataExporter type="xls" target="tableVcvMatrix" fileName="PortfolioReturn" />
+        </h:commandLink>
+      </f:facet>
+    </p:dataTable>
+  </h:form>
+</ui:composition>

@@ -12,6 +12,10 @@
         <p:separator />
         <s:link id="toolbarMaketVariable" view="#{configAction.getViewUrl('MarketVariable')}" value="#{messages.toolbarMarketVariable}" propagation="none"  />
         <p:separator />
+        <s:link id="toolbarProduct" view="#{configAction.getViewUrl('Product')}" value="#{messages.toolbarProduct}" propagation="none"  />
+        <p:separator />
+        <s:link id="toolbarRiskFactor" view="#{configAction.getViewUrl('RiskFactor')}" value="#{messages.toolbarRiskFactor}" propagation="none"  />
+        <p:separator />
         <s:link id="toolbarRiskComponent" view="#{configAction.getViewUrl('RiskComponent')}" value="#{messages.toolbarRiskComponent}" propagation="none"  />
         <p:separator />
         <s:link id="toolbarReturnRisk" view="#{configAction.getViewUrl('RiskAnalysis')}" value="#{messages.toolbarReturnRisk}" propagation="none"  />
@@ -53,7 +57,7 @@
       <h:outputText value="#{messages.baseDate}:" />
       <p:calendar id="endDate" value="#{basedateBean.date1}" showButtonPanel="true" pattern="yyyy/MM/dd"
         navigator="true" >
-        <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form)" />
+        <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form) " />
       </p:calendar>
     </p:panelGrid>
   

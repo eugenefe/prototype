@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
+import javax.faces.convert.FacesConverter;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
@@ -28,52 +29,61 @@ import com.eugenefe.session.PortfolioReturnBssdList;
 
 @Name("marketVariableConverterSeam")
 //@Scope(ScopeType.CONVERSATION)
-//@Converter
-//@BypassInterceptors
-public class MarketVariableConverter implements javax.faces.convert.Converter , Serializable{
-	@Logger
-	private Log log;
+@Converter
+@BypassInterceptors
+//@FacesConverter(forClass=com.eugenefe.converter.MarketVariableConverter.class, value="mvConverter")
+//@FacesConverter(forClass=com.eugenefe.converter.MarketVariableConverter.class, value="mvConverter")
+public class MarketVariableConverter implements javax.faces.convert.Converter{
+//	@Logger
+//	private Log log;
+//
+//	@In(create = true)
+//	private ProductSelectAction productSelectAction;
+//	
+//	public MarketVariableConverter(){
+//		
+//	}
 
-	@In(create = true)
-	private ProductSelectAction productSelectAction;
-	
-	public MarketVariableConverter(){
-		
-	}
-
+//	@Override
+//	public Object getAsObject(FacesContext facesContext, UIComponent component, String submittedValue) {
+//		log.info("In the Converter");
+//		if (submittedValue.trim().equals("")) {
+//            return null;
+//        } 
+//		else {
+//            try {
+//            	log.info("In the Converter1");
+//                for (MarketVariable aa : productSelectAction.getProducts()) {
+//                    if (aa.getMvId().equals(submittedValue) ) {
+////                    	if (aa.getMvId().contains(submittedValue) || aa.getMvName().contains(submittedValue)) {	
+//                    	log.info("In the Converter2");
+//                    	return aa;
+//                    }
+//                }
+//                
+//            } catch(NumberFormatException exception) {
+//                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid Portfolio"));
+//            }
+//            return null;
+//        }
+//	}
+//
+//	@Override
+//	 public String getAsString(FacesContext facesContext, UIComponent component, Object value) {
+//		if (value == null || value.equals("")) {
+//            return "";
+//        } else {
+//            return String.valueOf(((MarketVariable) value).getMvId());
+//        }
+//	}
 	@Override
 	public Object getAsObject(FacesContext facesContext, UIComponent component, String submittedValue) {
-		log.info("In the Converter");
-		if (submittedValue.trim().equals("")) {
-            return null;
-        } 
-		else {
-            try {
-            	log.info("In the Converter1");
-                for (MarketVariable aa : productSelectAction.getProducts()) {
-                    if (aa.getMvId().equals(submittedValue) ) {
-//                    	if (aa.getMvId().contains(submittedValue) || aa.getMvName().contains(submittedValue)) {	
-                    	log.info("In the Converter2");
-                    	return aa;
-                    }
-                }
-                
-            } catch(NumberFormatException exception) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid Portfolio"));
-            }
-        }
-		log.info("In the Converter3");
-		return null;
+		return new MarketVariable("AAAA");
 	}
 
 	@Override
 	 public String getAsString(FacesContext facesContext, UIComponent component, Object value) {
-		if (value == null || value.equals("")) {
-            return "";
-        } else {
-            return String.valueOf(((MarketVariable) value).getMvId());
-        }
+		return "AAAA";
 	}
-	
 
 }

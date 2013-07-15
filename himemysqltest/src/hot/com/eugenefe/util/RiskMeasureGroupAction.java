@@ -1,23 +1,15 @@
 package com.eugenefe.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.model.SelectItem;
-
-import org.hibernate.mapping.Array;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-
-import com.eugenefe.util.ProductType;
-import com.eugenefe.util.RiskMeasure;
-import com.eugenefe.util.RiskMeasureGroup;
 
 @Name("riskMeasureGroupAction")
 @Scope(ScopeType.SESSION)

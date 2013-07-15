@@ -40,8 +40,11 @@
     </p:accordionPanel> -->
 
     <p:dataTable id="datatableLazyProducts" var="_product" value="#{lazyProducts}" widgetVar="lazyProductsTable"
-      lazy="true" selectionMode="single" selection="#{productSelectAction.selectedProduct}" rowKey="#{_product.mvId}"
-      emptyMessage="No Product found with given criteria" resizableColumns="true" sortMode="single" paginator="true"
+      lazy="true" selectionMode="single" 
+      selection="#{productSelectAction.selectedProduct}" 
+      rowKey="#{_product.mvId}"
+      emptyMessage="No Product found with given criteria" 
+      resizableColumns="true" sortMode="single" paginator="true"
       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
       paginatorPosition="bottom" rows="15" style="height : 100%; width :100%;">
       
@@ -63,13 +66,15 @@
 
       <p:column id="colProductType" headerText="#{messages.productType}" sortBy="#{_product.mvType}"
         filterBy="#{_product.mvType}" filterMatchMode="contains" 
-        filterOptions="#{productTypeOption}" >
+        filterOptions="#{productTypeOption}" 
+        >
         <h:outputText value="(#{_product.positions.size})#{_product.mvType}" />
       </p:column>
       
       <!-- <p:column id="colPositionCount" style="width:2px" >
         <h:outputText value="#{_product.positions.size}" />
       </p:column> -->
+      
       <!-- <p:column id="colProductType" headerText="#{messages.productType}" sortBy="#{_product.mvType}"
         filterBy="#{_product.mvType}" filterMatchMode="contains" filterOptions="#{productTypeOption}">
         <h:outputText value="#{_product.mvType}" />

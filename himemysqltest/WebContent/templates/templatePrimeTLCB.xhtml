@@ -1,8 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:f="http://java.sun.com/jsf/core" 
-  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
   xmlns:s="http://jboss.org/schema/seam/taglib" contentType="text/html">
   <h:html>
   <h:head>
@@ -15,23 +14,10 @@
     <link type="text/css" rel="stylesheet"
       href="#{request.contextPath}/resources/css/syntaxhighlighter/syntaxhighlighter.css" />
   </h:head>
-  
+
   <h:body style="background:grey">
     <p:layout fullPage="true">
-      <p:layoutUnit position="north" resizable="true" size="60" collapsible="true" gutter="3"
-        style="background:rgb(190, 214, 248);">
-        <!--         <h:graphicImage value="/img/inkwell.jpg" height="20" width="100%" /> -->
-        <!-- <ui:include src="localeMenuAlt.xhtml" />
-        <ui:include src="primeToolbarOld.xhtml" /> -->
-        
-        <ui:include src="primeToolbar.xhtml" />
-        <ui:insert name="layoutTop" />
-      </p:layoutUnit>
 
-      <p:layoutUnit position="west" header="#{messages.layoutPortfolio}" resizable="true" collapsible="false" size="200"
-        gutter="4">
-        <ui:insert name="layoutLeft" />
-      </p:layoutUnit>
 
       <p:layoutUnit position="east" header="#{messages.layoutScenario}" resizable="true" collapsible="true" size="150"
         gutter="4" rendered="false">
@@ -46,9 +32,9 @@
             <ui:include src="/templates/primeDock.xhtml" />
           </p:layoutUnit>
 
-          <p:layoutUnit position="center" resizable="true" gutter="4" >
+          <p:layoutUnit position="center" resizable="true" gutter="4">
             <ui:insert name="layoutCenter" />
-<!--             <ui:include src="/popup/dialogLogin.xhtml" /> -->
+            <!--             <ui:include src="/popup/dialogLogin.xhtml" /> -->
 
             <p:ajaxStatus style="width:64px;height:64px;" id="ajaxStatusPanel">
               <f:facet name="start">
@@ -63,6 +49,21 @@
         </p:layout>
       </p:layoutUnit>
 
+      <p:layoutUnit position="west" header="#{messages.layoutPortfolio}" resizable="true" collapsible="false" size="200"
+        gutter="4" style="oveflow:visible;">
+        <ui:insert name="layoutLeft" />
+        
+      </p:layoutUnit>
+
+      <p:layoutUnit position="north" resizable="true" size="60" collapsible="true" gutter="3"
+        style="background:rgb(190, 214, 248);">
+        <!--         <h:graphicImage value="/img/inkwell.jpg" height="20" width="100%" /> -->
+        <!-- <ui:include src="localeMenuAlt.xhtml" />
+        <ui:include src="primeToolbarOld.xhtml" /> -->
+
+        <ui:include src="primeToolbar.xhtml" />
+        <ui:insert name="layoutTop" />
+      </p:layoutUnit>
     </p:layout>
     <!-- <h:outputStylesheet library="css" name="primetakion.css" /> -->
   </h:body>

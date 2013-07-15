@@ -1,14 +1,12 @@
 package com.eugenefe.session;
 
-import java.util.List;
-
-import com.eugenefe.entity.*;
-import com.eugenefe.util.ProductType;
-
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.framework.EntityHome;
+
+import com.eugenefe.entity.Bond;
+import com.eugenefe.entity.MarketVariable;
+import com.eugenefe.util.MarketVariableType;
 
 @Name("bondHome")
 public class BondHome extends EntityHome<Bond> {
@@ -47,7 +45,7 @@ public class BondHome extends EntityHome<Bond> {
 	
 	@Observer(value="selectProduct")
 	public void onSelectBond(MarketVariable selectProduct){
-		if(ProductType.BOND.equals(selectProduct.getMvType())){
+		if(MarketVariableType.BOND.equals(selectProduct.getMvType())){
 //		if(selectProduct.getMvType().equals(ProductType.BOND.getType())){
 //			if(selectProduct.getMvType().equals("BOND")){	
 			setBondId(selectProduct.getMvId());

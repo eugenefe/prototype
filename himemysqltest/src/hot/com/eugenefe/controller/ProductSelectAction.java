@@ -1,10 +1,8 @@
 package com.eugenefe.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -24,10 +22,8 @@ import org.primefaces.model.LazyDataModel;
 import com.eugenefe.converter.LazyModelMarketVariable;
 import com.eugenefe.entity.MarketVariable;
 import com.eugenefe.util.EView;
+import com.eugenefe.util.MarketVariableType;
 import com.eugenefe.util.NamedQuery;
-import com.eugenefe.util.ProductType;
-import com.eugenefe.util.RiskMeasure;
-import com.eugenefe.util.RiskMeasureGroup;
 
 @Name("productSelectAction")
 @Scope(ScopeType.CONVERSATION)
@@ -103,8 +99,16 @@ public class ProductSelectAction {
 
 	@Factory(value = "lazyProducts")
 	public void initModel() {
-		products = entityManager.createQuery(NamedQuery.MarketVariables.getQuery()).getResultList();
-		// log.info("product size:#0", products.size());
+//		List<MarketVariable> temp = new ArrayList<MarketVariable>();
+//		products = new ArrayList<MarketVariable>();
+//		temp =   entityManager.createQuery(NamedQuery.MarketVariables.getQuery()).getResultList();
+//		for(MarketVariable aa : temp){
+//			if( aa.getProductYN()=="Y"){
+//				products.add(aa);
+//			}
+//		}
+		
+		products = entityManager.createQuery(NamedQuery.Products.getQuery()).getResultList();
 		lazyProducts = new LazyModelMarketVariable(products);
 	}
 	
@@ -143,9 +147,9 @@ public class ProductSelectAction {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		
 //		System.out.println("in the redirect1"+fc.getViewRoot().getViewId()+EView.MarketVariableSelect.url);
-		if (EView.MarketVariable.url.equals(fc.getViewRoot().getViewId())) {
+		if (EView.Product.url.equals(fc.getViewRoot().getViewId())) {
 			fc.getApplication().getNavigationHandler()
-					.handleNavigation(fc, "null", EView.MarketVariableSelect.url+"?faces-redirect=true");
+					.handleNavigation(fc, "null", EView.ProductSelect.url+"?faces-redirect=true");
 		}
 
 		// Events.instance().raiseEvent("selectProduct",(MarketVariable)event.getObject());
@@ -160,8 +164,9 @@ public class ProductSelectAction {
 			requestContext.execute("wgInnerLayout.hide('north')");
 		}
 
-		if (selectedProduct.mvType == ProductType.BOND || selectedProduct.mvType == ProductType.STOCK
-				|| selectedProduct.mvType == ProductType.INT_RATE) {
+//		if (selectedProduct.mvType == ProductType.BOND || selectedProduct.mvType == ProductType.STOCK
+//				|| selectedProduct.mvType == ProductType.INT_RATE) {
+		if (selectedProduct.mvType == MarketVariableType.BOND || selectedProduct.mvType == MarketVariableType.STOCK ) {	
 			requestContext.execute("wgInnerLayout.show('east')");
 		} else {
 			requestContext.execute("wgInnerLayout.hide('east')");

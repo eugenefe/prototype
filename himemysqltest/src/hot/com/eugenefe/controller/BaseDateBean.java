@@ -10,12 +10,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.core.Conversation;
 import org.jboss.seam.core.Events;
 import org.jboss.seam.framework.CurrentDate;
 import org.jboss.seam.log.Log;
@@ -43,7 +45,7 @@ public class BaseDateBean implements Serializable {
 	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");  
 	
-	@Out(scope=ScopeType.SESSION)
+//	@Out(scope=ScopeType.SESSION)
 	private String bssd;
 	
 	public BaseDateBean() {
@@ -111,7 +113,9 @@ public class BaseDateBean implements Serializable {
 		this.endBssd = endBssd;
 	}
 
+//	@Begin(join=true)
 	public void handleDateSelect(SelectEvent event) {
+		log.info("handleDateSelect Id1 :#0,#1", Conversation.instance().getId(), Conversation.instance().isLongRunning());
 		log.info("Start ChangeBssd Event");
 		FacesContext facesContext = FacesContext.getCurrentInstance();  
         bssd = format.format(event.getObject());
@@ -122,6 +126,7 @@ public class BaseDateBean implements Serializable {
         
         Events.instance().raiseEvent(eventName, bssd);
         log.info("End of ChangeBssd Event");
+        log.info("handleDateSelect Id2 :#0,#1", Conversation.instance().getId(), Conversation.instance().isLongRunning());
 	}
 
 	

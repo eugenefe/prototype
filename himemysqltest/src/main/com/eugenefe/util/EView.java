@@ -6,8 +6,11 @@ import org.jboss.seam.annotations.Scope;
 
 public enum EView {
 	 Home("/view/home.xhtml")
-	,MarketVariable("/view/v100MarketVariableInit.xhtml")
-	,MarketVariableSelect("/view/v100MarketVariable.xhtml")
+	,MarketVariable("/view/v100MarketVariable.xhtml")
+//	,MarketVariableSelect("/view/v100MarketVariable.xhtml")
+	,Product("/view/v110ProductInit.xhtml")
+	,ProductSelect("/view/v110Product.xhtml")
+	,RiskFactor("/view/v120RiskFactor.xhtml")
 	,RiskComponent("/view/v200RiskComponent.xhtml")
 	,RiskAnalysis("/view/v300ReturnRisk.xhtml")
 	,WhatIf("/view/v400WhatIf.xhtml")

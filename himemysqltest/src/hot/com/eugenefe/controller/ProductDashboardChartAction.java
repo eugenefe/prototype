@@ -21,7 +21,8 @@ import com.eugenefe.entityinterface.ProductDashboard;
 public class ProductDashboardChartAction {
 	 private static final String EJBQL =
 	 " select New com.eugenefe.entityinterface.ProductDashboard(a.mvType, count(b.posId) as posCnt , sum(b.posAmt) as posAmt) " +
-	 " from MarketVariable a left join a.positions b"	 +
+	 " from MarketVariable a left join a.positions b" +
+	 " where a.productYN ='Y'"	 +
 	 " group by a.mvType";
 	 
 //	 private static final String EJBQL =

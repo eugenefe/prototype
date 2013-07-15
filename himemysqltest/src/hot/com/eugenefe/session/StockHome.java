@@ -1,15 +1,13 @@
 package com.eugenefe.session;
 
-import java.util.List;
-
-import com.eugenefe.entity.*;
-import com.eugenefe.util.ProductType;
-
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.core.Events;
 import org.jboss.seam.framework.EntityHome;
+
+import com.eugenefe.entity.MarketVariable;
+import com.eugenefe.entity.Stock;
+import com.eugenefe.util.MarketVariableType;
 
 @Name("stockHome")
 public class StockHome extends EntityHome<Stock> {
@@ -48,7 +46,7 @@ public class StockHome extends EntityHome<Stock> {
 	
 	@Observer(value="selectProduct")
 	public void onSelectStock(MarketVariable selectProduct){
-		if(ProductType.STOCK.equals(selectProduct.getMvType())){
+		if(MarketVariableType.STOCK.equals(selectProduct.getMvType())){
 			setStockId(selectProduct.getMvId());
 			Events.instance().raiseEvent("selectStock", getInstance());
 		}

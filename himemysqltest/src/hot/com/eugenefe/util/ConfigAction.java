@@ -77,25 +77,25 @@ public class ConfigAction {
 //***********************************************
 
 
-	static public class ColumnModel implements Serializable {  
-		  
-        private String header;  
-        private String property;  
-  
-        public ColumnModel(String header, String property) {  
-            this.header = header;  
-            this.property = property;  
-        }  
-  
-        public String getHeader() {  
-        	System.out.println("Get Header Method");
-            return header;  
-        }  
-  
-        public String getProperty() {  
-            return property;  
-        }  
-    }  
+//	static public class ColumnModel implements Serializable {  
+//		  
+//        private String header;  
+//        private String property;  
+//  
+//        public ColumnModel(String header, String property) {  
+//            this.header = header;  
+//            this.property = property;  
+//        }  
+//  
+//        public String getHeader() {  
+//        	System.out.println("Get Header Method");
+//            return header;  
+//        }  
+//  
+//        public String getProperty() {  
+//            return property;  
+//        }  
+//    }  
 	
 	@Observer("selectProduct")
 	public void updateColumns(MarketVariable marketVariable) {  

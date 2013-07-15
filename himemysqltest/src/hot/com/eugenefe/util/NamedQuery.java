@@ -13,9 +13,13 @@ public enum NamedQuery {
 	
 	,Bonds ("select a from Bond a")
 	
-//	,Products ("select a from MarketVariable a where a.productYN ='Y'")
+	,AllMarketVariables ("select a from MarketVariable a ")
+
+	,MarketVariables ("select a from MarketVariable a where a.productYN ='N'")
 	
-	,MarketVariables ("select a from MarketVariable a ")
+	,Products ("select a from MarketVariable a where a.productYN ='Y'")
+	
+	,RiskFactors ("select a from MarketVariable a where a.riskFactorYN ='Y'")
 	
 	,BondHisList("select a from BondHis a")
 	
@@ -24,7 +28,10 @@ public enum NamedQuery {
 	,StockIndexHisList("select a from StockIndexHis a")
 	
 	,IrCuverHisList("select a from IrCurveHis a")
-	;
+	
+	,VcvMatrixHisList("select a from VcvMatrixHis a ")
+	
+	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.bssd = #{basedateBean.bssd} ")
 	;
 	
 	private String query;

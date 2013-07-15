@@ -521,3 +521,6 @@ li.ui-tabs-selected a {
 .ui-layout-pane-north .ui-layout-unit-content {
 overflow: visible;
 }
+.ui-layout-pane-west .ui-layout-unit-content {
+overflow: visible;
+}

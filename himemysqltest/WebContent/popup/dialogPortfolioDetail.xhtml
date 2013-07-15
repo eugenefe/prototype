@@ -4,11 +4,13 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
-  <p:overlayPanel for=":formPortfolioTree:menuItemViewPortDetail" 
-      my="right top" at="right top"
-      showEffect="fade" hideEffect="explode" >
-      aaasdfasdfasdfasdf
-      
-  </p:overlayPanel>
+  <p:dialog header="#{messages.portfolioDetail}" modal="true" widgetVar="wgDialogPortDetail" appendToBody="true" closeOnEscape="true">
+      <p:panelGrid columns="2">
+        <p:outputLabel value="aaaa" />
+        <p:outputLabel value="aaaa" />
+        <p:outputLabel value="aaaa" />
+        <p:outputLabel value="aaaa" />
+      </p:panelGrid>
+  </p:dialog>
 
 </ui:composition>

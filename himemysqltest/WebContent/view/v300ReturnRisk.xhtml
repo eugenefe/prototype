@@ -6,17 +6,20 @@
   template="/templates/templatePrimeTLCB.xhtml">
   
   <ui:define name="layoutLeft">
+    <ui:include src="/popup/overlayPortfolioDetail.xhtml" />
     <ui:include src="/fragment/treePortfolio.xhtml" />
     
   </ui:define>
+
   <ui:define name="layoutCenter">
     <ui:include src="/fragment/tabViewPortfolio.xhtml" />
+
+    <ui:include src="/popup/dialogPortfolioDetail.xhtml" />    
     <ui:include src="/popup/dialogHierarchySelect.xhtml" />
-    <!-- <ui:include src="/popup/dialogPortfolioCreate.xhtml" /> --> 
-    <!-- <ui:include src="/popup/portfolioDetailOverlay.xhtml" /> -->
-    
-      
+    <ui:include src="/popup/dialogPortfolioCreate.xhtml" /> 
+
   </ui:define>
+
   <ui:define name="layoutBottom">
     <!-- <ui:include src="/templates/footer.xhtml" /> -->
     <!-- <ui:include src="/templates/primeDock.xhtml" /> -->

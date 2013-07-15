@@ -20,8 +20,12 @@
         <converter-class>com.eugenefe.converter.PortfolioConverter</converter-class>
     </converter>
  -->
- <!--  <converter>
-        <converter-id>marketVariableConverter</converter-id>
+   <!-- <converter>
+        <converter-id>rfConverter</converter-id>
         <converter-class>com.eugenefe.converter.MarketVariableConverter</converter-class>
+    </converter> -->
+<!--        <converter>
+        <converter-id>_rf</converter-id>
+        <converter-class>com.eugenefe.converter.RiskFactorPickListConverter</converter-class>
     </converter> -->
 </faces-config>
