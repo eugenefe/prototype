@@ -5,6 +5,8 @@
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
   
   <h:form id="formPosition">
+  <div style="overflow : auto">
+   
     <p:dataTable id="dataTablePosition" var="_position" value="#{selectedProduct.positions}" widgetVar="positionTable"
       selectionMode="single" 
       rowKey="#{_position.posId}"
@@ -13,7 +15,7 @@
       resizableColumns="true"
       draggableColumns="true"
       liveResize="true"
-      style="height : 100%; width: 100%">
+      style="margin: 0.5em">
 
         <!-- <p:ajax event="rowSelect" update=":#{p:component('takiondisplay')}"  oncomplete="portDialog.show()" /> -->
       
@@ -112,5 +114,6 @@
         <h:outputText value="#{messages.datatableExport}" style="float: right; vertical-aling:middle" />
       </f:facet>
     </p:dataTable>
+    </div>
   </h:form>
 </ui:composition>

@@ -447,19 +447,19 @@ li.ui-tabs-selected a {
 	height: 20px;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	padding-left: 0.6 em;
-	padding-right: 0.6 em;
+	padding-left: 0.6em;
+	padding-right: 0.6em;
 	font-size: 1em;
 }
 
 .ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active {
 	color: #cc9900;
-	font: bold;
+	font-weight: bolder;
 }
 
 .ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited {
 	color: #cc9900;
-	font: bold;
+	font-weight: bolder;
 }
 /* ****************************************** */
 /* .form-label {
@@ -519,8 +519,86 @@ li.ui-tabs-selected a {
 	margin: 0 auto;
 }
 .ui-layout-pane-north .ui-layout-unit-content {
-overflow: visible;
+overflow: auto;
 }
+
+.ui-layout-pane-north-outer .ui-layout-unit-content {
+	overflow: visible;
+}
+
+.ui-layout-pane-center-inner .ui-layout-unit-content {
+overflow: hidden;
+}
+
 .ui-layout-pane-west .ui-layout-unit-content {
-overflow: visible;
+overflow: auto;
+}
+
+
+.ui-radiobutton-takion .ui-icon{
+	border: none;
+	height:16px;
+	width:16px;
+}
+.ui-radiobutton-takion .ui-radiobutton-icon{
+	/* background: url("./../../img/eclipse/step_done.gif") no-repeat; */
+	background: url("./../../img/famsilk/accept.png") no-repeat;
+	border: none;
+	height:16px;
+	width:16px;
+}
+
+/* .ui-radiobutton-takion .ui-widget-content{
+	background: none;
+	border: none;
+} */
+
+.ui-radiobutton-takion .ui-radiobutton-box{
+	background :none;
+	border: none;
+}
+
+/* ********************************Menu Image**************** */
+
+.ui-menu .ui-menu-parent .ui-menu-child {
+	width : 20em
+}
+.ui-menuitem-icon.img_home_nav {
+	background: url("./../../img/eclipse/home_nav.gif") no-repeat;
+	height:16px;
+	width:16px;
+}
+.ui-menuitem-icon.img_markget_variable {
+	background: url("./../../img/famsilk/chart_curve.png") no-repeat;
+	height:16px;
+	width:16px;
+}
+.ui-menuitem-icon.img_help {
+	background: url("./../../img/eclipse/help.gif") no-repeat;
+	height:16px;
+	width:16px;
+}
+
+.ui-menuitem-icon.img_whatIf {
+	background: url("./../../img/eclipse/debugts_obj.gif") no-repeat;
+	height:16px;
+	width:16px;
+}
+
+.ui-menuitem-icon.img_chart_org {
+	background: url("./../../img/famsilk/chart_organisation.png") no-repeat;
+	height:16px;
+	width:16px;
+}
+
+.ui-menuitem-icon.img_limit {
+	background: url("./../../img/famsilk/controller.png") no-repeat;
+	height:16px;
+	width:16px;
+}
+
+.ui-menuitem-icon.img_setting {
+	background: url("./../../img/famsilk/cog.png") no-repeat;
+	height:16px;
+	width:16px;
 }

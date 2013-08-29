@@ -113,7 +113,7 @@ public class CopyOfVcvMatrixAction {
 		}
 	}
 	
-	@Observer("selRiskFactors")
+//	@Observer("selRiskFactors")
 	public void aa(List<MarketVariable> selRf){
 		selRiskFactors = selRf;
 		initVcvMatrix();

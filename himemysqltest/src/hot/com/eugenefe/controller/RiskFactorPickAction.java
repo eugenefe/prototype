@@ -97,7 +97,8 @@ public class RiskFactorPickAction implements Serializable {
 		log.info("loadPickList Id1 :#0,#1", Conversation.instance().getId(),Conversation.instance().isLongRunning());
 	}
 	
-	public void afterPick(List<String> target){
+//	public void afterPick(List<String> target){
+	public void afterPick(){	
 		log.info("afterPick Id1 :#0,#1", Conversation.instance().getId(),Conversation.instance().isLongRunning());
 //		selRiskFactors = pickRiskFactors.getTarget();
 		List<MarketVariable> selRf = new ArrayList<MarketVariable>();
@@ -109,7 +110,6 @@ public class RiskFactorPickAction implements Serializable {
 				}
 			}
 		}
-		
 		
 		Events.instance().raiseEvent("selRiskFactors", selRf);
 		log.info("End of Risk Factor Pick");

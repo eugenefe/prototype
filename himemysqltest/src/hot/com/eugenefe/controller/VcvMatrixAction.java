@@ -42,7 +42,7 @@ public class VcvMatrixAction {
 		System.out.println("Construcion VcvMatrixAction");
 	}
 	
-	@Observer("selRiskFactors")
+//	@Observer("selRiskFactors")
 	public void aa(List<MarketVariable> selRf){
 		log.info("AAAAA : #0", selRf.size());
 		riskFactorInit.setRiskFactors(selRf);

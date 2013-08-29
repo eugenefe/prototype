@@ -24,32 +24,43 @@
       widgetVar="wgTableVcvMatrix"
       emptyMessage="#{messages.noDataFound}" 
       resizableColumns="true" 
-      draggableColumns="true"
-      sortMode="multiple" 
-      paginator="true" paginatorPosition="bottom" 
-      rows="10"
-      rowsPerPageTemplate="5,10,15"  
-      style="height : 100%">
+      liveResize="false"
+      style="height :100%;">
 
  
-      <p:column id="colRfId" headerText="#{messages.colRiskFactorId}" sortBy="#{_vcv.label}" >
+      <p:column id="colRfId" headerText="#{messages.colRiskFactorId}" width="100">
         <h:outputText value="#{_vcv.label}" />
       </p:column>
       
-      <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex" 
-       sortBy="#{_vcv.contentMap[column.property]}"  >
+      <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex"  width="80">
         <f:facet name="header">  
                 #{column.header}  
          </f:facet>
+       
         <h:outputText value="#{_vcv.contentMap[column.property]}" style="float:right">
           <f:convertNumber pattern="#,###.##" />
-          <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
         </h:outputText>
       </p:columns>
-  
       
-      
-      <f:facet name="footer">
+     <!-- <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex"  width="80">
+     <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex" 
+       sortBy="#{_vcv.contentMap[column.property]}"  width="100">
+        <f:facet name="header">  
+                #{column.header}  
+         </f:facet>
+        <p:cellEditor>
+        <f:facet name="input"><h:inputText value="#{_vcv.contentMap[column.property]}" style="float:right"/></f:facet>
+        <f:facet name="output">
+        <h:outputText value="#{_vcv.contentMap[column.property]}" style="float:right">
+          <f:convertNumber pattern="#,###.##" />
+          <f:convertNumber  pattern="\u00A4#,##0"/>
+        </h:outputText>
+        </f:facet>
+        </p:cellEditor>       
+        
+      </p:columns> -->
+
+      <!-- <f:facet name="footer" >
         <h:commandLink style="float: right">
           <p:graphicImage value="/img/primefaces/csv.png" />
           <p:dataExporter type="csv" target="tableVcvMatrix" fileName="PortfolioReturn" />
@@ -62,7 +73,7 @@
           <p:graphicImage value="/img/primefaces/excel.png" />
           <p:dataExporter type="xls" target="tableVcvMatrix" fileName="PortfolioReturn" />
         </h:commandLink>
-      </f:facet>
+      </f:facet> -->
     </p:dataTable>
   </h:form>
 </ui:composition>

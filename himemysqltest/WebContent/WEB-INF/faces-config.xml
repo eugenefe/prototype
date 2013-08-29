@@ -13,6 +13,11 @@
       <supported-locale>fr</supported-locale>
       <supported-locale>en</supported-locale>
     </locale-config>
+    
+    <!-- <resource-bundle>
+        <base-name>messages</base-name>
+        <var>msg</var>
+     </resource-bundle> -->
   </application>
   
 <!--   <converter>
@@ -28,4 +33,6 @@
         <converter-id>_rf</converter-id>
         <converter-class>com.eugenefe.converter.RiskFactorPickListConverter</converter-class>
     </converter> -->
+    
+    
 </faces-config>

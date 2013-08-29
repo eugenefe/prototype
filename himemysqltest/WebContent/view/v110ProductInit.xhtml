@@ -6,15 +6,28 @@
   template="/templates/templatePrimeTLC.xhtml">
 
   <ui:define name="layoutLeft">
-    <ui:include src="/fragment/tableLazyProducts.xhtml" />
+    <ui:include src="/fragment/tableLazyMarketVariables.xhtml">
+      <ui:param name="paraLazyModels" value="#{lazyModelProduct}" />
+      <ui:param name="paraSelectOneMvType" value="#{currentMvTypeOption}" />
+      <ui:param name="flagMvId" value="true" />
+      <ui:param name="flagContext" value="true" />
+    </ui:include>
   </ui:define>
 
   <ui:define name="layoutCenter">
-    <p:tabView id="tabViewProduct" >
-    <p:tab id="tabProductDashboard" title="#{messages.tabProductDashboard}" rendered="#{selectedProduct ==null}">
-      <ui:include src="/chart/chartProductDashboard.xhtml" />    
+    
+    <!-- <p:tabView id="tabViewProduct">
+      <p:tab id="tabProductDashboard" title="#{messages.tabProductDashboard}" rendered="#{selectedMarketVariable==null}">
+        <ui:include src="/chart/chartProductDashboard.xhtml" />
+      </p:tab>
+      <p:tab id="zdfasd" title="#{messages.tabProductDashboard}" rendered="#{selectedMarketVariable !=null}">
+      asdfasd   
     </p:tab>
-    </p:tabView>
+    </p:tabView> -->
+    <p:tab id="tabProductDashboard" title="#{messages.tabProductDashboard}" rendered="#{selectedMarketVariable==null}">
+        <ui:include src="/chart/chartProductDashboard.xhtml" />
+      </p:tab>
+
   </ui:define>
 
 </ui:composition>

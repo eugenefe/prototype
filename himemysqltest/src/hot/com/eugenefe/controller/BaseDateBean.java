@@ -54,7 +54,7 @@ public class BaseDateBean implements Serializable {
 	@Create
 	public void init(){
 		date1 = Calendar.getInstance().getTime();
-		stDate = Calendar.getInstance().getTime();
+		stDate = Calendar.getInstance().getTime() ;
 		endDate =Calendar.getInstance().getTime();
 //		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");  
 	    bssd = format.format(date1);

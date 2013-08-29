@@ -6,22 +6,22 @@
 
   <h:form id="formPortfolioTree">
 <!--     <p:tooltip /> -->  
-    <p:toolbar styleClass="contextBar">
+    <!-- <p:toolbar styleClass="contextBar">
       <p:toolbarGroup align="right">
         <p:commandLink id="expandMenu" title="#{messages.expandMenu}" update="@(.ui-tree)" 
           actionListener="#{portfolioTreeAction.expandAll}" >
-          <p:graphicImage value="/img/primefaces/add.png" />
+          <p:graphicImage value="/img/eclipse/expandAll.jpg" />
         </p:commandLink>
         <p:commandLink id="collapseMenu" title="#{messages.collapseMenu}" update="@(.ui-tree)" 
           action="#{portfolioTreeAction.collapseAll}" >
-          <p:graphicImage value="/img/primefaces/minus.png" />
+          <p:graphicImage value="/img/eclipse/collapseall.gif" />
         </p:commandLink>
         
         <p:menuButton id="treeMenu"  styleClass="contextButton" >
           <ui:include src="/fragment/menuPortfolioTree.xhtml" />
         </p:menuButton>
       </p:toolbarGroup>
-    </p:toolbar>
+    </p:toolbar> -->
     
      <p:contextMenu for="accoPortTree:treePortfolio">
       <p:menuitem value="#{messages.viewPortfolioDetail}" id="menuItemViewPortDetail" icon="ui-icon-circle-zoomin" />

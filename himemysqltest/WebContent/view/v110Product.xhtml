@@ -6,7 +6,13 @@
   template="/templates/templatePrimeProduct.xhtml">
 
   <ui:define name="layoutLeft">
-    <ui:include src="/fragment/tableLazyProducts.xhtml" />
+    <ui:include src="/fragment/tableLazyMarketVariables.xhtml">
+      <ui:param name="paraLazyModels" value="#{lazyModelProduct}" />
+      <ui:param name="paraSelectOneMvType" value="#{currentMvTypeOption}" />
+      <ui:param name="flagMvId" value="true" />
+      <ui:param name="flagContext" value="false" />
+      <ui:param name="flagUpdateFull" value="true" />
+    </ui:include>
   </ui:define>
 
   <ui:define name="layoutInnerTop">
@@ -15,12 +21,62 @@
 
   <ui:define name="layoutInnerRight">
     <ui:include src="/fragment/bondInfo.xhtml" />
-    <ui:include src="/fragment/stockInfo.xhtml" />
+    <!-- <ui:include src="/fragment/stockInfo.xhtml" /> -->
+
+
   </ui:define>
 
 
   <ui:define name="layoutInnerCenter">
-    <ui:include src="/fragment/tabviewProduct.xhtml" />
+    <p:tabView id="tabViewProduct" dynamic="true" style="overflow: auto; height :100%">
+      <!-- <p:ajax event="tabChange" listener="#{layoutBottomCloseAction.onProductTabChange}" update="@(.ui-layout)"/> -->
+      <!-- <p:tab id="tabProductDashboard" title="#{messages.tabProductDashboard}" rendered="#{selectedProduct ==null}">
+      <ui:include src="/fragment/productDashboardChart.xhtml" />    
+    </p:tab> -->
+
+      <p:tab id="tabProductChart" title="#{messages.tabProductChart}" 
+        titleStyleClass="takionProdChart">
+        <ui:include src="/chart/chartProductHis.xhtml" />
+      </p:tab>
+
+      <p:tab id="tabProductHis" title="#{messages.tabProductHis}" >
+        <ui:include src="/fragment/tableMvHistoryData.xhtml">
+          <ui:param name="paraMvHisData" value="#{mvHisList}" />
+          <!-- <ui:param name="flagMvName" value="true" /> -->
+        </ui:include>
+
+
+      </p:tab>
+
+      <p:tab id="tabPricingModel" title="#{messages.tabPricingModel}" >
+        <ui:include src="/fragment/pricingModelInfo.xhtml" />
+
+      </p:tab>
+
+      <p:tab id="tabRiskFactor" title="#{messages.tabRiskFactor}"  style="overflow: scroll">
+      <!--       <p:tab id="tabRiskFactor" title="#{messages.tabRiskFactor}" rendered="#{selectedMarketVariable.productYN == 'Y'}"
+        style="overflow: scroll"> -->
+      
+
+        <!--  <p:scrollPanel style="height:400px" mode="native">
+        <ui:include src="/fragment/bondInfo.xhtml" />
+        </p:scrollPanel> -->
+
+        <!-- <p:panel   > 
+        <ui:include src="/fragment/bondInfo.xhtml" />
+      </p:panel>  -->
+
+        <!-- <p:panelGrid columns="2" style="overflow :scroll" header="asdfas ">
+        <ui:include src="/fragment/bondInfo.xhtml" />
+        </p:panelGrid> -->
+
+      </p:tab>
+
+    </p:tabView>
+
+
+    <!-- <ui:include src="/fragment/position.xhtml" /> -->
+    <!-- <ui:include src="/fragment/tabviewProduct.xhtml" /> -->
   </ui:define>
 
 </ui:composition>

@@ -8,74 +8,74 @@ public enum MarketVariableType {
 			"BOND"
 			,true
 			,"IR"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}"
 	)
 	,STOCK(
 			"STOCK"
 			,true
 			,"EQ"
-			,"select a from StockHis a where a.id.stockId =#{selectedProduct.mvId}"
+			,"select a from StockHis a where a.id.stockId =#{selectedMarketVariable.mvId}"
 	)
 	,FUTURES(
 			"FUTURES"
 			,true
 			,"NONE"
-			,"select a from  FuturesHis a where a.id.futuresId=#{selectedProduct.mvId}"
+			,"select a from  FuturesHis a where a.id.futuresId=#{selectedMarketVariable.mvId}"
 	)
 	,OPTION(
 			"OPTION"
 			,true
 			,"NONE"
-			,"select a from  OptionHis a where a.id.optionId=#{selectedProduct.mvId}"
+			,"select a from  OptionHis a where a.id.optionId=#{selectedMarketVariable.mvId}"
 	)
 	,ETF(
 			"ETF"
 			,true			
 			,"NONE"
-			,"select a from  EtfHis a where a.id.etfId=#{selectedProduct.mvId}"
+			,"select a from  EtfHis a where a.id.etfId=#{selectedMarketVariable.mvId}"
 	)
 	,ELW(
 			"ELW"
 			,true			
 			,"NONE"
-			,"select a from  OptionHis a where a.id.optionId=#{selectedProduct.mvId}"
+			,"select a from  OptionHis a where a.id.optionId=#{selectedMarketVariable.mvId}"
 	)
 	,ELS(
 			"ELS"
 			,true
 			,"NONE"
-			,"select a from BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}"
 	)
 	,SWAP(
 			"SWAP"
 			,true
 			,"NONE"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}"
 	)
 	,DEPOSIT(
 			"DEPOSIT"
 			,true
 			,"NONE"
-			,"select a from  BondHis a where a.id.bondId=#{selectedProduct.mvId}"
+			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}"
 	)
 	
 	,FX_RATE(
 			"FX_RATE"
 			,false
 			,"NONE"
-			,"select a from  FxRateHis a where a.id.fxId=#{selectedProduct.mvId}"
+			,"select a from  FxRateHis a where a.id.fxId=#{selectedMarketVariable.mvId}"
 	)
 	,INT_RATE(
 			"INT_RATE"
 			,false
 			,"NONE"
-			,"select a from  IntRateHis a where a.id.irId=#{selectedProduct.mvId}"
+			,"select a from  IntRateHis a where a.id.irId=#{selectedMarketVariable.mvId}"
 	)
 	,S_INDEX(
 			"S_INDEX"
 			,false
 			,"NONE"
-			,"select a from  StockIndexHis a where a.id.stIndexId=#{selectedProduct.mvId}"
+			,"select a from  StockIndexHis a where a.id.stIndexId=#{selectedMarketVariable.mvId}"
 	)
 	;
 	

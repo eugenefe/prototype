@@ -115,7 +115,6 @@ public class RiskFactorInit {
 	
 //*******************************************
 
-
 	@Factory(value = "lazyRiskFactors")
 	@Begin(join=true)
 	public void initModel() {

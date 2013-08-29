@@ -12,8 +12,12 @@
   <ui:define name="layoutCenter">
     <p:tabView id="tabViewRiskFactor" >
     <p:tab id="tabVcvMatrix" title="#{messages.tabVcvMatrix}" >
-      <ui:include src="/fragment/tableVcvMatrix.xhtml" />
-      <ui:include src="/popup/dialogRiskFactorSelect.xhtml"/>    
+      <ui:include src="/fragment/tableVcvMatrix.xhtml" /> 
+       <ui:include src="/popup/dialogRiskFactorSelect.xhtml">
+        <ui:param name="pickList" value="#{riskFactorPickAction.pickRiskFactors}" />
+        <ui:param name="header" value=" #{messages.selectRiskFactor1}" />
+      </ui:include>    
+      
     </p:tab>
     </p:tabView>
   </ui:define>
