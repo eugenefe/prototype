@@ -52,7 +52,7 @@
     </exception>
     
     <exception class="javax.faces.application.ViewExpiredException">
-        <redirect view-id="/error.xhtml">
+        <redirect view-id="/view/home.xhtml">
             <message severity="warn">Your session has timed out, please try again</message>
         </redirect>
     </exception>

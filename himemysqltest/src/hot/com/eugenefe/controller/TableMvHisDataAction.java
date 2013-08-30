@@ -3,6 +3,7 @@ package com.eugenefe.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -23,36 +24,51 @@ import org.primefaces.model.LazyDataModel;
 import com.eugenefe.converter.LazyModelMarketVariable;
 import com.eugenefe.entity.IMarketVariableHis;
 import com.eugenefe.entity.MarketVariable;
-import com.eugenefe.util.EView;
 import com.eugenefe.util.MarketVariableType;
 import com.eugenefe.util.NamedQuery;
 
-@Name("tableMvHisDataInit")
+@Name("tableMvHisDataAction")
 @Scope(ScopeType.CONVERSATION)
-public class TableMvHisDataInit {
+public class TableMvHisDataAction {
+
+	@Logger
+	private Log log;
 	@In
 	private EntityManager entityManager;
-	
-	@Out
+
+//	private List<MarketVariable> marketVariables;
+
+	@In(required = false)
+	@Out(required = false)
+	// @In
+	// @Out
+	private MarketVariable selectedMarketVariable;
+
+	@Out(required = false)
+	// @Out
 	private List<IMarketVariableHis> mvHisList;
-	
+
 	private String query;
-	
-	public TableMvHisDataInit(){
-		System.out.println("Construction TableMvHisDataHis");
+
+	public TableMvHisDataAction() {
+		System.out.println("Construction TableMvHisDataAction");
 	}
-	
-//	@Factory(value="marketVariableHisList")
-	@Observer(value="/view/v101ViewHistoryData.xhtml_evtSelectMarketVariable")
-	public void onSelectMarketVariable(MarketVariable selectedMarketVariable){
-		query =selectedMarketVariable.getMvType().getQuery();
-		mvHisList = entityManager.createQuery(query).getResultList();
-//		Events.instance().raiseEvent("evtForCreateChart", selectedProduct, marketVariableHisList);
+
+	public MarketVariable getSelectedMarketVariable() {
+		return selectedMarketVariable;
 	}
-	@Observer(value="/view/v110Product.xhtml_evtSelectMarketVariable")
-	public void onSelectMarketVariable1(MarketVariable selectedMarketVariable){
-		query =selectedMarketVariable.getMvType().getQuery();
-		mvHisList = entityManager.createQuery(query).getResultList();
-//		Events.instance().raiseEvent("evtForCreateChart", selectedProduct, marketVariableHisList);
+
+	public void setSelectedMarketVariable(MarketVariable selectedMarketVariable) {
+		this.selectedMarketVariable = selectedMarketVariable;
 	}
+
+	@Observer(value = "evtDateChange")
+	public void onMvSelection() {
+		if (selectedMarketVariable != null) {
+			query = selectedMarketVariable.getMvType().getQuery();
+			mvHisList = entityManager.createQuery(query).getResultList();
+			Events.instance().raiseEvent("evtForCreateChart",selectedMarketVariable, mvHisList);
+		}
+	}
+
 }

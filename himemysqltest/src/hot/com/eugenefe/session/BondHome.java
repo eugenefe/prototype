@@ -43,12 +43,10 @@ public class BondHome extends EntityHome<Bond> {
 		return isIdDefined() ? getInstance() : null;
 	}
 	
-	@Observer(value="selectProduct")
-	public void onSelectBond(MarketVariable selectProduct){
-		if(MarketVariableType.BOND.equals(selectProduct.getMvType())){
-//		if(selectProduct.getMvType().equals(ProductType.BOND.getType())){
-//			if(selectProduct.getMvType().equals("BOND")){	
-			setBondId(selectProduct.getMvId());
+	@Observer(value="evtProductSelection")
+	public void onSelectBond(MarketVariable selectedProduct){
+		if(MarketVariableType.BOND.equals(selectedProduct.getMvType())){
+			setBondId(selectedProduct.getMvId());
 		}
 	}
 }

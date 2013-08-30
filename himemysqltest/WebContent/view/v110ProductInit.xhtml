@@ -3,16 +3,18 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich" xmlns:p="http://primefaces.org/ui"
-  template="/templates/templatePrimeTLC.xhtml">
+  template="/templates/templatePrimeTop.xhtml">
 
-  <ui:define name="layoutLeft">
-    <ui:include src="/fragment/tableLazyMarketVariables.xhtml">
-      <ui:param name="paraLazyModels" value="#{lazyModelProduct}" />
+  <!-- <ui:define name="layoutLeft">
+  <ui:include src="/fragment/tableLazyMarketVariables.xhtml">
+      <ui:param name="paraLazyModels" value="#{lazyModelMarketVariable}" />
       <ui:param name="paraSelectOneMvType" value="#{currentMvTypeOption}" />
       <ui:param name="flagMvId" value="true" />
-      <ui:param name="flagContext" value="true" />
+      <ui:param name="flagContext" value="false" />
+      <ui:param name="flagUpdateFull" value="true" />
+      <ui:param name="flagDisablePosition" value="false" />
     </ui:include>
-  </ui:define>
+  </ui:define> -->
 
   <ui:define name="layoutCenter">
     

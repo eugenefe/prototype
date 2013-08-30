@@ -86,6 +86,7 @@ public class FullPortfolioInit {
 		fullHiers= new ArrayList<Portfolio>();
 
 		fullPorts = entityManager.createQuery(NamedQuery.PortfolioJoinReturnBssd.getQuery()).getResultList();
+		log.info("Full Port:#0,#1", NamedQuery.PortfolioJoinReturnBssd.getQuery());
 		for(Portfolio aa : fullPorts){
 			if(aa.getParentPortfolio()== null){
 				fullHiers.add(aa);

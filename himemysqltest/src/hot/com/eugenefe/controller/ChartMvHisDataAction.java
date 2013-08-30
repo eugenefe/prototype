@@ -14,19 +14,19 @@ import org.primefaces.model.chart.LineChartSeries;
 import com.eugenefe.entity.IMarketVariableHis;
 import com.eugenefe.entity.MarketVariable;
 
-@Name("productChartAction")
+@Name("chartMvHisDataAction")
 @Scope(ScopeType.CONVERSATION)
-public class ProductChartAction {
+public class ChartMvHisDataAction {
 	@Logger
 	private Log log;
 	
 	private CartesianChartModel linearModel;
 
-	public ProductChartAction() {
+	public ChartMvHisDataAction() {
 		linearModel  = new CartesianChartModel();
 		LineChartSeries series1 = new LineChartSeries(); 
 		series1.setLabel("Series 1");  
-		series1.set("0", 0);
+		series1.set(" ", 0);
 		linearModel.addSeries(series1);  
 	}
 
@@ -38,18 +38,20 @@ public class ProductChartAction {
 		this.linearModel = linearModel;
 	}
 
-	@Observer(value="afterQueryResult")
+//	@Observer(value="afterQueryResult")
+	@Observer(value="evtForCreateChart")
 	public void loadChart(MarketVariable product, List<IMarketVariableHis> marketVariableHisList){
-		log.info("afterQueryResult", marketVariableHisList.size());
+		log.info("evtForCreateChart", marketVariableHisList.size());
 		linearModel  = new CartesianChartModel();
 		LineChartSeries series1 = new LineChartSeries(); 
 		series1.setLabel(product.getMvId());  
 
 		if(product == null || marketVariableHisList == null || marketVariableHisList.isEmpty()){
-			log.info("in the load chart Event Null port ");
-			series1.set("0", 0);
+			log.info("in the load chart");
+			series1.set(" ", 0);
 		}
 		int cnt=0;
+		
 		String temp;
 		for(IMarketVariableHis aa : marketVariableHisList){
 			log.info("in the load chart11 :#0 ", aa.getBssd());

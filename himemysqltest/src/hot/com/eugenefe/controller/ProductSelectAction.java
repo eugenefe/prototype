@@ -147,7 +147,7 @@ public class ProductSelectAction {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		
 //		System.out.println("in the redirect1"+fc.getViewRoot().getViewId()+EView.MarketVariableSelect.url);
-		if (EView.Product.url.equals(fc.getViewRoot().getViewId())) {
+		if (EView.ProductDashBoard.url.equals(fc.getViewRoot().getViewId())) {
 			fc.getApplication().getNavigationHandler()
 					.handleNavigation(fc, "null", EView.ProductSelect.url+"?faces-redirect=true");
 		}

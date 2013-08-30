@@ -8,14 +8,13 @@
   <ui:define name="layoutLeft">
     
     <ui:include src="/fragment/tableLazyMarketVariables.xhtml">
-      <!-- <ui:param name="paraLazyModels" value="#{lazyModelMarketVariable}" /> -->
-      <!-- <ui:param name="paraLazyModels" value="#{tableLazyMarketVariableInit.lazyModelMarketVariable}"/> -->
-      <!-- <ui:param name="paraSelectOneMvType" value="#{tableLazyMarketVariableInit.currentMvTypeOption}" /> -->
-      <!-- <ui:param name="paraSelectOneMvType" value="#{currentMvTypeOption}"/> -->
+      <ui:param name="paraLazyModels" value="#{lazyModelMarketVariable}" />
+      <ui:param name="paraSelectOneMvType" value="#{currentMvTypeOption}"/>
       <!-- <ui:param name="flagMvId" value="false" /> -->
       <!-- <ui:param name="flagIsRiskFactor" value="false" /> -->
       <ui:param name="flagContext" value="true" />
       <ui:param name="flagUpdateFull" value="true" />
+      <ui:param name="flagDisablePosition" value="true" />
     </ui:include>
     <!-- <ui:include src="/fragment/contextMenuLazyMarketVariables.xhtml" /> -->
   </ui:define>
@@ -23,7 +22,7 @@
   <ui:define name="layoutCenter">
     <ui:include src="/fragment/tableMvHistoryData.xhtml">
       <ui:param name="paraMvHisData" value="#{mvHisList}" />
-      <!-- <ui:param name="flagMvName" value="true" /> -->
+      <ui:param name="flagMvName" value="true" />
     </ui:include>
   </ui:define>
 

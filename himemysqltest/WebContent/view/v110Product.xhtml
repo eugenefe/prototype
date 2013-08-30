@@ -7,23 +7,24 @@
 
   <ui:define name="layoutLeft">
     <ui:include src="/fragment/tableLazyMarketVariables.xhtml">
-      <ui:param name="paraLazyModels" value="#{lazyModelProduct}" />
+      <ui:param name="paraLazyModels" value="#{lazyModelMarketVariable}" />
       <ui:param name="paraSelectOneMvType" value="#{currentMvTypeOption}" />
       <ui:param name="flagMvId" value="true" />
       <ui:param name="flagContext" value="false" />
       <ui:param name="flagUpdateFull" value="true" />
+      <ui:param name="flagDisablePosition" value="false" />
     </ui:include>
   </ui:define>
 
   <ui:define name="layoutInnerTop">
-    <ui:include src="/fragment/position.xhtml" />
+    <ui:include src="/fragment/tablePosition.xhtml" >
+      <ui:param name="paraTablePosition" value="#{positions}" />
+    </ui:include>
   </ui:define>
 
   <ui:define name="layoutInnerRight">
-    <ui:include src="/fragment/bondInfo.xhtml" />
-    <!-- <ui:include src="/fragment/stockInfo.xhtml" /> -->
-
-
+    <ui:include src="/fragment/panelBondInfo.xhtml" />
+    <ui:include src="/fragment/panelStockInfo.xhtml" />
   </ui:define>
 
 
@@ -34,18 +35,19 @@
       <ui:include src="/fragment/productDashboardChart.xhtml" />    
     </p:tab> -->
 
-      <p:tab id="tabProductChart" title="#{messages.tabProductChart}" 
-        titleStyleClass="takionProdChart">
-        <ui:include src="/chart/chartProductHis.xhtml" />
-      </p:tab>
+      <!-- <p:tab id="tabProductChart" title="#{messages.tabProductChart}" titleStyleClass="takionProdChart"> -->
+      
 
       <p:tab id="tabProductHis" title="#{messages.tabProductHis}" >
         <ui:include src="/fragment/tableMvHistoryData.xhtml">
           <ui:param name="paraMvHisData" value="#{mvHisList}" />
-          <!-- <ui:param name="flagMvName" value="true" /> -->
+          <ui:param name="flagMvName" value="true" />
+          <ui:param name="flagFullData" value="true" />
         </ui:include>
+      </p:tab>
 
-
+      <p:tab id="tabProductChart" title="#{messages.tabProductChart}" >
+        <ui:include src="/chart/chartMvHisData.xhtml" />
       </p:tab>
 
       <p:tab id="tabPricingModel" title="#{messages.tabPricingModel}" >

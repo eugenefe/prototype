@@ -43,14 +43,19 @@
         </p:submenu>
 
         <p:submenu label="#{messages.submenuProduct}">
+        <p:menuitem>
+            <s:link id="menubarHoldingProduct" view="#{configAction.getViewUrl('ProductDashBoard')}"
+              value="#{conversation.viewId}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" >
+              <f:param name="flagDataTable" value="Prod" />
+             </s:link> 
+          </p:menuitem>
           <p:menuitem>
             <s:link id="menubarAllProduct" view="#{configAction.getViewUrl('ProductSelect')}"
-              value="#{messages.menubarProduct}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
+              value="#{messages.menubarProduct}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" >
+              <f:param name="flagDataTable" value="Prod" />
+             </s:link> 
           </p:menuitem>
-          <p:menuitem>
-            <s:link id="menubarHoldingProduct" view="#{configAction.getViewUrl('Product')}"
-              value="#{conversation.viewId}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
-          </p:menuitem>
+          
         </p:submenu>
 
         <p:separator />
@@ -139,7 +144,7 @@
 
 
           <h:outputText value="#{messages.baseDate}:" />
-          <p:calendar id="endDate" value="#{basedateBean.date1}" showButtonPanel="true" pattern="yyyy/MM/dd"
+          <p:calendar id="baseDate" value="#{basedateBean.baseDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
             navigator="true">
             <p:ajax event="dateSelect" listener="#{basedateBean.handleDateSelect}" update="@(form) " />
           </p:calendar>

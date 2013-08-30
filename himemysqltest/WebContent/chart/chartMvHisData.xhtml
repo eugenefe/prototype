@@ -3,15 +3,22 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
-  <h:form id="formProductChart">
+  <h:form id="formMvHisDataChart">
   <!-- <p:panel id="panelProductChart" toggleable="true" header="#{messages.productPriceChart}"> -->
-  <p:panel id="panelProductChart" >
-      <p:lineChart id="linearProduct" title="#{messages.productPriceChart}" 
-        value="#{productChartAction.linearModel}"   
+  
+  <!-- <p:panel id="panelMvHisDataChart" >
+      <p:lineChart id="linearProduct" title="#{messages.mvHisDataChart}" 
+        value="#{chartMvHisDataAction.linearModel}"  
         showMarkers="false"
         zoom="true"
         legendPosition="ne"  xaxisAngle="-45"
         style="height:100%;" />
-  </p:panel>
+  </p:panel> -->
+  <p:lineChart id="linearProduct" title="#{messages.mvHisDataChart}" 
+        value="#{chartMvHisDataAction.linearModel}"  
+        showMarkers="false"
+        zoom="true"
+        legendPosition="ne"  xaxisAngle="-45"
+        style="height:100%;" />
   </h:form>
 </ui:composition>

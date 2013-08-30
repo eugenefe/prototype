@@ -8,74 +8,98 @@ public enum MarketVariableType {
 			"BOND"
 			,true
 			,"IR"
-			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}"
+			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	,STOCK(
 			"STOCK"
 			,true
 			,"EQ"
-			,"select a from StockHis a where a.id.stockId =#{selectedMarketVariable.mvId}"
+			," select a from StockHis a where a.id.stockId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "		
 	)
 	,FUTURES(
 			"FUTURES"
 			,true
 			,"NONE"
-			,"select a from  FuturesHis a where a.id.futuresId=#{selectedMarketVariable.mvId}"
+			,"select a from  FuturesHis a where a.id.futuresId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	,OPTION(
 			"OPTION"
 			,true
 			,"NONE"
-			,"select a from  OptionHis a where a.id.optionId=#{selectedMarketVariable.mvId}"
-	)
+			,"select a from  OptionHis a where a.id.optionId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
+			)
 	,ETF(
 			"ETF"
 			,true			
 			,"NONE"
-			,"select a from  EtfHis a where a.id.etfId=#{selectedMarketVariable.mvId}"
+			,"select a from  EtfHis a where a.id.etfId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	,ELW(
 			"ELW"
 			,true			
 			,"NONE"
-			,"select a from  OptionHis a where a.id.optionId=#{selectedMarketVariable.mvId}"
+			,"select a from  OptionHis a where a.id.optionId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	,ELS(
 			"ELS"
 			,true
 			,"NONE"
-			,"select a from BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}"
+			,"select a from BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	,SWAP(
 			"SWAP"
 			,true
 			,"NONE"
-			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}"
+			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	,DEPOSIT(
 			"DEPOSIT"
 			,true
 			,"NONE"
-			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}"
+			,"select a from  BondHis a where a.id.bondId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	
 	,FX_RATE(
 			"FX_RATE"
 			,false
 			,"NONE"
-			,"select a from  FxRateHis a where a.id.fxId=#{selectedMarketVariable.mvId}"
+			,"select a from  FxRateHis a where a.id.fxId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	,INT_RATE(
 			"INT_RATE"
 			,false
 			,"NONE"
-			,"select a from  IntRateHis a where a.id.irId=#{selectedMarketVariable.mvId}"
+			,"select a from  IntRateHis a where a.id.irId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	,S_INDEX(
 			"S_INDEX"
 			,false
 			,"NONE"
-			,"select a from  StockIndexHis a where a.id.stIndexId=#{selectedMarketVariable.mvId}"
+			,"select a from  StockIndexHis a where a.id.stIndexId=#{selectedMarketVariable.mvId}" +
+					" and a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd} "	
 	)
 	;
 	

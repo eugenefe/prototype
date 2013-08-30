@@ -11,7 +11,7 @@ public enum EView {
 //	,ViewRfHistoryData("/view/v102ViewRfHistoryData.xhtml")
 //	,ViewProdHistoryData("/view/v103ViewProdHistoryData.xhtml")
 //	,MarketVariableSelect("/view/v100MarketVariable.xhtml")
-	,Product("/view/v110ProductInit.xhtml")
+	,ProductDashBoard("/view/v110ProductInit.xhtml")
 	,ProductSelect("/view/v110Product.xhtml")
 	,RiskFactor("/view/v120RiskFactor.xhtml")
 	,VcvMatrix("/view/v130VcvMatrix.xhtml")

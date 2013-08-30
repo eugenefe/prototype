@@ -23,7 +23,9 @@ import org.jboss.seam.framework.CurrentDate;
 import org.jboss.seam.log.Log;
 import org.primefaces.event.SelectEvent;
 
+import com.eugenefe.enums.EMaturity;
 import com.eugenefe.session.BasedateList;
+import com.eugenefe.util.FnCalendar;
 
 
 @Name("basedateBean")
@@ -37,41 +39,49 @@ public class BaseDateBean implements Serializable {
 	@In(create = true)
 	private BasedateList basedateList;
 
-	private Date date1;
+	private FnCalendar cal;
+	
+	private Date baseDate;
 	private Date stDate;
 	private Date endDate;
+
+//	@Out(scope=ScopeType.SESSION)
+	private String bssd;
 	private String stBssd;
 	private String endBssd;
 	
+	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");  
 	
-//	@Out(scope=ScopeType.SESSION)
-	private String bssd;
 	
 	public BaseDateBean() {
 	}
 
 	@Create
 	public void init(){
-		date1 = Calendar.getInstance().getTime();
-		stDate = Calendar.getInstance().getTime() ;
-		endDate =Calendar.getInstance().getTime();
-//		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");  
-	    bssd = format.format(date1);
+		cal = FnCalendar.getInstance();
+//		cal = new FnCalendar(2013, 4, 29);
+//		log.info("Calendar : #0 , #1", cal.getTime());
+		
+		baseDate = cal.getTime();
+		endDate =cal.getTime();
+		stDate = cal.minusTerm(EMaturity.M03, true).getTime();
+
+		bssd = format.format(cal.getTime());
 	    stBssd = format.format(stDate);
 	    endBssd = format.format(endDate);
-//	    bssd =  "20130304";
 					
 	}
-	public Date getDate1() {
-		return date1;
+	
+	
+	public Date getBaseDate() {
+		return baseDate;
 	}
 
-	public void setDate1(Date date1) {
-		this.date1 = date1;
-		
+	public void setBaseDate(Date baseDate) {
+		this.baseDate = baseDate;
 	}
-	
+
 	public String getBssd() {
 		return bssd;
 	}
@@ -127,6 +137,19 @@ public class BaseDateBean implements Serializable {
         Events.instance().raiseEvent(eventName, bssd);
         log.info("End of ChangeBssd Event");
         log.info("handleDateSelect Id2 :#0,#1", Conversation.instance().getId(), Conversation.instance().isLongRunning());
+	}
+	
+	public void handleStartDateSelect(SelectEvent event){
+		stBssd = format.format(event.getObject());
+		log.info("handleStartDateSelect : #0,#1", stBssd,stDate);
+        Events.instance().raiseEvent("evtDateChange", stBssd);
+//        log.info("handleStartDateSelect1 : #0,#1", stBssd,stDate);
+	}
+	
+	public void handleEndDateSelect(SelectEvent event){
+        endBssd = format.format(event.getObject());
+		log.info("handleEndDateSelect : #0,#1", endBssd,endDate);
+        Events.instance().raiseEvent("evtDateChange", endBssd);
 	}
 
 	

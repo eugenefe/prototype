@@ -7,8 +7,8 @@
   
   <h:form id="formBondInfo">
   <!-- <p:panel> -->
-
-    <p:panelGrid id="panelGridBondInfo" columns="2" rendered="#{selectedProduct.mvType =='BOND'}">
+    
+    <p:panelGrid id="panelGridBondInfo" columns="2" rendered="#{selectedMarketVariable.mvType =='BOND'}">
         <p:outputLabel value="#{messages.productName}" styleClass="takionLabel" style="float:right"/>
         <p:outputLabel value="#{selectBond.bondId}" />
         
