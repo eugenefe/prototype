@@ -4,45 +4,65 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
-  <h:form id="formTableVcvMatrix">
+  <h:form id="formVcvMatrix">
 
     <p:panelGrid columns="6">
-      <p:outputLabel value="vcvMethod"/>
+      <p:outputLabel value="#{messages.vcvMethod}" />
+
+      <p:selectOneMenu value="#{flagBean.vcvMethod}" style="width:100px">
+        <s:selectItems value="#{vcvMatrixList.resultList.{t|t.vcvId}}" var="_vcv" label="#{_vcv}" />
+        <p:ajax event="change" process="@this" update="@(form)"
+            listener="#{tableRfVcvMatrixInit.loadMatrix()}" />
+      </p:selectOneMenu>
       
-      <p:outputLabel value="matrixType"/>
+      <!-- <p:outputLabel value="#{messages.showRfType}" />
+      <p:selectOneMenu value="#{flagVcvRfType}" style="width:100px">
+        <s:selectItems value="#{rfType}" var="_group" label="#{_group.type}" />
+        <s:convertEnum />
+      </p:selectOneMenu> -->
       
+      <p:outputLabel value="#{messages.vcvType}" />
+      <p:selectOneRadio id="customRadio" value="#{flagBean.flagVcvType}" layout="lineDirection"  plain="true" >
+        <f:selectItem itemLabel="#{messages.volatility}" itemValue="1" />
+        <f:selectItem itemLabel="#{messages.correlation}" itemValue="2" />
+        <p:ajax event="valueChange" process="@this" update="@(form)"
+            listener="#{tableRfVcvMatrixInit.onVcvTypeChange()}" />
+      </p:selectOneRadio>
     </p:panelGrid>
-    
-    <p:contextMenu for="formTableVcvMatrix">
-      <p:menuitem value="#{messages.selectRiskFactors}" oncomplete="wgDlgRfSelect.show()"  action="#{riskFactorPickAction.loadPickList()}"  />
-      <p:menuitem value="#{messages.exportVcvMatrix}">
-        <!-- <p:dataExporter type="csv" target="tableVcvMatrix" fileName="VcvMatrix" /> -->
+
+    <p:contextMenu for="formVcvMatrix">
+      <p:menuitem value="#{messages.selectRiskFactors}" oncomplete="wgDlgRfSelect.show()"
+        action="#{pickListRfAction.loadPickList()}" />
+      <p:menuitem >
+       <h:commandLink value="#{messages.exportToExcel}" styleClass="ui-menuitem-link ui-corner-all">
+        <!-- <p:graphicImage value="/img/primefaces/excel.png" /> -->
+        <p:dataExporter type="xls" target="tableVcvMatrix" fileName="#{messages.vcvMatrix}_#{basedateBean.bssd}" />
+      </h:commandLink>
       </p:menuitem>
     </p:contextMenu>
     
-    <p:dataTable id="tableVcvMatrix"  var="_vcv" value="#{pivotList}" 
-      widgetVar="wgTableVcvMatrix"
-      emptyMessage="#{messages.noDataFound}" 
-      resizableColumns="true" 
-      liveResize="false"
-      style="height :100%;">
+    <p:dataTable id="tableVcvMatrix" var="_vcv" value="#{pivotList1}" widgetVar="wgTableVcvMatrix"
+      emptyMessage="#{messages.noDataFound}" resizableColumns="true" liveResize="false" style="height :100%;">
 
- 
-      <p:column id="colRfId" headerText="#{messages.colRiskFactorId}" width="100">
+
+      <p:column id="colRfId" width="100">
+        <f:facet name="header">  
+           <h:outputText value="#{messages.colRiskFactorId}" />  
+         </f:facet>
         <h:outputText value="#{_vcv.label}" />
       </p:column>
-      
-      <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex"  width="80">
+
+      <p:columns value="#{dynCol}" var="column" columnIndexVar="colIndex" width="80">
         <f:facet name="header">  
-                #{column.header}  
+                <h:outputText value="#{column.header}" />  
          </f:facet>
-       
+
         <h:outputText value="#{_vcv.contentMap[column.property]}" style="float:right">
           <f:convertNumber pattern="#,###.##" />
         </h:outputText>
       </p:columns>
-      
-     <!-- <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex"  width="80">
+
+      <!-- <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex"  width="80">
      <p:columns value="#{riskFactorInit.vcvMatrixColumns}" var="column" columnIndexVar="colIndex" 
        sortBy="#{_vcv.contentMap[column.property]}"  width="100">
         <f:facet name="header">  

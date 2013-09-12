@@ -76,6 +76,6 @@
   
   <session-config> 
   <!-- HTTP Session timeout, in minutes --> 
-  <session-timeout>10</session-timeout> 
+  <session-timeout>3</session-timeout> 
 </session-config>
 </web-app>

@@ -3,6 +3,7 @@ package com.eugenefe.entity;
 // Generated Apr 10, 2013 4:09:22 PM by Hibernate Tools 3.4.0.CR1
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,10 +17,16 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -28,6 +35,7 @@ import org.hibernate.annotations.Parameter;
  */
 @Entity
 @Table(name = "INT_RATE")
+//@BatchSize(size= 5)
 public class IntRate implements java.io.Serializable {
 
 	private String irId;
@@ -47,6 +55,7 @@ public class IntRate implements java.io.Serializable {
 	private List<IrCurve> irCurves ;
 //	private Set<IrCurve> irCurves = new HashSet<IrCurve>(0);
 //	private Set<InterateRateHis> interateRateHises = new HashSet<InterateRateHis>(0);
+	private List<IntRateHis> intRateHisList = new ArrayList<IntRateHis>();
 
 	public IntRate() {
 	}
@@ -222,7 +231,20 @@ public class IntRate implements java.io.Serializable {
 		this.irCurves = irCurves;
 	}
 
+	@OneToMany(mappedBy="interestRate", fetch=FetchType.LAZY)
+//	@Fetch(FetchMode.SUBSELECT)
+//	@BatchSize(size= 5)
+	@OrderBy("id.bssd")
+	@Filter(name="filterBtwnDate" , condition=" BSSD >= :stBssd  and BSSD <=:endBssd")
+	public List<IntRateHis> getIntRateHisList() {
+		return intRateHisList;
+	}
 
+	public void setIntRateHisList(List<IntRateHis> intRateHisList) {
+		this.intRateHisList = intRateHisList;
+	}
+
+	
 
 //	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "interestRates")
 //	public Set<IrCurve> getIrCurves() {

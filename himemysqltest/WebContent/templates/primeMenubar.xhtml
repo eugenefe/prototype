@@ -59,14 +59,24 @@
         </p:submenu>
 
         <p:separator />
+        <p:menuitem value="#{messages.menubarIrCurve}" url="#{messages.url}/view/v140IrCurve.seam" icon="ui-icon-arrowreturnthick-1-w">
+          <!-- <s:link id="menubarIrCurve" view="#{configAction.getViewUrl('VcvMatrix')}"
+            value="#{messages.menubarIrCurve}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" >
+          </s:link> -->
+        </p:menuitem>
+        
         <p:menuitem>
           <s:link id="menubarVcvMatrix" view="#{configAction.getViewUrl('VcvMatrix')}"
-            value="#{messages.menubarVcvMatrix}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
+            value="#{messages.menubarVcvMatrix}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" >
+          </s:link>
         </p:menuitem>
         <p:menuitem>
           <s:link id="menubarFxMatrix" view="#{configAction.getViewUrl('ForexMatrix')}"
             value="#{messages.menubarFxMatrix}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
         </p:menuitem>
+        
+         <p:menuitem value="Workspace" url="http://localhost:8080/himemysqltest/view/v130RfVcvMatrix.seam" />
+         <p:menuitem value="Workspace1" url="#{messages.url2}#{configAction.getViewUrl('VcvMatrix')}" />
       </p:submenu>
 
 

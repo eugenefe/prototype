@@ -3,7 +3,9 @@ package com.eugenefe.util;
 import java.math.BigDecimal;
 import java.util.Map;
 
-public class CrossTableModel {
+import org.primefaces.model.SelectableDataModel;
+
+public class CrossTableModel  {
 	private String label;
 	private Map<String, BigDecimal> contentMap;
 	

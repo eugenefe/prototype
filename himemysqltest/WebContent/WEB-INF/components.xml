@@ -29,7 +29,17 @@
 
   <persistence:managed-persistence-context name="entityManager" auto-create="true"
     persistence-unit-jndi-name="java:/himemysqltestEntityManagerFactory" />
-
+  
+  
+  <!-- <persistence:hibernate-session-factory name="hibernateSessionFactory"/>
+  <persistence:managed-hibernate-session name="hibernateSession" 
+                                auto-create="true"
+                  session-factory-jndi-name="java:/hibernateSessionFactory"/> -->
+  <!-- <persistence:managed-hibernate-session name="hibernateSession" 
+                                auto-create="true"
+                  session-factory-jndi-name="java:/hibernateSessionFactory"/> -->                    
+  <factory name="session" auto-create="true" scope="stateless" value="#{entityManager.delegate}"/>
+         
   <drools:rule-base name="securityRules">
     <drools:rule-files>
       <value>/security.drl</value>
@@ -61,4 +71,10 @@
     </core:bundle-names>
   </core:resource-loader>
  -->
+    
+    <!-- <factory name="radioFlag" value="1" scope="SESSION" /> -->
+    
+ <!-- <component name="flagBean">
+  <property name="flagVcvType">1</property>
+ </component> -->
 </components>

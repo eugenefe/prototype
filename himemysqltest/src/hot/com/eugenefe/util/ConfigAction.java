@@ -9,6 +9,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
@@ -32,6 +33,16 @@ public class ConfigAction {
 	
 //	private List<EView> viewUrl ;
 	private String viewUrl;
+	
+//	@Out(scope=ScopeType.SESSION)
+//	@Out
+	private String flagVcvType;
+	public String getFlagVcvType() {
+		return flagVcvType;
+	}
+	public void setFlagVcvType(String flagVcvType) {
+		this.flagVcvType = flagVcvType;
+	}
 
 //	@Out
 //	private Integer flag;
@@ -42,11 +53,12 @@ public class ConfigAction {
 //		this.flag = flag;
 //	}
 	
+	
 	public ConfigAction(){
 //		productInfoXhtml = "/fragment/bondInfo.xhtml";
-		
-		
+//		flagVcvType ="1";
 	}
+
 	public String getProductInfoXhtml() {
 		return productInfoXhtml;
 	}
@@ -143,5 +155,9 @@ public class ConfigAction {
 			break;
 		}
     }  
+    
+    @Create
+    public void init(){
+    }
 
 }

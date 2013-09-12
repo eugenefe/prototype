@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+//import org.hibernate.annotations.Entity;
+import org.hibernate.annotations.FilterJoinTable;
+
 import com.eugenefe.util.MarketVariableType;
 
 /**
@@ -62,6 +65,7 @@ public class IntRateHis implements java.io.Serializable, IMarketVariableHis {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BSSD", nullable = false, insertable = false, updatable = false)
 	@NotNull
+//	@FilterJoinTable(name="filterBtwnDate" , condition = "id.bssd between :stBssd and : endBssd")
 	public Basedate getBasedate() {
 		return this.basedate;
 	}

@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+  <h:form id="formIrcTsByCurve">
+
+    <p:dataTable id="tableIrcTsByCurve" var="_irc" value="#{tableIrCurveInit.pivotTableByCurve}" widgetVar="wgTableIrcTs"
+      emptyMessage="#{messages.noDataFound}" resizableColumns="true" liveResize="false" 
+      selection="#{tableIrCurveHisAction.selectedTableModel}"      rowKey="#{_irc.label}"
+      paginator="true" paginatorPosition="bottom" rows="15"
+      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+      rowsPerPageTemplate="15,25,50">
+      
+      <p:ajax event="rowSelectCheckbox" listener="#{chartIrcHisAction.loadChart()}" update="@(form)"/>
+      <p:ajax event="rowUnselectCheckbox" listener="#{chartIrcHisAction.loadChart()}" update="@(form)"/>
+      <p:ajax event="toggleSelect" listener="#{chartIrcHisAction.loadChart()}" update="@(form)"/>
+
+      <p:column selectionMode="multiple"  headerText="All" exportable="false" width="6" style="width:2%" />
+      
+      <p:column id="colBssd" sortBy="#{_irc.label}" width="50">
+        <f:facet name="header">
+          <h:outputText value="#{messages.ircId}" />
+        </f:facet>
+        <h:outputText value="#{_irc.label}" />
+      </p:column>
+
+      <p:columns value="#{tableIrCurveInit.ircTsHeader}" var="column"
+        sortBy="#{_irc.contentMap[column.property]}" columnIndexVar="colIndex" width="40">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+
+        <h:outputText value="#{_irc.contentMap[column.property]}" style="float:right">
+          <f:convertNumber pattern="#,###.####" />
+        </h:outputText>
+      </p:columns>
+    </p:dataTable>
+  </h:form>
+</ui:composition>

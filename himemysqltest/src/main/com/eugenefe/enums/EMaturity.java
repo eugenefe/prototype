@@ -6,7 +6,7 @@ import java.util.Calendar;
 //import org.slf4j.LoggerFactory;
 
 //public enum MaturityE implements org.hibernate.usertype.UserType{
-public enum EMaturity{ 
+public enum EMaturity implements Comparable<EMaturity> { 
 	
 	SPOT		(1,Calendar.DATE, 1),
 	D001		(1,Calendar.DATE, 1),
@@ -79,4 +79,10 @@ public enum EMaturity{
 		}
 		return this;
 	}
+	
+//	@Override
+//	public public int compareTo(EMaturity other){
+//		return ((Integer)this.numDays).compareTo(other.numDays);
+//	}
+	
 }

@@ -19,7 +19,7 @@
         <var>msg</var>
      </resource-bundle> -->
   </application>
-  
+ 
 <!--   <converter>
         <converter-id>portConverter</converter-id>
         <converter-class>com.eugenefe.converter.PortfolioConverter</converter-class>
@@ -34,5 +34,7 @@
         <converter-class>com.eugenefe.converter.RiskFactorPickListConverter</converter-class>
     </converter> -->
     
-    
+    <!-- <lifecycle>
+    <phase-listener>com.eugenefe.util.LifeCycleListener</phase-listener>
+</lifecycle> -->
 </faces-config>

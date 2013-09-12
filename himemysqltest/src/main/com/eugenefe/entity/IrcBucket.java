@@ -12,10 +12,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.eugenefe.enums.EMaturity;
 
 @Entity
 @Table(name = "IRC_BUCKET_DETAIL")
+@BatchSize(size=5)
 public class IrcBucket implements java.io.Serializable {
 	private IrcBucketId id;
 	private IrCurve ircId;

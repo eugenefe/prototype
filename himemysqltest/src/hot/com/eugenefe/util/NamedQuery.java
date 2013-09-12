@@ -19,7 +19,7 @@ public enum NamedQuery {
 	
 	,Products ("select a from MarketVariable a where a.productYN ='Y'")
 	
-	,RiskFactors ("select a from MarketVariable a where a.riskFactorYN ='Y'")
+	,RiskFactors ("select a from MarketVariable a where a.riskFactorYN ='Y' order by a.mvId")
 	
 	,BondHisList("select a from BondHis a")
 	
@@ -31,7 +31,11 @@ public enum NamedQuery {
 	
 	,VcvMatrixHisList("select a from VcvMatrixHis a ")
 	
-	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.bssd = #{basedateBean.bssd} ")
+//	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.vcvId = #{pickListRfActionaa.vcvId} and a.id.bssd = #{basedateBean.bssd}  ")
+	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.vcvId = #{flagBean.vcvMethod} and a.id.bssd = #{basedateBean.bssd} ")
+	,VcvMatrixHisBtwn("select a from VcvMatrixHis a where a.id.bssd > #{basedateBean.stBssd} " +
+					" and a.id.bssd <=#{basedateBean.endBssd}")
+//	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.vcvId = 'SMA_1DAY' and a.id.bssd = #{basedateBean.bssd}  ")
 	;
 	
 	private String query;

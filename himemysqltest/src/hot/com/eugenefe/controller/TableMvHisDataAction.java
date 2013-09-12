@@ -35,7 +35,8 @@ public class TableMvHisDataAction {
 	private Log log;
 	@In
 	private EntityManager entityManager;
-
+	
+	
 //	private List<MarketVariable> marketVariables;
 
 	@In(required = false)

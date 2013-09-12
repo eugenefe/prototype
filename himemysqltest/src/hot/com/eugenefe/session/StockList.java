@@ -8,11 +8,11 @@ import java.util.Arrays;
 @Name("stockList")
 public class StockList extends EntityQuery<Stock> {
 
-	private static final String EJBQL = "select a from Stock a";
+	private static final String EJBQL = "select stock from Stock stock";
 
 	private static final String[] RESTRICTIONS = {
-			"lower(bizunit.orgId) like lower(concat(#{bizunitList.bizunit.orgId},'%'))",
-			"lower(bizunit.orgName) like lower(concat(#{bizunitList.bizunit.orgName},'%'))", };
+			"lower(stock.stockId) like lower(concat(#{stockList.stock.stockId},'%'))",
+			 };
 
 	private Stock stock = new Stock();
 

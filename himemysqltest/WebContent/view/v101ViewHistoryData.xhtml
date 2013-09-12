@@ -6,12 +6,9 @@
   template="/templates/templatePrimeTLC.xhtml">
 
   <ui:define name="layoutLeft">
-    
     <ui:include src="/fragment/tableLazyMarketVariables.xhtml">
       <ui:param name="paraLazyModels" value="#{lazyModelMarketVariable}" />
       <ui:param name="paraSelectOneMvType" value="#{currentMvTypeOption}"/>
-      <!-- <ui:param name="flagMvId" value="false" /> -->
-      <!-- <ui:param name="flagIsRiskFactor" value="false" /> -->
       <ui:param name="flagContext" value="true" />
       <ui:param name="flagUpdateFull" value="true" />
       <ui:param name="flagDisablePosition" value="true" />

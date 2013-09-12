@@ -80,7 +80,7 @@ public enum MarketVariableType {
 	,FX_RATE(
 			"FX_RATE"
 			,false
-			,"NONE"
+			,"FX"
 			,"select a from  FxRateHis a where a.id.fxId=#{selectedMarketVariable.mvId}" +
 					" and a.id.bssd > #{basedateBean.stBssd} " +
 					" and a.id.bssd <=#{basedateBean.endBssd} "	
@@ -88,7 +88,7 @@ public enum MarketVariableType {
 	,INT_RATE(
 			"INT_RATE"
 			,false
-			,"NONE"
+			,"IR"
 			,"select a from  IntRateHis a where a.id.irId=#{selectedMarketVariable.mvId}" +
 					" and a.id.bssd > #{basedateBean.stBssd} " +
 					" and a.id.bssd <=#{basedateBean.endBssd} "	
@@ -96,7 +96,7 @@ public enum MarketVariableType {
 	,S_INDEX(
 			"S_INDEX"
 			,false
-			,"NONE"
+			,"EQ"
 			,"select a from  StockIndexHis a where a.id.stIndexId=#{selectedMarketVariable.mvId}" +
 					" and a.id.bssd > #{basedateBean.stBssd} " +
 					" and a.id.bssd <=#{basedateBean.endBssd} "	
@@ -124,6 +124,8 @@ public enum MarketVariableType {
 	}
 
 	public String getQuery(){
+//		return this.query + " and a.id.bssd > #{basedateBean.stBssd} " +
+//							" and a.id.bssd <=#{basedateBean.endBssd} " ;	
 		return this.query;
 	}
 	public String getRfType() {
