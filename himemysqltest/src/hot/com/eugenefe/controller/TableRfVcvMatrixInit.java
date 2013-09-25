@@ -34,11 +34,12 @@ import org.primefaces.model.DualListModel;
 import org.primefaces.model.LazyDataModel;
 
 import com.eugenefe.converter.LazyModelMarketVariable;
+import com.eugenefe.converter.LazyModelVcvHis;
 import com.eugenefe.entity.MarketVariable;
 import com.eugenefe.entity.VcvMatrix;
 import com.eugenefe.entity.VcvMatrixHis;
 import com.eugenefe.util.ColumnModel;
-import com.eugenefe.util.CrossTableModel;
+import com.eugenefe.util.CrossTableModelOld;
 import com.eugenefe.util.FlagBean;
 import com.eugenefe.util.MarketVariableType;
 import com.eugenefe.util.NamedQuery;
@@ -68,12 +69,14 @@ public class TableRfVcvMatrixInit {
 	private List<ColumnModel> vcvMatrixColumns;
 	
 //	@Out(scope=ScopeType.CONVERSATION, required=false)
-	private List<CrossTableModel> pivotTable;
+	private List<CrossTableModelOld> pivotTable;
 	
 //	@Out
 	private List<VcvMatrixHis> allVcvMatrix;
 	
 	private List<VcvMatrixHis> allVcvHis;
+	
+	private LazyDataModel<VcvMatrixHis> lazyModelVcvHis;
 	
 	public TableRfVcvMatrixInit() {
 		System.out.println("Construction TableRfVcvMatrixInit");
@@ -102,10 +105,10 @@ public class TableRfVcvMatrixInit {
 		this.vcvMatrixColumns = vcvMatrixColumns;
 	}
 	
-	public List<CrossTableModel> getPivotTable() {
+	public List<CrossTableModelOld> getPivotTable() {
 		return pivotTable;
 	}
-	public void setPivotTable(List<CrossTableModel> pivotTable) {
+	public void setPivotTable(List<CrossTableModelOld> pivotTable) {
 		this.pivotTable = pivotTable;
 	}
 	public List<VcvMatrixHis> getAllVcvMatrix() {
@@ -119,6 +122,12 @@ public class TableRfVcvMatrixInit {
 	}
 	public void setAllVcvHis(List<VcvMatrixHis> allVcvHis) {
 		this.allVcvHis = allVcvHis;
+	}
+	public LazyDataModel<VcvMatrixHis> getLazyModelVcvHis() {
+		return lazyModelVcvHis;
+	}
+	public void setLazyModelVcvHis(LazyDataModel<VcvMatrixHis> lazyModelVcvHis) {
+		this.lazyModelVcvHis = lazyModelVcvHis;
 	}
 	//*******************************************
 //	@Observer("changeBssd_/view/v130RfVcvMatrix.xhtml")
@@ -154,6 +163,7 @@ public class TableRfVcvMatrixInit {
 		
 		allRiskFactors = entityManager.createQuery(NamedQuery.RiskFactors.getQuery()).getResultList();
 		
+		
 		for(MarketVariable bb : allRiskFactors){
 //			log.info("MV Type : #0, #1", bb.getMvType().getRfType(), flagVcvRfType);
 			if(bb.getMvType().getRfType().equals(flagVcvRfType)){
@@ -169,8 +179,10 @@ public class TableRfVcvMatrixInit {
 		allVcvMatrix = entityManager.createQuery(NamedQuery.VcvMatrixHisBssd.getQuery()).getResultList();
 		allVcvHis = entityManager.createQuery(NamedQuery.VcvMatrixHisBtwn.getQuery()).getResultList();
 		
-		log.info("All VcvMatrix: #{pickListRfActionaa.vcvId}");
-		pivotTable = new ArrayList<CrossTableModel>();
+		lazyModelVcvHis = new LazyModelVcvHis(allVcvHis);
+		
+		log.info("All VcvMatrix: #{pickListRfActionaa.vcvId}, #0", allVcvMatrix.size());
+		pivotTable = new ArrayList<CrossTableModelOld>();
 		
 		for(MarketVariable aa : pickRiskFactors){
 			Map<String, BigDecimal> tempMap =new HashMap<String, BigDecimal>() ;
@@ -186,11 +198,11 @@ public class TableRfVcvMatrixInit {
 					}
 				}
 			}
-			pivotTable.add(new CrossTableModel(aa.getMvName(), tempMap));
+			pivotTable.add(new CrossTableModelOld(aa.getMvName(), tempMap));
 		}
 	}
 
-	@Observer("evtDateChange")
+	@Observer("evtDateChange_/view/v130RfVcvMatrix.xhtml")
 	public void onDateChange() {
 		resetTable();
 		loadMatrix();

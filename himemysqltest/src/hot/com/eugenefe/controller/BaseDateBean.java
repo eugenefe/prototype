@@ -29,17 +29,29 @@ import com.eugenefe.util.FnCalendar;
 
 
 @Name("basedateBean")
-@Scope(ScopeType.SESSION)
-//@Scope(ScopeType.CONVERSATION)
+//@Scope(ScopeType.SESSION)
+@Scope(ScopeType.CONVERSATION)
 public class BaseDateBean implements Serializable {
 
 	@Logger
 	private Log log;
 	
-	@In(create = true)
-	private BasedateList basedateList;
+	@In
+	private BasedateSession basedateSession;
+	@In(value = "#{conversation.viewId}")
+	private String viewId;
+//	public BasedateSession getBasedateSession() {
+//		return basedateSession;
+//	}
+//	public void setBasedateSession(BasedateSession basedateSession) {
+//		this.basedateSession = basedateSession;
+//	}
+	
+//	@In(create = true)
+//	private BasedateList basedateList;
 
-	private FnCalendar cal;
+
+//	private FnCalendar cal;
 	
 	private Date baseDate;
 	private Date stDate;
@@ -57,22 +69,32 @@ public class BaseDateBean implements Serializable {
 	public BaseDateBean() {
 	}
 
-	@Create
+//	@Create
 	public void init(){
-		cal = FnCalendar.getInstance();
+//		cal = FnCalendar.getInstance();
 //		cal = new FnCalendar(2013, 4, 29);
 //		log.info("Calendar : #0 , #1", cal.getTime());
 		
-		baseDate = cal.getTime();
-		endDate =cal.getTime();
-		stDate = cal.minusTerm(EMaturity.M03, true).getTime();
-
-		bssd = format.format(cal.getTime());
-	    stBssd = format.format(stDate);
-	    endBssd = format.format(endDate);
+//		baseDate = cal.getTime();
+//		endDate =cal.getTime();
+//		stDate = cal.minusTerm(EMaturity.M03, true).getTime();
+//
+//		bssd = format.format(cal.getTime());
+//	    stBssd = format.format(stDate);
+//	    endBssd = format.format(endDate);
 					
 	}
 	
+	@Create
+	public void initNew(){
+		baseDate = basedateSession.getBaseDate();
+		stDate = basedateSession.getStDate();
+		endDate = basedateSession.getEndDate();
+		
+		bssd = basedateSession.getBssd();
+	    stBssd = basedateSession.getStBssd();
+	    endBssd = basedateSession.getEndBssd();
+	}
 	
 	public Date getBaseDate() {
 		return baseDate;
@@ -128,10 +150,13 @@ public class BaseDateBean implements Serializable {
 		log.info("handleDateSelect Id1 :#0,#1", Conversation.instance().getId(), Conversation.instance().isLongRunning());
 		log.info("Start ChangeBssd Event");
 		FacesContext facesContext = FacesContext.getCurrentInstance();  
+		
         bssd = format.format(event.getObject());
+        
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", bssd));
         
-        String eventName = "changeBssd_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
+//        String eventName = "changeBssd_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        String eventName = "changeBssd_" + viewId;
         log.info("View ID : #0",eventName);
         
         Events.instance().raiseEvent(eventName, bssd);
@@ -141,15 +166,20 @@ public class BaseDateBean implements Serializable {
 	
 	public void handleStartDateSelect(SelectEvent event){
 		stBssd = format.format(event.getObject());
-		log.info("handleStartDateSelect : #0,#1", stBssd,stDate);
-        Events.instance().raiseEvent("evtDateChange", stBssd);
+//		String eventName = "evtDateChange_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
+		String eventName = "evtDateChange_" + viewId;
+		
+		log.info("handleStartDateSelect : #0,#1", stBssd,eventName);
+        Events.instance().raiseEvent(eventName, stBssd);
 //        log.info("handleStartDateSelect1 : #0,#1", stBssd,stDate);
 	}
 	
 	public void handleEndDateSelect(SelectEvent event){
         endBssd = format.format(event.getObject());
+//        String eventName = "evtDateChange_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        String eventName = "evtDateChange_" + viewId;
 		log.info("handleEndDateSelect : #0,#1", endBssd,endDate);
-        Events.instance().raiseEvent("evtDateChange", endBssd);
+        Events.instance().raiseEvent(eventName, endBssd);
 	}
 
 	

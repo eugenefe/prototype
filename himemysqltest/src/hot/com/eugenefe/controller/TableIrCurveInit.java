@@ -51,13 +51,13 @@ import com.eugenefe.enums.EMaturity;
 import com.eugenefe.session.IrCurveList;
 import com.eugenefe.util.ColumnModel;
 import com.eugenefe.util.ComparatorEMaturity;
-import com.eugenefe.util.CrossTableModel;
+import com.eugenefe.util.CrossTableModelOld;
 import com.eugenefe.util.FlagBean;
 import com.eugenefe.util.MarketVariableType;
 import com.eugenefe.util.NamedQuery;
 
 
-@Name("tableIrCurveInit")
+@Name("tableIrCurveInit1")
 @Scope(ScopeType.CONVERSATION)
 public class TableIrCurveInit {
 	@Logger
@@ -99,7 +99,7 @@ public class TableIrCurveInit {
 		this.endBssd = endBssd;
 	}
 	public TableIrCurveInit() {
-		System.out.println("Construction TableRfVcvMatrixInit");
+		System.out.println("Construction TableIrCurveInit");
 	}
 //****************Getter and Setter
 	public List<IrCurve> getIrCurveList() {
@@ -128,36 +128,45 @@ public class TableIrCurveInit {
 //		
 		log.info("Ir Curve con:#{basedateBean.stBssd}, #{basedateBean.endBssd}");
 		Filter filter = session.enableFilter("filterBtwnDate")
-//								.setParameter("stBssd", stBssd)
-				.setParameter("stBssd", "20120501")
-								.setParameter("endBssd", endBssd);
+								.setParameter("stBssd", stBssd)
+//								.setParameter("stBssd", "20120501")
+								.setParameter("endBssd", endBssd)
+				;
+		
 //		org.hibernate.Query qr1 = session.createQuery("from IrCurve");
 //		irCurveList = qr1.list();
 		
 		irCurveList = session.createQuery("from IrCurve").list();
-		log.info("Ir Curve1 :#0,#1,#2", 
-					irCurveList.get(0).getIrcName(),
-					irCurveList.get(0).getIrcBucketList().size(),
-					irCurveList.get(0).getIrcBucketList().get(0).getIntRate().getIntRateHisList().size());
 	}
-	@Observer("evtDateChange")
+	
+	
+	@Observer("evtDateChange_/view/v140IrCurve.xhtml")
 	public void onChange(){
 		session.clear();
 		loadIrCurve();
 		loadPivotTable();
 		Events.instance().raiseEvent("evtReloadIrCurve");
 	}
-	@Observer("changeBssd_/view/v140IrCurve.xhtml")
-	public void onBssdChange(){
+//	@Observer(value ={ "changeBssd_/view/v140IrCurve.xhtml", "changeBssd_/view/v800Setting.xhtml"})
+	@Observer(value ="changeBssd_/view/v145IrCurveHis.xhtml")
+	public void onBssdChange(String basedate){
+		bssd = basedate;
+		log.info("In BaseDateSession Change:#0", bssd);
 		session.clear();
 		loadIrCurve();
 		loadPivotTable();
 //		Events.instance().raiseEvent("evtReloadIrCurve");
 	}
 	
+//	@Observer(value ="changeBssd_/view/v140IrCurve.xhtml")
+//	public void onBssdChangeEvent(String basedate){
+//		bssd = basedate;
+//		onBssdChange();
+//	}
+	
 	
 	private List<ColumnModel> ircTsHeader;
-	private List<CrossTableModel> pivotTableByCurve;
+	private List<CrossTableModelOld> pivotTableByCurve;
 	
 	public List<ColumnModel> getIrcTsHeader() {
 		return ircTsHeader;
@@ -165,10 +174,10 @@ public class TableIrCurveInit {
 	public void setIrcTsHeader(List<ColumnModel> ircTsHeader) {
 		this.ircTsHeader = ircTsHeader;
 	}
-	public List<CrossTableModel> getPivotTableByCurve() {
+	public List<CrossTableModelOld> getPivotTableByCurve() {
 		return pivotTableByCurve;
 	}
-	public void setPivotTableByCurve(List<CrossTableModel> pivotTableByCurve) {
+	public void setPivotTableByCurve(List<CrossTableModelOld> pivotTableByCurve) {
 		this.pivotTableByCurve = pivotTableByCurve;
 	}
 	
@@ -176,12 +185,12 @@ public class TableIrCurveInit {
 	
 	public void loadPivotTable(){
 		ircTsHeader = new ArrayList<ColumnModel>();
-		pivotTableByCurve = new ArrayList<CrossTableModel>();
+		pivotTableByCurve = new ArrayList<CrossTableModelOld>();
 		
 		List<EMaturity> maturityList= new ArrayList<EMaturity>();
 		
-		log.info("Load Pivot Table : #0, #1,#2", bssd, irCurveList.get(0).getIrcBucketList().size());
-		for(IrCurve zz : irCurveList){
+		
+		/*for(IrCurve zz : irCurveList){
 			Map<String, BigDecimal> tempMap =new HashMap<String, BigDecimal>() ;
 			for(IrcBucket aa : zz.getIrcBucketList()){
 				if( !maturityList.contains(aa.getMaturityId())){
@@ -196,8 +205,8 @@ public class TableIrCurveInit {
 					}
 				}
 			}
-			pivotTableByCurve.add(new CrossTableModel(zz.getIrcId(), tempMap));
-		}
+			pivotTableByCurve.add(new CrossTableModelOld(zz.getIrcId(), tempMap));
+		}*/
 		Collections.sort(maturityList);
 		for(EMaturity aa : maturityList){
 			ircTsHeader.add(new ColumnModel(aa.name(), aa.name()));

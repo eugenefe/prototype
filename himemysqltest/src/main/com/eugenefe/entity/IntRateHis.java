@@ -93,6 +93,7 @@ public class IntRateHis implements java.io.Serializable, IMarketVariableHis {
 	public void setIntRate(BigDecimal intRate) {
 		this.intRate = intRate;
 	}
+	
 //	******************Override Method**********************
 	@Override
 	@Transient

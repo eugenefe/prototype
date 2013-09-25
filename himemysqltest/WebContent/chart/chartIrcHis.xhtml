@@ -8,8 +8,12 @@
         value="#{chartIrcHisAction.linearModel}"  
         showMarkers="false"
         zoom="true"
+        breakOnNull="false"
         legendRows="5"
         legendPosition="ne"  xaxisAngle="-45"
-        style="height:100%;" />
+        showDatatip="true"
+        datatipFormat="#{chartIrcHisAction.datatipFormat}"
+        style="height:100%;" 
+        styleClass="chartTakion"/>
   </h:form>
 </ui:composition>

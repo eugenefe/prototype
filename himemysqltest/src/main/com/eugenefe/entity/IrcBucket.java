@@ -22,6 +22,8 @@ import com.eugenefe.enums.EMaturity;
 @Table(name = "IRC_BUCKET_DETAIL")
 @BatchSize(size=5)
 public class IrcBucket implements java.io.Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private IrcBucketId id;
 	private IrCurve ircId;
 	private EMaturity maturityId;
@@ -46,6 +48,7 @@ public class IrcBucket implements java.io.Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IRC_ID", nullable = false, insertable = false, updatable = false)
+	@BatchSize(size=3)
 	@NotNull
 	public IrCurve getIrcId() {
 		return ircId;
@@ -79,6 +82,8 @@ public class IrcBucket implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
+//	@Fetch(FetchMode.JOIN)
+	@BatchSize(size=20)
 	@JoinColumn(name = "IR_ID", nullable = false, insertable = false, updatable = false)
 	@NotNull
 	public IntRate getIntRate() {

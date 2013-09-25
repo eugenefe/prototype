@@ -52,7 +52,7 @@
       <p:ajax event="valueChange" process="@this" update="@(form)"
         listener="#{tableLazyMarketVariableInit.onViewChange()}" />
     </p:selectOneRadio> -->
-
+    
     <p:contextMenu for="tableLazyMarketVariables" rendered="#{flagContext}">
       <p:menuitem value="#{messages.showAllMarketVariable}" icon="ui-icon-circle-plus" update="@(.ui-datatable)"
         actionListener="#{tableLazyMarketVariableInit.resetTable()}"

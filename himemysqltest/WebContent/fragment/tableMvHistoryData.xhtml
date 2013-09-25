@@ -19,6 +19,10 @@
       
       <p:outputLabel value="#{messages.viewDetailColumn}"  rendered="#{flagFullData}"/>
 
+      <!-- <p:selectCheckboxMenu  value="#{configAction.selectRiskMeasureGroup}" style="width:100px" onchange="" rendered="#{flagFullData}">
+        <s:selectItems value="#{riskMeasureGroupMap.keySet()}" var="_group" label="#{riskMeasureGroupMap.get(_group)}" />
+        <s:convertEnum />
+      </p:selectCheckboxMenu> -->
       <p:selectOneMenu value="#{configAction.selectRiskMeasureGroup}" style="width:100px" onchange="" rendered="#{flagFullData}">
         <s:selectItems value="#{riskMeasureGroupMap.keySet()}" var="_group" label="#{riskMeasureGroupMap.get(_group)}" />
         <s:convertEnum />
@@ -55,7 +59,7 @@
           <h:outputText value="#{messages.currentPrice}" />
         </f:facet>
         <h:outputText value="#{_mvHis.currentPrice}" style="float:right">
-          <f:convertNumber pattern="#,###.##" />
+          <f:convertNumber pattern="#,###.####" />
           <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
         </h:outputText>
       </p:column>

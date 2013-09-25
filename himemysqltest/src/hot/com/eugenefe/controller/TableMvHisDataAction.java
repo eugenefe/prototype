@@ -63,8 +63,10 @@ public class TableMvHisDataAction {
 		this.selectedMarketVariable = selectedMarketVariable;
 	}
 
-	@Observer(value = "evtDateChange")
+	@Observer(value = "evtDateChange_/view/v101ViewHistoryData.xhtml")
 	public void onMvSelection() {
+		log.info("In the Event on DataChange");
+		
 		if (selectedMarketVariable != null) {
 			query = selectedMarketVariable.getMvType().getQuery();
 			mvHisList = entityManager.createQuery(query).getResultList();

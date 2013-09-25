@@ -19,6 +19,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Startup;
 
 import com.eugenefe.entity.MarketVariable;
+import com.eugenefe.enums.EMaturity;
 import com.eugenefe.util.RiskMeasureGroup;
 
 @Name("flagBean")
@@ -30,6 +31,7 @@ public class FlagBean {
 	private String flagVcvType;
 	private String flagVcvRfType;
 	private String vcvMethod;
+	private String flagInterval;
 	
 	public FlagBean(){
 		System.out.println("Construction FlagBean");
@@ -40,6 +42,7 @@ public class FlagBean {
 	    	flagVcvType="1";               //vcvType = volatilty or correlation
 	    	flagVcvRfType="IR";			   //VcvMatrix default Rf Type
 	    	vcvMethod = "EWMA_1DAY";		// default VCV Method Id
+	    	flagInterval = EMaturity.M01.name();
 	 }	
 	
    
@@ -64,5 +67,16 @@ public class FlagBean {
 	public void setVcvMethod(String vcvMethod) {
 		this.vcvMethod = vcvMethod;
 	}
+
+	public String getFlagInterval() {
+		return flagInterval;
+	}
+
+	public void setFlagInterval(String flagInterval) {
+		this.flagInterval = flagInterval;
+	}
+
+	
+	
 	
 }

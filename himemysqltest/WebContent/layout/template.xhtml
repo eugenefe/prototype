@@ -31,7 +31,7 @@
          <p style="margin-top: -0.5em;">
             <s:link id="debugConsole" view="/debug.xhtml" value="Debug console" target="debugConsole"/>
             #{' - '}
-            <s:link id="resetSession" view="/home.xhtml" action="#{org.jboss.seam.web.session.invalidate()}" propagation="none" value="Terminate session"/>
+            <s:link id="resetSession" view="/error.xhtml" action="#{org.jboss.seam.web.session.invalidate()}" propagation="none" value="Terminate session"/>
          </p>
          </s:fragment>
       </div>

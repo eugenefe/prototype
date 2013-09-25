@@ -28,7 +28,11 @@
   <!-- entity-manager-factory="#{entityManagerFactory}"/> -->
 
   <persistence:managed-persistence-context name="entityManager" auto-create="true"
-    persistence-unit-jndi-name="java:/himemysqltestEntityManagerFactory" />
+    persistence-unit-jndi-name="java:/himemysqltestEntityManagerFactory" >
+    <!-- <persistence:filters>
+      <value>#{filterBtwnDate}</value>
+    </persistence:filters> -->
+  </persistence:managed-persistence-context>
   
   
   <!-- <persistence:hibernate-session-factory name="hibernateSessionFactory"/>
@@ -39,6 +43,16 @@
                                 auto-create="true"
                   session-factory-jndi-name="java:/hibernateSessionFactory"/> -->                    
   <factory name="session" auto-create="true" scope="stateless" value="#{entityManager.delegate}"/>
+  
+  <!-- <persistence:filter name="filterBtwnDate">
+    <persistence:name>filterBtwnDate</persistence:name>
+    <persistence:parameters>
+        <key>stBssd</key>
+        <value>#{basedateBean.stBssd}</value>
+        <key>endBssd</key>
+        <value>#{basedateBean.endBssd}</value>
+    </persistence:parameters>
+</persistence:filter> -->
          
   <drools:rule-base name="securityRules">
     <drools:rule-files>

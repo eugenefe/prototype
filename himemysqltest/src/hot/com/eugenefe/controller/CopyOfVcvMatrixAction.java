@@ -22,7 +22,7 @@ import org.jboss.seam.log.Log;
 import com.eugenefe.entity.MarketVariable;
 import com.eugenefe.entity.VcvMatrixHis;
 import com.eugenefe.util.ColumnModel;
-import com.eugenefe.util.CrossTableModel;
+import com.eugenefe.util.CrossTableModelOld;
 import com.eugenefe.util.NamedQuery;
 
 @Name("vcvMatrixActionOld")
@@ -43,7 +43,7 @@ public class CopyOfVcvMatrixAction {
 	private List<ColumnModel> vcvMatrixColumns;
 	
 	@Out(scope=ScopeType.CONVERSATION)
-	private List<CrossTableModel> pivotList;
+	private List<CrossTableModelOld> pivotList;
 	
 	
 	public CopyOfVcvMatrixAction() {
@@ -73,17 +73,17 @@ public class CopyOfVcvMatrixAction {
 		this.vcvMatrixColumns = vcvMatrixColumns;
 	}
 	
-	public List<CrossTableModel> getPivotList() {
+	public List<CrossTableModelOld> getPivotList() {
 		return pivotList;
 	}
-	public void setPivotList(List<CrossTableModel> pivotList) {
+	public void setPivotList(List<CrossTableModelOld> pivotList) {
 		this.pivotList = pivotList;
 	}
 
 //	@Factory(value="pivotList")
 //	@Observer("changeBssd_/view/v120RiskFactor.xhtml")
 	public void initVcvMatrix(){
-		pivotList = new ArrayList<CrossTableModel>();
+		pivotList = new ArrayList<CrossTableModelOld>();
 		riskFactors = new ArrayList<MarketVariable>();
 		vcvMatrixColumns = new ArrayList<ColumnModel>();
 		
@@ -109,7 +109,7 @@ public class CopyOfVcvMatrixAction {
 					tempMap.put(bb.getRefRiskFactor().getMvName(), bb.getCovariance());
 				}
 			}
-			pivotList.add(new CrossTableModel(aa.getMvName(), tempMap));
+			pivotList.add(new CrossTableModelOld(aa.getMvName(), tempMap));
 		}
 	}
 	

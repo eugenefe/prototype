@@ -34,6 +34,7 @@ import org.primefaces.model.LazyDataModel;
 import com.eugenefe.converter.LazyModelMarketVariable;
 import com.eugenefe.entity.Basedate;
 import com.eugenefe.entity.IMarketVariableHis;
+import com.eugenefe.entity.IntRate;
 import com.eugenefe.entity.IntRateHis;
 import com.eugenefe.entity.IrCurve;
 import com.eugenefe.entity.IrcBucket;
@@ -41,7 +42,8 @@ import com.eugenefe.entity.MarketVariable;
 import com.eugenefe.entity.VcvMatrixHis;
 import com.eugenefe.enums.EMaturity;
 import com.eugenefe.util.ColumnModel;
-import com.eugenefe.util.CrossTableModel;
+import com.eugenefe.util.CrossTableModelOld;
+import com.eugenefe.util.PivotTableModel;
 import com.eugenefe.util.MarketVariableType;
 import com.eugenefe.util.NamedQuery;
 
@@ -53,9 +55,8 @@ public class TableIrCurveHisAction {
 	private Log log;
 	@In
 	private EntityManager entityManager;
-	
 
-//	private List<MarketVariable> marketVariables;
+	// private List<MarketVariable> marketVariables;
 
 	@In(required = false)
 	@Out(required = false)
@@ -63,21 +64,34 @@ public class TableIrCurveHisAction {
 	// @Out
 	private IrCurve selectedIrCurve;
 	private List<IntRateHis> intRateHis = new ArrayList<IntRateHis>();
-//	private List<IntRateHis> filteredIntRateHis = new ArrayList<IntRateHis>();
-	@Out(required=false)
-	private List<IntRateHis> filteredIntRateHis; 
-	
+	// private List<IntRateHis> filteredIntRateHis = new
+	// ArrayList<IntRateHis>();
+	@Out(required = false)
+	private List<IntRateHis> filteredIntRateHis;
+
 	private List<ColumnModel> ircTsHeader;
-	private List<CrossTableModel> pivotTable;
-	private List<CrossTableModel> pivotTableByCurve;
+	private List<CrossTableModelOld> pivotTable;
+	private List<CrossTableModelOld> pivotTableByCurve;
+
+	@Out(required = false)
+	private List<PivotTableModel<IrCurve,EMaturity,IntRate>> selectedTableModel;
 	
-	@Out(required=false)
-	private List<CrossTableModel> selectedTableModel;
-	
+//	private List<CrossTableModel> selectedTableModel;
+
+	public List<PivotTableModel<IrCurve, EMaturity,IntRate>> getSelectedTableModel() {
+		return selectedTableModel;
+	}
+
+	public void setSelectedTableModel(List<PivotTableModel<IrCurve, EMaturity,IntRate>> selectedTableModel) {
+		this.selectedTableModel = selectedTableModel;
+	}
+
+
 	public List<IntRateHis> getIntRateHis() {
 		return intRateHis;
 	}
 
+	
 	public void setIntRateHis(List<IntRateHis> intRateHis) {
 		this.intRateHis = intRateHis;
 	}
@@ -98,114 +112,127 @@ public class TableIrCurveHisAction {
 		this.ircTsHeader = ircTsHeader;
 	}
 
-	public List<CrossTableModel> getPivotTable() {
+	public List<CrossTableModelOld> getPivotTable() {
 		return pivotTable;
 	}
 
-	public void setPivotTable(List<CrossTableModel> pivotTable) {
+	public void setPivotTable(List<CrossTableModelOld> pivotTable) {
 		this.pivotTable = pivotTable;
 	}
 
-	public List<CrossTableModel> getPivotTableByCurve() {
+	public List<CrossTableModelOld> getPivotTableByCurve() {
 		return pivotTableByCurve;
 	}
 
-	public void setPivotTableByCurve(List<CrossTableModel> pivotTableByCurve) {
+	public void setPivotTableByCurve(List<CrossTableModelOld> pivotTableByCurve) {
 		this.pivotTableByCurve = pivotTableByCurve;
 	}
 
-	public List<CrossTableModel> getSelectedTableModel() {
-		return selectedTableModel;
-	}
+//	public List<CrossTableModel> getSelectedTableModel() {
+//		return selectedTableModel;
+//	}
+//
+//	public void setSelectedTableModel(List<CrossTableModel> selectedTableModel) {
+//		this.selectedTableModel = selectedTableModel;
+//	}
 
-	public void setSelectedTableModel(List<CrossTableModel> selectedTableModel) {
-		this.selectedTableModel = selectedTableModel;
-	}
-
-	//***************************************************************
+	// ***************************************************************
 	public TableIrCurveHisAction() {
 		System.out.println("Construction TableIrCurveHisAction");
 	}
 
-//	@Create
-//	public void create(){
-//
-//		
-//	}
-	
+	// @Create
+	// public void create(){
+	//
+	//
+	// }
+
 	@Observer("evtReloadIrCurve")
-	public void onIrcSelection(){
+	public void onIrcSelection() {
 		resetTable();
 		ircTsHeader = new ArrayList<ColumnModel>();
-		pivotTable = new ArrayList<CrossTableModel>();
+		pivotTable = new ArrayList<CrossTableModelOld>();
 		intRateHis = new ArrayList<IntRateHis>();
 		filteredIntRateHis = new ArrayList<IntRateHis>();
-		
-//		log.info("bucket1:#0,#1", selectedIrCurve.getIrcBucketList().size(), intRateHis.size());
+
+		// log.info("bucket1:#0,#1", selectedIrCurve.getIrcBucketList().size(),intRateHis.size());
 		List<Basedate> baseDates = new ArrayList<Basedate>();
-		List<EMaturity> maturityList= new ArrayList<EMaturity>();
-		
-		for(IrcBucket aa : selectedIrCurve.getIrcBucketList()){
-//			if( !maturityList.contains(aa.getMaturityId())){
-				maturityList.add(aa.getMaturityId());
-//			}
-//			ircTsHeader.add(new ColumnModel(aa.getMaturityId().name(), aa.getMaturityId().name()));
-			
+		List<EMaturity> maturityList = new ArrayList<EMaturity>();
+
+		if(selectedIrCurve==null){
+			selectedIrCurve = new IrCurve();
+		}
+		/*for (IrcBucket aa : selectedIrCurve.getIrcBucketMap().) {
+			// if( !maturityList.contains(aa.getMaturityId())){
+			maturityList.add(aa.getMaturityId());
+			// }
+			// ircTsHeader.add(new ColumnModel(aa.getMaturityId().name(),
+			// aa.getMaturityId().name()));
+
 			intRateHis.addAll(aa.getIntRate().getIntRateHisList());
 			filteredIntRateHis.addAll(aa.getIntRate().getIntRateHisList());
-			for( IntRateHis bb : aa.getIntRate().getIntRateHisList()){
-				if(!baseDates.contains(bb.getBasedate())){
+			for (IntRateHis bb : aa.getIntRate().getIntRateHisList()) {
+				if (!baseDates.contains(bb.getBasedate())) {
 					baseDates.add(bb.getBasedate());
 				}
 			}
-		}
-		
-		for(Basedate zz : baseDates){
-			Map<String, BigDecimal> tempMap =new HashMap<String, BigDecimal>() ;
-			for(IrcBucket aa : selectedIrCurve.getIrcBucketList()){
-				for( IntRateHis bb : aa.getIntRate().getIntRateHisList()){
-					if( zz.equals(bb.getBasedate())){
-						tempMap.put(aa.getMaturityId().name(), bb.getIntRate());	
+		}*/
+
+		/*for (Basedate zz : baseDates) {
+			Map<String, BigDecimal> tempMap = new HashMap<String, BigDecimal>();
+			for (IrcBucket aa : selectedIrCurve.getIrcBucketList()) {
+				for (IntRateHis bb : aa.getIntRate().getIntRateHisList()) {
+					if (zz.equals(bb.getBasedate())) {
+						tempMap.put(aa.getMaturityId().name(), bb.getIntRate());
 					}
 				}
 			}
-			pivotTable.add(new CrossTableModel(zz.getBssd(), tempMap));
-		}	
+			pivotTable.add(new CrossTableModelOld(zz.getBssd(), tempMap));
+		}*/
+
 		Collections.sort(maturityList);
-		for(EMaturity aa : maturityList){
+		for (EMaturity aa : maturityList) {
 			ircTsHeader.add(new ColumnModel(aa.name(), aa.name()));
 		}
 		Events.instance().raiseEvent("evtReloadIntRateHis", filteredIntRateHis);
-	}	
-	
-	
-	
-//***************************************
+	}
+
+	// ***************************************
 	private void resetTable() {
-	    DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
-	            .findComponent("tabViewIrCurve:formIrcBucketHis:tableIrcBucketHis");
-	    if (dataTable != null) {
-	    	dataTable.setValueExpression("sortBy", null);
-//	    	dataTable.setValueExpression("filterBy", null);
-	    	dataTable.setFirst(0);
-	        dataTable.reset();
-	    }
+		DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
+				.findComponent("tabViewIrCurve:formIrcBucketHis:tableIrcBucketHis");
+		if (dataTable != null) {
+			dataTable.setValueExpression("sortBy", null);
+			// dataTable.setValueExpression("filterBy", null);
+			dataTable.setFirst(0);
+			dataTable.reset();
+		}
 	}
-	
+
 	public Map<String, String> onFilter(FilterEvent event) {
-	       DataTable table = (DataTable) event.getSource();
-	       log.info("In the Filter:#0,#1,#2", table.getFilters().size(), table.getFilteredValue().size()
-	    		   ,filteredIntRateHis.size());
-//	       List<Screenshot> obj =   table.getFilteredData();
+		DataTable table = (DataTable) event.getSource();
+		log.info("In the Filter:#0,#1,#2", table.getFilters().size(), table.getFilteredValue().size(),
+				filteredIntRateHis.size());
+		// List<Screenshot> obj = table.getFilteredData();
 
-	       // Do your stuff here
+		// Do your stuff here
 
-	       Map<String, String>  filters = table.getFilters();
-	       return filters;
+		Map<String, String> filters = table.getFilters();
+		return filters;
 	}
 	
-	
-	
-	
+	public void onDblClikSelect(SelectEvent event){
+		log.info("IN The Double Clik:#0", ((CrossTableModelOld)event.getObject()).getLabel());
+//		return "/view/v145IrCurveHis.xhtml";
+
+		try {
+//			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedTableModel", (CrossTableModel)event.getObject());
+//			FacesContext.getCurrentInstance().getExternalContext().redirect("/himemysqltest/view/v145IrCurveHis.seam?faces-redirect=true");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/himemysqltest/view/v145IrCurveHis.seam");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+//		/himemysqltest/view/v145IrCurveHis.seam
+	}
 
 }

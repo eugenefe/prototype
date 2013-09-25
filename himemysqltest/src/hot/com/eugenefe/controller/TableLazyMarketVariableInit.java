@@ -99,10 +99,10 @@ public class TableLazyMarketVariableInit {
 //		String aaa = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("flagDataTable");
 //		log.info("flag : #0, #1,#2 ", flagDataTable1,flagDataTable, aaa);
 		
-		if(flagDataTable.equals("Rf")){
+		if(flagDataTable!=null && flagDataTable.equals("Rf")){
 			onViewRiskFactor();
 		}
-		else if(flagDataTable.equals("Prod")){
+		else if(flagDataTable!=null && flagDataTable.equals("Prod")){
 			onViewProduct();
 		}
 		else{
@@ -135,6 +135,7 @@ public class TableLazyMarketVariableInit {
 	}
 
 	
+//TODO : remove String Constant using UI Component Binding 	
 //***************************************************************
 	public void resetTable() {
 	    DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()

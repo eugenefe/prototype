@@ -19,8 +19,8 @@ import com.eugenefe.entity.MarketVariable;
 import com.eugenefe.entity.Position;
 import com.eugenefe.entity.PositionReturn;
 
-@Name("lazyModelMarketVariable")
-@Scope(ScopeType.CONVERSATION)
+//@Name("lazyModelMarketVariable")
+//@Scope(ScopeType.CONVERSATION)
 public class LazyModelMarketVariable  extends LazyDataModel<MarketVariable>{
 	
 //	@Logger

@@ -79,6 +79,9 @@ public enum EMaturity implements Comparable<EMaturity> {
 		}
 		return this;
 	}
+	public String getName(){
+		return this.name();
+	}
 	
 //	@Override
 //	public public int compareTo(EMaturity other){

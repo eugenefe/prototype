@@ -5,15 +5,19 @@
 				  			   }
 		)
 		,@org.hibernate.annotations.FilterDef(name = "filterCurrentDate"
-			, parameters = { @org.hibernate.annotations.ParamDef(name = "currentDate", type = "string") 
+			, parameters = { @org.hibernate.annotations.ParamDef(name = "bssd", type = "string") 
 							}
+			, defaultCondition = " :bssd=BSSD "
 		)
-		,@org.hibernate.annotations.FilterDef(
+		,@FilterDef(
 			  name = "filterBtwnDate"
 			, parameters = {
 				 @org.hibernate.annotations.ParamDef(name = "stBssd", type = "string")
 				,@org.hibernate.annotations.ParamDef(name = "endBssd", type = "string") 
 			  }
+//			, defaultCondition = " BSSD between #{basedateBean.stBssd} and #{basedateBean.endBssd}"
+			, defaultCondition = " BSSD between :stBssd and :endBssd "		
+ 
 		)
 //		,@org.hibernate.annotations.FilterDef(name = "filterEndDate"
 //				, parameters = { @org.hibernate.annotations.ParamDef(name = "endBssd", type = "string") }) 
@@ -27,5 +31,6 @@
  */
 package com.eugenefe.entity;
 
+import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.FilterDefs;
 

@@ -18,8 +18,8 @@ import org.primefaces.model.SortOrder;
 import com.eugenefe.entity.Position;
 import com.eugenefe.entity.PositionReturn;
 
-@Name("lazyModelPosition")
-@Scope(ScopeType.CONVERSATION)
+//@Name("lazyModelPosition")
+//@Scope(ScopeType.CONVERSATION)
 public class LazyModelPosition  extends LazyDataModel<Position>{
 	
 //	@Logger
