@@ -6,8 +6,10 @@
 
   <h:form id="formLazyMarketVariables">
     <p:dataTable id="tableLazyMarketVariables" value="#{paraLazyModels}" var="_mv"
-      widgetVar="wgTableLazyMarketVariables" lazy="true" emptyMessage="#{messages.noDataFound}" selectionMode="single"
-      rowKey="#{_mv.mvId}" selection="#{selectedMarketVariable}" resizableColumns="true" sortMode="single"
+      widgetVar="wgTableLazyMarketVariables" lazy="true" emptyMessage="#{messages.noDataFound}" 
+      selectionMode="single"
+      rowKey="#{_mv.mvId}" selection="#{selectedMarketVariable}" 
+      resizableColumns="true" sortMode="single"
       paginator="true"
       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
       paginatorPosition="bottom" rows="15"

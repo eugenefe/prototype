@@ -59,11 +59,14 @@
           <h:outputText value="#{_column}" />
         </f:facet>
         
-        <h:outputText value="#{_irc.contentMap[_column].irId}" 
-                      rendered="#{_irc.contentMap[_column].intRateHisList.size()!=1}"/>
+        <!-- <h:outputText value="#{_irc.contentMap[_column].irId}" 
+                      rendered="#{_irc.contentMap[_column].intRateHisList.size()!=1}"/> -->
         
-        <h:outputText value="#{_irc.contentMap[_column].intRateHisList.get(0).intRate}" style="float:right" 
+        <!-- <h:outputText value="#{_irc.contentMap[_column].intRateHisList.get(0).intRate}" style="float:right" 
           rendered="#{_irc.contentMap[_column].intRateHisList.size()==1}">
+          <f:convertNumber pattern="#.####" />
+        </h:outputText> -->
+        <h:outputText value="#{_irc.contentMap[_column].intRate.get(basedateBean.bssd)}" style="float:right">
           <f:convertNumber pattern="#.####" />
         </h:outputText>
         <!-- <h:outputText value="#{_irc.contentMap[_column].intRateHisList.size()}" >

@@ -16,19 +16,20 @@
   </ui:define>
  -->
   <ui:define name="layoutCenter">
-    <p:tabView id="tabViewVcv" >
+    <p:tabView id="tabViewVcv" dynamic="false">
     <p:tab id="tabVcvMatrix" title="#{messages.tabVcvMatrix}" >
       <ui:include src="/fragment/tableVcvMatrix.xhtml" >
-        <ui:param name="pivotList1" value="#{tableRfVcvMatrixInit.pivotTable}" />
-        <ui:param name="dynCol" value="#{tableRfVcvMatrixInit.vcvMatrixColumns}" />
+        <!-- <ui:param name="pivotList1" value="#{tableRfVcvMatrixInit.pivotTableContent}" />
+        <ui:param name="dynCol" value="#{tableRfVcvMatrixInit.pivotTableHeader}" /> -->
         <!-- <ui:param name="dynCol" value="#{vcvMatrixColumns}" /> -->
         <!-- <ui:param name="pivotList1" value="#{pivotList}" /> -->
       </ui:include> 
        <ui:include src="/popup/dialogPickListRiskFactor.xhtml"/>
     </p:tab>
 
-    <p:tab id="tabVcvHis" title="#{messages.tabVcvHis}" >
-      <ui:include src="/fragment/tableVcvHistoryData.xhtml" />
+    <p:tab id="tabVcvHis" title="#{messages.tabVcvHis}"  >
+      <!-- <ui:include src="/fragment/tableVolatilityHistory.xhtml" /> -->
+      <ui:include src="/fragment/tableLazyVolatilityHistory.xhtml" />
     </p:tab>
     </p:tabView>
   </ui:define>

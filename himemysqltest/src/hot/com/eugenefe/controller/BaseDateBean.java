@@ -10,12 +10,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
+import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Conversation;
 import org.jboss.seam.core.Events;
@@ -23,79 +22,111 @@ import org.jboss.seam.framework.CurrentDate;
 import org.jboss.seam.log.Log;
 import org.primefaces.event.SelectEvent;
 
-import com.eugenefe.enums.EMaturity;
-import com.eugenefe.session.BasedateList;
 import com.eugenefe.util.FnCalendar;
 
-
 @Name("basedateBean")
-//@Scope(ScopeType.SESSION)
+// @Scope(ScopeType.SESSION)
 @Scope(ScopeType.CONVERSATION)
 public class BaseDateBean implements Serializable {
 
 	@Logger
 	private Log log;
-	
+
 	@In
 	private BasedateSession basedateSession;
+	
+//	@In
+//	private org.jboss.seam.faces.FacesContext facesContext;
+//	private FacesMessage facesMessgae;
+	
 	@In(value = "#{conversation.viewId}")
 	private String viewId;
-//	public BasedateSession getBasedateSession() {
-//		return basedateSession;
-//	}
-//	public void setBasedateSession(BasedateSession basedateSession) {
-//		this.basedateSession = basedateSession;
-//	}
-	
-//	@In(create = true)
-//	private BasedateList basedateList;
 
-
-//	private FnCalendar cal;
-	
 	private Date baseDate;
 	private Date stDate;
 	private Date endDate;
 
-//	@Out(scope=ScopeType.SESSION)
 	private String bssd;
 	private String stBssd;
 	private String endBssd;
-	
-	
-	private SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");  
-	
-	
+
+	private SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+
 	public BaseDateBean() {
 	}
 
-//	@Create
-	public void init(){
-//		cal = FnCalendar.getInstance();
-//		cal = new FnCalendar(2013, 4, 29);
-//		log.info("Calendar : #0 , #1", cal.getTime());
-		
-//		baseDate = cal.getTime();
-//		endDate =cal.getTime();
-//		stDate = cal.minusTerm(EMaturity.M03, true).getTime();
-//
-//		bssd = format.format(cal.getTime());
-//	    stBssd = format.format(stDate);
-//	    endBssd = format.format(endDate);
-					
-	}
-	
 	@Create
-	public void initNew(){
+	public void initNew() {
 		baseDate = basedateSession.getBaseDate();
 		stDate = basedateSession.getStDate();
 		endDate = basedateSession.getEndDate();
-		
-		bssd = basedateSession.getBssd();
-	    stBssd = basedateSession.getStBssd();
-	    endBssd = basedateSession.getEndBssd();
+
+		bssd = format.format(baseDate);
+		stBssd = format.format(stDate);
+		endBssd = format.format(endDate);
+
 	}
-	
+
+	// ****************************************************
+	@Observer("evtBaseDateChange")
+	public void onBaseDateChange(Date date) {
+		baseDate = date;
+		bssd = format.format(baseDate);
+
+//		Events.instance().raiseEvent("evtBaseDateChange_" + viewId, bssd);
+		Events.instance().raiseEvent("evtBaseDateChange_" + viewId);
+		log.info("End of ChangeBssd Event:#0,#1", viewId);
+	}
+
+	@Observer("evtStartDateChange")
+	public void onStartDateChange(Date date) {
+		stDate = date;
+		bssd = format.format(stDate);
+	}
+
+	@Observer("evtEndDateChange")
+	public void onEndDateChange(Date date) {
+		endDate = date;
+		bssd = format.format(endDate);
+	}
+
+	// @Begin(join=true)
+	public void handleDateSelect(SelectEvent event) {
+		log.info("handleDateSelect Id1 :#0,#1", Conversation.instance().getId(), viewId);
+		bssd = format.format(event.getObject());
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", bssd));
+
+		// String eventName = "changeBssd_" + facesContext.getViewRoot().getViewId();
+		String eventName = "changeBssd_" + viewId;
+
+		Events.instance().raiseEvent(eventName, bssd);
+		log.info("End of ChangeBssd Event:#0,#1", viewId,facesContext.getViewRoot().getViewId());
+	}
+
+	public void handleStartDateSelect(SelectEvent event) {
+		stBssd = format.format(event.getObject());
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", stBssd));
+
+		// String eventName = "evtDateChange_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
+		String eventName = "evtDateChange_" + viewId;
+		Events.instance().raiseEvent(eventName, stBssd);
+	}
+
+	public void handleEndDateSelect(SelectEvent event) {
+		endBssd = format.format(event.getObject());
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", endBssd));
+		
+		// String eventName = "evtDateChange_" +facesContext.getViewRoot().getViewId();
+		String eventName = "evtDateChange_" + viewId;
+		log.info("handleEndDateSelect : #0, #1", endBssd, endDate);
+		Events.instance().raiseEvent(eventName, endBssd);
+	}
+
+	// **************************Getter and Setter**********************
 	public Date getBaseDate() {
 		return baseDate;
 	}
@@ -111,7 +142,6 @@ public class BaseDateBean implements Serializable {
 	public void setBssd(String bssd) {
 		this.bssd = bssd;
 	}
-	
 
 	public Date getStDate() {
 		return stDate;
@@ -144,43 +174,4 @@ public class BaseDateBean implements Serializable {
 	public void setEndBssd(String endBssd) {
 		this.endBssd = endBssd;
 	}
-
-//	@Begin(join=true)
-	public void handleDateSelect(SelectEvent event) {
-		log.info("handleDateSelect Id1 :#0,#1", Conversation.instance().getId(), Conversation.instance().isLongRunning());
-		log.info("Start ChangeBssd Event");
-		FacesContext facesContext = FacesContext.getCurrentInstance();  
-		
-        bssd = format.format(event.getObject());
-        
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", bssd));
-        
-//        String eventName = "changeBssd_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        String eventName = "changeBssd_" + viewId;
-        log.info("View ID : #0",eventName);
-        
-        Events.instance().raiseEvent(eventName, bssd);
-        log.info("End of ChangeBssd Event");
-        log.info("handleDateSelect Id2 :#0,#1", Conversation.instance().getId(), Conversation.instance().isLongRunning());
-	}
-	
-	public void handleStartDateSelect(SelectEvent event){
-		stBssd = format.format(event.getObject());
-//		String eventName = "evtDateChange_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
-		String eventName = "evtDateChange_" + viewId;
-		
-		log.info("handleStartDateSelect : #0,#1", stBssd,eventName);
-        Events.instance().raiseEvent(eventName, stBssd);
-//        log.info("handleStartDateSelect1 : #0,#1", stBssd,stDate);
-	}
-	
-	public void handleEndDateSelect(SelectEvent event){
-        endBssd = format.format(event.getObject());
-//        String eventName = "evtDateChange_" + FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        String eventName = "evtDateChange_" + viewId;
-		log.info("handleEndDateSelect : #0,#1", endBssd,endDate);
-        Events.instance().raiseEvent(eventName, endBssd);
-	}
-
-	
 }

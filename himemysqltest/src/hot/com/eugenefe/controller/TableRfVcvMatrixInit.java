@@ -2,6 +2,7 @@ package com.eugenefe.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.hibernate.Filter;
+import org.hibernate.Session;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
@@ -35,14 +38,20 @@ import org.primefaces.model.LazyDataModel;
 
 import com.eugenefe.converter.LazyModelMarketVariable;
 import com.eugenefe.converter.LazyModelVcvHis;
+import com.eugenefe.entity.IntRate;
+import com.eugenefe.entity.IrCurve;
 import com.eugenefe.entity.MarketVariable;
 import com.eugenefe.entity.VcvMatrix;
 import com.eugenefe.entity.VcvMatrixHis;
+import com.eugenefe.entity.Volatility;
+import com.eugenefe.entity.VolatilityHis;
+import com.eugenefe.enums.EMaturity;
 import com.eugenefe.util.ColumnModel;
 import com.eugenefe.util.CrossTableModelOld;
 import com.eugenefe.util.FlagBean;
 import com.eugenefe.util.MarketVariableType;
 import com.eugenefe.util.NamedQuery;
+import com.eugenefe.util.PivotTableModel;
 
 @Name("tableRfVcvMatrixInit")
 @Scope(ScopeType.CONVERSATION)
@@ -51,172 +60,187 @@ public class TableRfVcvMatrixInit {
 	private Log log;
 
 	@In
-	private EntityManager entityManager;
-	
-	@In(value="#{flagBean.flagVcvType}")
-	private String flagVcvType;
-	
-	@In(value="#{flagBean.flagVcvRfType}")
+	private Session session;
+
+	@In(value="#{basedateBean}")
+	private BaseDateBean basedateBean;
+
+	@In(value = "#{flagBean.flagVcvRfType}")
 	private String flagVcvRfType;
 
-	//	@Out
-	private List<MarketVariable> allRiskFactors = new ArrayList<MarketVariable>();
+	@In(value="#{flagBean.vcvMethod}")
+	private String selectedVolId ;
+	private Volatility selectedVol;
 
-//	@Out
-	private List<MarketVariable> pickRiskFactors = new ArrayList<MarketVariable>();
+	private List<MarketVariable> riskFactorList;
+	private List<Volatility> volatilityList;
 
-//	@Out(scope=ScopeType.CONVERSATION)
-	private List<ColumnModel> vcvMatrixColumns;
-	
-//	@Out(scope=ScopeType.CONVERSATION, required=false)
-	private List<CrossTableModelOld> pivotTable;
-	
-//	@Out
-	private List<VcvMatrixHis> allVcvMatrix;
-	
-	private List<VcvMatrixHis> allVcvHis;
-	
-	private LazyDataModel<VcvMatrixHis> lazyModelVcvHis;
-	
+	private List<MarketVariable> pivotTableHeader;
+	private List<PivotTableModel<MarketVariable, MarketVariable, VolatilityHis>> pivotTableContent;
+	private List<PivotTableModel<MarketVariable, MarketVariable, VolatilityHis>> filterPivotTableContent;
+
+	private List<VolatilityHis> volatilityHisList;
+	private LazyDataModel<VolatilityHis> lazyModelVolHis;
+
 	public TableRfVcvMatrixInit() {
 		System.out.println("Construction TableRfVcvMatrixInit");
 	}
-//****************Getter and Setter
-	public List<MarketVariable> getAllRiskFactors() {
-		return allRiskFactors;
-	}
-	public void setAllRiskFactors(List<MarketVariable> allRiskFactors) {
-		this.allRiskFactors = allRiskFactors;
-	}
 
-	public List<MarketVariable> getPickRiskFactors() {
-		return pickRiskFactors;
-	}
-	public void setPickRiskFactors(List<MarketVariable> pickRiskFactors) {
-		this.pickRiskFactors = pickRiskFactors;
-	}
-	public List<ColumnModel> getVcvMatrixColumns() {
-//		if(vcvMatrixColumns!=null){
-//			log.info("get vcvMatrix:#0", vcvMatrixColumns.size());
-//		}
-		return vcvMatrixColumns;
-	}
-	public void setVcvMatrixColumns(List<ColumnModel> vcvMatrixColumns) {
-		this.vcvMatrixColumns = vcvMatrixColumns;
-	}
-	
-	public List<CrossTableModelOld> getPivotTable() {
-		return pivotTable;
-	}
-	public void setPivotTable(List<CrossTableModelOld> pivotTable) {
-		this.pivotTable = pivotTable;
-	}
-	public List<VcvMatrixHis> getAllVcvMatrix() {
-		return allVcvMatrix;
-	}
-	public void setAllVcvMatrix(List<VcvMatrixHis> allVcvMatrix) {
-		this.allVcvMatrix = allVcvMatrix;
-	}
-	public List<VcvMatrixHis> getAllVcvHis() {
-		return allVcvHis;
-	}
-	public void setAllVcvHis(List<VcvMatrixHis> allVcvHis) {
-		this.allVcvHis = allVcvHis;
-	}
-	public LazyDataModel<VcvMatrixHis> getLazyModelVcvHis() {
-		return lazyModelVcvHis;
-	}
-	public void setLazyModelVcvHis(LazyDataModel<VcvMatrixHis> lazyModelVcvHis) {
-		this.lazyModelVcvHis = lazyModelVcvHis;
-	}
-	//*******************************************
-//	@Observer("changeBssd_/view/v130RfVcvMatrix.xhtml")
+	// *******************************************
+	// @Observer("changeBssd_/view/v130RfVcvMatrix.xhtml")
 	@Create
-	public void create(){
-//		vcvId ="SMA_1DAY";
-		prepVcvMatrix();
-		loadMatrix();
+	public void create() {
+		// vcvId ="SMA_1DAY";
+		initPivotTableHeader();
+
+		loadVolatility();
+		loadVcvMatrix();
 	}
-	
+	@Observer("evtBaseDateChange_/view/v130RfVcvMatrix.xhtml")
+	public void onBaseDateChange(){
+		log.info("VCV event Observer:#0");
+
+//		TODO : Check Performance tradeOff with filtering VolatilityHisList 
+//		session.clear();
+//		initPivotTableHeader();
+//		loadVolatility();
+		loadVcvMatrix();
+		
+	}
 	@Observer("evtPickRiskFactors")
-	public void onPickRiskFactors(List<MarketVariable> selRf){
-//		pickRiskFactors = new ArrayList<MarketVariable>();
-		vcvMatrixColumns = new ArrayList<ColumnModel>();
-		pickRiskFactors = selRf;
-		log.info("selRiskFactors size :#0", pickRiskFactors.size());
-		
-		for(MarketVariable aa : pickRiskFactors){
-			vcvMatrixColumns.add(new ColumnModel(aa.mvName, aa.getMvName()));
-//			log.info("selRiskFactors  :#0", vcvMatrixColumns.size());
-		}
-		loadMatrix();
+	public void onPickRiskFactors(List<MarketVariable> selRf) {
+		pivotTableHeader = selRf;
+		loadVcvMatrix();
 	}
 	
-	public void onVcvTypeChange(){
-		loadMatrix();
-	}
-	
-	
-	public void prepVcvMatrix(){
-		pickRiskFactors = new ArrayList<MarketVariable>();
-		vcvMatrixColumns = new ArrayList<ColumnModel>();
+//******************************************	
+	public void initPivotTableHeader() {
+		pivotTableHeader = new ArrayList<MarketVariable>();
+		riskFactorList = session.createQuery("from MarketVariable a where a.riskFactorYN ='Y'").list();
 		
-		allRiskFactors = entityManager.createQuery(NamedQuery.RiskFactors.getQuery()).getResultList();
-		
-		
-		for(MarketVariable bb : allRiskFactors){
-//			log.info("MV Type : #0, #1", bb.getMvType().getRfType(), flagVcvRfType);
-			if(bb.getMvType().getRfType().equals(flagVcvRfType)){
-				pickRiskFactors.add(bb);
-				vcvMatrixColumns.add(new ColumnModel(bb.getMvName(), bb.getMvName()));
+		for (MarketVariable bb : riskFactorList) {
+			if (bb.getMvType().getRfType().equals(flagVcvRfType)) {
+				pivotTableHeader.add(bb);
 			}
 		}
-		log.info("VCV Matrix Prep:#0", vcvMatrixColumns.size());
+		log.info("initPivotTableHeader Prep:#0", pivotTableHeader.size());
+	}
+
+	public void loadVolatility() {
+		log.info("VCV:#{basedateBean.bssd}");
+		Filter filter = session.enableFilter("filterBtwnDate")
+				.setParameter("stBssd", basedateBean.getStBssd())
+				.setParameter("endBssd", basedateBean.getEndBssd());
+//		Filter filterBssd = session.enableFilter("filterCurrentDate").setParameter("bssd", basedateBean.getBssd());
+
+		volatilityList = session.createQuery("from Volatility").list();
 	}
 	
-	@Observer("changeBssd_/view/v130RfVcvMatrix.xhtml")
-	public void loadMatrix(){
-		allVcvMatrix = entityManager.createQuery(NamedQuery.VcvMatrixHisBssd.getQuery()).getResultList();
-		allVcvHis = entityManager.createQuery(NamedQuery.VcvMatrixHisBtwn.getQuery()).getResultList();
-		
-		lazyModelVcvHis = new LazyModelVcvHis(allVcvHis);
-		
-		log.info("All VcvMatrix: #{pickListRfActionaa.vcvId}, #0", allVcvMatrix.size());
-		pivotTable = new ArrayList<CrossTableModelOld>();
-		
-		for(MarketVariable aa : pickRiskFactors){
-			Map<String, BigDecimal> tempMap =new HashMap<String, BigDecimal>() ;
-			for(VcvMatrixHis bb: allVcvMatrix){
-//				log.info("Get Risk Factor:#0", bb.getRiskFactor().getMvId());
-				if(aa.equals(bb.getRiskFactor())){
-//TODO : remove the String
-					if(flagVcvType.equals("1")){	
-						tempMap.put(bb.getRefRiskFactor().getMvName(), bb.getCovariance());
-					}
-					else {
-						tempMap.put(bb.getRefRiskFactor().getMvName(), bb.getCorrel());
-					}
+	
+	public void loadVcvMatrix() {
+		pivotTableContent = new ArrayList<PivotTableModel<MarketVariable,MarketVariable,VolatilityHis>>();
+		Collections.sort(pivotTableHeader);
+		for (Volatility vol : volatilityList) {
+			if (vol.getVolId().equals(selectedVolId)) {
+				selectedVol = vol;
+			}
+		}
+		for (MarketVariable rf : pivotTableHeader) {
+			Map<MarketVariable, VolatilityHis> tempContentMap = new HashMap<MarketVariable, VolatilityHis>();
+			for (VolatilityHis volHis : selectedVol.getVolatilityHisList()) {
+				if (volHis.getId().getBssd().equals(basedateBean.getBssd())
+						&& volHis.getRiskFactor().equals(rf)) {
+					tempContentMap.put(volHis.getRefRiskFactor(), volHis);
 				}
 			}
-			pivotTable.add(new CrossTableModelOld(aa.getMvName(), tempMap));
+			pivotTableContent.add(new PivotTableModel<MarketVariable,MarketVariable,VolatilityHis>(rf,tempContentMap));
 		}
+		log.info("In the Vcv Matrix:#0,#1", selectedVol.getVolId(),pivotTableContent.size());
 	}
 
-	@Observer("evtDateChange_/view/v130RfVcvMatrix.xhtml")
-	public void onDateChange() {
-		resetTable();
-		loadMatrix();
-	}
-//***************************************************************
+
+
+	
+	// ***************************************************************
 	public void resetTable() {
-	    DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
-	            .findComponent("tabViewVcv:formVcvHis:tableVcvHis");
-	    if (dataTable != null) {
-//	    	log.info("In the dataTable");
-	    	dataTable.setValueExpression("sortBy", null);
-//	    	dataTable.setValueExpression("filterBy", null);
-	    	dataTable.setFirst(0);
-	        dataTable.reset();
-	    }
+		DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
+				.findComponent("tabViewVcv:formVcvHis:tableVcvHis");
+		if (dataTable != null) {
+			// log.info("In the dataTable");
+			dataTable.setValueExpression("sortBy", null);
+			// dataTable.setValueExpression("filterBy", null);
+			dataTable.setFirst(0);
+			dataTable.reset();
+		}
 	}
+	
+// ****************Getter and Setter***********************
+	public Volatility getSelectedVol() {
+		return selectedVol;
+	}
+
+	public void setSelectedVol(Volatility selectedVol) {
+		this.selectedVol = selectedVol;
+	}
+
+	public String getSelectedVolId() {
+		return selectedVolId;
+	}
+
+	public void setSelectedVolId(String selectedVolId) {
+		this.selectedVolId = selectedVolId;
+	}
+
+	public List<MarketVariable> getPivotTableHeader() {
+		return pivotTableHeader;
+	}
+
+	public void setPivotTableHeader(List<MarketVariable> pivotTableHeader) {
+		this.pivotTableHeader = pivotTableHeader;
+	}
+
+	public List<PivotTableModel<MarketVariable, MarketVariable, VolatilityHis>> getPivotTableContent() {
+		return pivotTableContent;
+	}
+
+	public void setPivotTableContent(List<PivotTableModel<MarketVariable, MarketVariable, VolatilityHis>> pivotTableContent) {
+		this.pivotTableContent = pivotTableContent;
+	}
+
+	public List<PivotTableModel<MarketVariable, MarketVariable, VolatilityHis>> getFilterPivotTableContent() {
+		return filterPivotTableContent;
+	}
+
+	public void setFilterPivotTableContent(
+			List<PivotTableModel<MarketVariable, MarketVariable, VolatilityHis>> filterPivotTableContent) {
+		this.filterPivotTableContent = filterPivotTableContent;
+	}
+
+	public List<Volatility> getVolatilityList() {
+		return volatilityList;
+	}
+
+	public void setVolatilityList(List<Volatility> volatilityList) {
+		this.volatilityList = volatilityList;
+	}
+
+	public List<MarketVariable> getRiskFactorList() {
+		return riskFactorList;
+	}
+
+	public void setRiskFactorList(List<MarketVariable> riskFactorList) {
+		this.riskFactorList = riskFactorList;
+	}
+
+	public List<VolatilityHis> getVolatilityHisList() {
+		return volatilityHisList;
+	}
+
+	public void setVolatilityHisList(List<VolatilityHis> volatilityHisList) {
+		this.volatilityHisList = volatilityHisList;
+	}
+
+
+	
+
 }

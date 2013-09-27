@@ -32,7 +32,7 @@ public enum NamedQuery {
 	,VcvMatrixHisList("select a from VcvMatrixHis a ")
 	
 //	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.vcvId = #{pickListRfActionaa.vcvId} and a.id.bssd = #{basedateBean.bssd}  ")
-	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.vcvId = #{flagBean.vcvMethod} and a.id.bssd = #{basedateSession.bssd} ")
+	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.vcvId = #{flagBean.vcvMethod} and a.id.bssd = #{basedateBean.bssd} ")
 	,VcvMatrixHisBtwn("select a from VcvMatrixHis a where a.id.bssd > #{basedateBean.stBssd} " +
 					" and a.id.bssd <=#{basedateBean.endBssd}")
 //	,VcvMatrixHisBssd("select a from VcvMatrixHis a where a.id.vcvId = 'SMA_1DAY' and a.id.bssd = #{basedateBean.bssd}  ")

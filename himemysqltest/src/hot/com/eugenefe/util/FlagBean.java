@@ -28,7 +28,7 @@ import com.eugenefe.util.RiskMeasureGroup;
 //@Scope(ScopeType.CONVERSATION)
 public class FlagBean {
 	
-	private String flagVcvType;
+	private boolean vol;
 	private String flagVcvRfType;
 	private String vcvMethod;
 	private String flagInterval;
@@ -39,7 +39,7 @@ public class FlagBean {
 
 	@Create
 	 public void create(){
-	    	flagVcvType="1";               //vcvType = volatilty or correlation
+	    	vol =true;               // volatilty or correlation
 	    	flagVcvRfType="IR";			   //VcvMatrix default Rf Type
 	    	vcvMethod = "EWMA_1DAY";		// default VCV Method Id
 	    	flagInterval = EMaturity.M01.name();
@@ -47,15 +47,19 @@ public class FlagBean {
 	
    
 //    **************************************
-	public String getFlagVcvType() {
-		return flagVcvType;
+	
+	public boolean isVol() {
+		return vol;
 	}
-	public void setFlagVcvType(String flagVcvType) {
-		this.flagVcvType = flagVcvType;
+
+	public void setVol(boolean isVol) {
+		this.vol = isVol;
 	}
+
 	public String getFlagVcvRfType() {
 		return flagVcvRfType;
 	}
+	
 	public void setFlagVcvRfType(String flagVcvRfType) {
 		this.flagVcvRfType = flagVcvRfType;
 	}

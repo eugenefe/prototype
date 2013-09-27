@@ -19,6 +19,7 @@
 
   <!-- Make sure this URL pattern is the same as that used by the Faces Servlet -->
   <web:hot-deploy-filter url-pattern="*.seam" />
+  <web:exception-filter url-pattern="*.seam"/>
 
   <!-- If you are still using JBoss 4, uncomment this to have your PU started -->
   <!-- <persistence:entity-manager-factory name="entityManagerFactory" -->
@@ -89,6 +90,6 @@
     <!-- <factory name="radioFlag" value="1" scope="SESSION" /> -->
     
  <!-- <component name="flagBean">
-  <property name="flagVcvType">1</property>
+  <property name="vol">true</property>
  </component> -->
 </components>

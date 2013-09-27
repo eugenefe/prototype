@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,19 +64,22 @@ public class TableIrCurveInit {
 	@Logger
 	private Log log;
 
-	@In
-	private EntityManager entityManager;
+//	@In
+//	private EntityManager entityManager;
 //	@In
 //	private Session hibernateSession;
 	
 	@In
 	private Session session;
-	@In(value="#{basedateBean.stBssd}")
-	private String stBssd;
-	@In(value="#{basedateBean.endBssd}")
-	private String endBssd;
-	@In(value="#{basedateBean.bssd}")
-	private String bssd;
+	@In
+	private BaseDateBean basedateBean;
+	
+//	@In(value="#{basedateBean.stBssd}")
+//	private String stBssd;
+//	@In(value="#{basedateBean.endBssd}")
+//	private String endBssd;
+//	@In(value="#{basedateBean.bssd}")
+//	private String bssd;
 	
 //	@In(value="#{flagBean.flagVcvType}")
 //	private String flagVcvType;
@@ -86,18 +90,18 @@ public class TableIrCurveInit {
 	private List<IrCurve> irCurveList = new ArrayList<IrCurve>();
 
 	
-	public String getStBssd() {
-		return stBssd;
-	}
-	public void setStBssd(String stBssd) {
-		this.stBssd = stBssd;
-	}
-	public String getEndBssd() {
-		return endBssd;
-	}
-	public void setEndBssd(String endBssd) {
-		this.endBssd = endBssd;
-	}
+//	public String getStBssd() {
+//		return stBssd;
+//	}
+//	public void setStBssd(String stBssd) {
+//		this.stBssd = stBssd;
+//	}
+//	public String getEndBssd() {
+//		return endBssd;
+//	}
+//	public void setEndBssd(String endBssd) {
+//		this.endBssd = endBssd;
+//	}
 	public TableIrCurveInit() {
 		System.out.println("Construction TableIrCurveInit");
 	}
@@ -128,9 +132,9 @@ public class TableIrCurveInit {
 //		
 		log.info("Ir Curve con:#{basedateBean.stBssd}, #{basedateBean.endBssd}");
 		Filter filter = session.enableFilter("filterBtwnDate")
-								.setParameter("stBssd", stBssd)
+								.setParameter("stBssd", basedateBean.getStBssd())
 //								.setParameter("stBssd", "20120501")
-								.setParameter("endBssd", endBssd)
+								.setParameter("endBssd", basedateBean.getEndBssd())
 				;
 		
 //		org.hibernate.Query qr1 = session.createQuery("from IrCurve");
@@ -150,8 +154,8 @@ public class TableIrCurveInit {
 //	@Observer(value ={ "changeBssd_/view/v140IrCurve.xhtml", "changeBssd_/view/v800Setting.xhtml"})
 	@Observer(value ="changeBssd_/view/v145IrCurveHis.xhtml")
 	public void onBssdChange(String basedate){
-		bssd = basedate;
-		log.info("In BaseDateSession Change:#0", bssd);
+//		bssd = basedate;
+//		log.info("In BaseDateSession Change:#0", bssd);
 		session.clear();
 		loadIrCurve();
 		loadPivotTable();

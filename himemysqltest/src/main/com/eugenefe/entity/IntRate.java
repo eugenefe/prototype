@@ -5,10 +5,15 @@ package com.eugenefe.entity;
 import java.beans.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,6 +22,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
@@ -64,7 +71,9 @@ public class IntRate implements java.io.Serializable {
 	private List<IrCurve> irCurves ;
 //	private IrCurve irCurve;
 	
-	private List<IntRateHis> intRateHisList = new ArrayList<IntRateHis>();
+//	private List<IntRateHis> intRateHisList = new ArrayList<IntRateHis>();
+	
+	private Map<String, BigDecimal> intRate = new HashMap<String, BigDecimal>(); 
 //	private BigDecimal currentIrValue;
 //	private IntRateHis currentIntRateHis;
 //	private List<IntRateHis> currentIntRateHis = new ArrayList<IntRateHis>();
@@ -243,7 +252,7 @@ public class IntRate implements java.io.Serializable {
 		this.irCurves = irCurves;
 	}
 
-	@OneToMany(mappedBy="interestRate", fetch=FetchType.LAZY)
+	/*@OneToMany(mappedBy="interestRate", fetch=FetchType.LAZY)
 	@Fetch(FetchMode.SUBSELECT)
 //	@BatchSize(size= 50)
 	@OrderBy("id.bssd")
@@ -259,8 +268,26 @@ public class IntRate implements java.io.Serializable {
 
 	public void setIntRateHisList(List<IntRateHis> intRateHisList) {
 		this.intRateHisList = intRateHisList;
+	}*/
+
+	@ElementCollection(fetch=FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
+	@CollectionTable(name="INT_RATE_HIS" , joinColumns={@JoinColumn(name="IR_ID")})
+	@MapKeyColumn(name="BSSD")
+	@Column(name="INT_RATE")
+	@Filters(
+			{	@Filter(name="filterBtwnDate" )	,@Filter(name="filterCurrentDate")}
+		)
+	public Map<String, BigDecimal> getIntRate() {
+		return intRate;
 	}
 
+	public void setIntRate(Map<String, BigDecimal> intRateHisMap) {
+		this.intRate = intRateHisMap;
+	}
+
+	
+	
 //	@OneToMany(mappedBy="interestRate", fetch=FetchType.LAZY)
 ////	@Fetch(FetchMode.JOIN)
 //	@Filter(name="filterCurrentDate" )

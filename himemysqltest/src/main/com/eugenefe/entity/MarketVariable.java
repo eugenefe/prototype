@@ -25,7 +25,7 @@ import com.eugenefe.util.MarketVariableType;
 @Table(name = "MARKET_VARIABLE")
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 //@Inheritance(strategy = InheritanceType.JOINED)
-public class MarketVariable implements java.io.Serializable {
+public class MarketVariable implements java.io.Serializable , Comparable<MarketVariable>{
 
 	public String mvId;
 	public String mvName;
@@ -334,6 +334,13 @@ public class MarketVariable implements java.io.Serializable {
 
 	public void setPositions(List<Position> positions) {
 		this.positions = positions;
+	}
+
+	@Override
+	public int compareTo(MarketVariable other) {
+		return 10* this.mvType.getRfType().compareTo(other.mvType.getRfType())
+				+ this.mvName.compareTo(other.mvName);
+//		return 0;
 	}
 
 }
