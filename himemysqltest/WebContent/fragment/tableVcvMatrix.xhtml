@@ -68,7 +68,7 @@
         <h:outputText value="#{_vcv.data.mvId}" />
       </p:column>
 
-      <p:columns value="#{tableRfVcvMatrixInit.pivotTableHeader}" var="column" columnIndexVar="colIndex" width="80">
+      <p:columns value="#{tableRfVcvMatrixInit.pivotTableHeader}" var="column" columnIndexVar="colIndex" width="80" sortBy="#{_vcv.contentMap[column].covariance}">
         <f:facet name="header">  
                 <h:outputText value="#{column.mvId}" />  
          </f:facet>

@@ -66,20 +66,11 @@ public class TableIrCurveInit {
 
 //	@In
 //	private EntityManager entityManager;
-//	@In
-//	private Session hibernateSession;
 	
 	@In
 	private Session session;
 	@In
 	private BaseDateBean basedateBean;
-	
-//	@In(value="#{basedateBean.stBssd}")
-//	private String stBssd;
-//	@In(value="#{basedateBean.endBssd}")
-//	private String endBssd;
-//	@In(value="#{basedateBean.bssd}")
-//	private String bssd;
 	
 //	@In(value="#{flagBean.flagVcvType}")
 //	private String flagVcvType;
@@ -90,18 +81,6 @@ public class TableIrCurveInit {
 	private List<IrCurve> irCurveList = new ArrayList<IrCurve>();
 
 	
-//	public String getStBssd() {
-//		return stBssd;
-//	}
-//	public void setStBssd(String stBssd) {
-//		this.stBssd = stBssd;
-//	}
-//	public String getEndBssd() {
-//		return endBssd;
-//	}
-//	public void setEndBssd(String endBssd) {
-//		this.endBssd = endBssd;
-//	}
 	public TableIrCurveInit() {
 		System.out.println("Construction TableIrCurveInit");
 	}

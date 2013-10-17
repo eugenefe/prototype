@@ -23,6 +23,7 @@ public enum EView {
 	,BackTest("/view/v600BackTest.xhtml")
 	,LimitManagement("/view/v700Limit.xhtml")
 	,Settings("/view/v800Settings.xhtml")
+	,DataNavigation("/view/v900DataNavigation.xhtml")
 	;
 	
 	public final String url;

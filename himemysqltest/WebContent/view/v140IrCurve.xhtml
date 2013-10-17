@@ -9,7 +9,7 @@
   <ui:define name="layoutCenter">
     <p:tabView id="tabViewIrCurve" dynamic="true" activeIndex="0">
       <!-- <p:ajax event="tabChange" listener="#{chartIntRateHisAction.loadChart1}" update="@(form)" /> -->
-      <p:ajax event="tabChange" listener="#{chartIrcHisAction.loadChart1}" update="@(form)" />
+      <!-- <p:ajax event="tabChange" listener="#{chartIrcHisAction.loadChart1}" update="@(form)" /> -->
 
       <p:tab id="tabIrcTermStructure1" title="#{messages.termStructureByCurve}">
         <ui:include src="/fragment/tableIrcTermStructureByCurve.xhtml" />

@@ -1,12 +1,16 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
-  xmlns:s="http://jboss.org/schema/seam/taglib">
-  <h:form id="formToolbar">
+  xmlns:s="http://jboss.org/schema/seam/taglib"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"  >
+  <h:form id="formMenubar">
+
     <p:growl id="growl" showDetail="true" />
     <!-- <p:tooltip /> -->
     <!-- <p:menubar style="background-color:rgb(190, 214, 248); border:none;  height:53px; opacity=0.2"> -->
     <!-- <p:menubar autoDisplay="false" style="border:none; width:100%  "> -->
-    
+
+
+
     <p:menubar autoDisplay="false">
       <p:menuitem value="#{messages.menuHome}" icon="img_home_nav"
         url="http://localhost:8080/himemysqltest/view/home.seam">
@@ -66,7 +70,7 @@
           </s:link> -->
 
           </p:menuitem>
-            <p:menuitem value="#{messages.menuitemTermStructureHis}" url="#{messages.url}/view/v145IrCurveHis.seam"
+          <p:menuitem value="#{messages.menuitemTermStructureHis}" url="#{messages.url}/view/v145IrCurveHis.seam"
             icon="ui-icon-arrowreturnthick-1-w">
           </p:menuitem>
         </p:submenu>
@@ -102,8 +106,9 @@
 
 
 
-        <p:menuitem value="Show" onclick="test.show();" />
+        <p:menuitem value="Show" onclick="wgtTest.show()" />
       </p:submenu>
+
 
 
 
@@ -138,16 +143,49 @@
           <p:menuitem value="File" url="#" />
         </p:submenu>
         <p:separator />
-        <p:menuitem value="#{messages.aboutUs}" url="#" />
+        <p:menuitem value="#{messages.aboutUs}" actionListener="#{navigationMenu.save}"/>
       </p:submenu>
 
 
+      <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
+          <p:submenu label="Text" >
+            <p:menuitem value="#{messages.irCurve}" outcome="/view/v900DataNavigation" includeViewParams="true">
+              <f:param name="navigation" value="IrCurve"></f:param>
+            </p:menuitem>
+            <p:menuitem value="#{messages.volatilityHis}" outcome="/view/v900DataNavigation" includeViewParams="true">
+              <f:param name="navigation" value="VolatilityHis"></f:param>
+            </p:menuitem>
+            <p:menuitem value="#{messages.fxCash}" outcome="/view/v900DataNavigation" includeViewParams="true" >
+              <f:param name="navigation" value="FxCash"></f:param>
+            </p:menuitem>
+            
+          </p:submenu>
+          <p:menuitem value="File" url="#" />
+        </p:submenu>
+        
+       <!--  <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
+          <p:submenu label="bbb">
+            <c:forEach var="_klz" items="#{navigationList.allData}">
+            <p:menuitem value="#{_klz.shortName}" outcome="/view/v900DataNavigation" includeViewParams="true">
+              <f:param name="navigation" value="#{_klz.shortName}"></f:param>
+            </p:menuitem>
+            </c:forEach>
+          </p:submenu> 
+        </p:submenu> -->
+
+
+      <!-- <p:menuitem value="#{messages.menuNavigationData}">
+        <p:commandLink id="dynaButton" value="Show" styleClass="ui-menuitem-link ui-corner-all" />
+        <s:link id="dynaButton" view="#{configAction.getViewUrl('DataNavigation')}" value="#{messages.menuDataNaigation}"
+          propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
+      </p:menuitem> -->
 
 
       <f:facet name="options">
         <!-- <p:panelGrid columns="2" style="padding: 10px; border:none; float:right ;"> -->
-        <p:panelGrid columns="2">
-
+        <p:panelGrid columns="3">
+          
+          <!-- <p:menubar model="#{navigationMenu.menuModel}" style="border: none"/> -->
           <s:link id="toolbarLogin" view="/view/login.xhtml" value="#{messages.logIn}"
             rendered="#{not identity.loggedIn}" propagation="none" />
 
@@ -158,18 +196,23 @@
             rendered="#{identity.loggedIn}" />
           <h:outputText id="toolbarWelcome1" value="" rendered="#{not identity.loggedIn}" />
 
-
+          <h:outputText value="" />
           <h:outputText value="#{messages.baseDate}:" />
           <p:calendar id="baseDate" value="#{basedateSession.baseDate}" showButtonPanel="true" pattern="yyyy/MM/dd"
-            navigator="true" mindate="#{basedateSession.stDate}" maxdate="#{basedateSession.endDate}" >
+            navigator="true" mindate="#{basedateSession.stDate}" maxdate="#{basedateSession.endDate}">
             <p:ajax event="dateSelect" listener="#{basedateSession.handleDateSelect}" update="@(form)" />
           </p:calendar>
         </p:panelGrid>
       </f:facet>
 
     </p:menubar>
+    
+    
+    <p:tieredMenu id="tiered" overlay="true" trigger="dynaButton" model="#{navigationMenu.menuModel}" my="left top" at="left bottom"/>
+    <!-- <p:menu overlay="true" trigger="dynaButton" model="#{navigationMenu.menuModel}" my="left top" at="left bottom" /> -->
+    <!-- <p:menubar model="#{navigationMenu.menuModel}"/> -->
 
-    <p:dialog widgetVar="test" header="This is a test" />
+    <p:dialog id="menubarTestDlg" widgetVar="wgtTest" header="This is a test" modal="tru" />
     <!-- <p:panelGrid columns="2" style="padding: 10px; border:none; float:right">
       <h:outputText value="#{messages.baseDate}:" />
       <p:calendar id="endDate" value="#{basedateBean.date1}" showButtonPanel="true" pattern="yyyy/MM/dd"

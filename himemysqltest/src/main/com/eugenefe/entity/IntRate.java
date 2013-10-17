@@ -56,7 +56,7 @@ import org.jboss.seam.annotations.Name;
 public class IntRate implements java.io.Serializable {
 
 	private String irId;
-//	private MarketVariable marketVariable;
+	private MarketVariable marketVariable;
 	private String irName;
 	private String issueDate;
 	private String maturityDate;
@@ -118,17 +118,17 @@ public class IntRate implements java.io.Serializable {
 		this.irId = irId;
 	}
 
-//	@OneToOne(fetch = FetchType.LAZY)
-//	@PrimaryKeyJoinColumn
-//	@NotNull
-//	@Size(max = 20)
-//	public MarketVariable getMarketVariable() {
-//		return this.marketVariable;
-//	}
-//
-//	public void setMarketVariable(MarketVariable marketVariable) {
-//		this.marketVariable = marketVariable;
-//	}
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	@NotNull
+	@Size(max = 20)
+	public MarketVariable getMarketVariable() {
+		return this.marketVariable;
+	}
+
+	public void setMarketVariable(MarketVariable marketVariable) {
+		this.marketVariable = marketVariable;
+	}
 
 	@Column(name = "IR_NAME", length = 50)
 	@Size(max = 50)

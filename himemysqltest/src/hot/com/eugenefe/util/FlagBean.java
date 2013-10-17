@@ -33,6 +33,28 @@ public class FlagBean {
 	private String vcvMethod;
 	private String flagInterval;
 	
+	
+	public ENavigationData navigationData;
+	public ENavigationData getNavigationData() {
+		return navigationData;
+	}
+	public void setNavigationData(ENavigationData navigationData) {
+		this.navigationData = navigationData;
+	}
+	
+//	public List<ENavigationData> navigationList;
+//	public List<ENavigationData> getNavigationList() {
+//		return ENavigationData.values();
+//	}
+//	public void setNavigationList(List<ENavigationData> navigationList) {
+//		this.navigationList = navigationList;
+//	}
+	public ENavigationData[] navigationList;
+	
+	public ENavigationData[] getNavigationList() {
+		return ENavigationData.values();
+	}
+	
 	public FlagBean(){
 		System.out.println("Construction FlagBean");
 	}
@@ -43,6 +65,7 @@ public class FlagBean {
 	    	flagVcvRfType="IR";			   //VcvMatrix default Rf Type
 	    	vcvMethod = "EWMA_1DAY";		// default VCV Method Id
 	    	flagInterval = EMaturity.M01.name();
+	    	navigationData = ENavigationData.IrCurve;
 	 }	
 	
    

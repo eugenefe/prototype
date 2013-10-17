@@ -44,6 +44,8 @@ public class ConfigAction {
 		this.flagVcvType = flagVcvType;
 	}
 
+	
+	
 //	@Out
 //	private Integer flag;
 //	public Integer getFlag() {
@@ -52,6 +54,7 @@ public class ConfigAction {
 //	public void setFlag(Integer flag) {
 //		this.flag = flag;
 //	}
+	
 	
 	
 	public ConfigAction(){

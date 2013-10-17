@@ -30,7 +30,7 @@
         <ui:insert name="layoutCenter" />
         
         <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
-        <p:dialog modal="false" widgetVar="statusDialog" header="Status" draggable="false" closable="false">
+        <p:dialog modal="false" widgetVar="statusDialog" header="#{messages.ajaxStatus}" draggable="false" closable="false">
           <p:graphicImage value="/img/ajaxloadingbar.gif" />
         </p:dialog>
       <!-- </h:form> -->
