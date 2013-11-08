@@ -10,8 +10,9 @@
   </ui:define>
   
   <ui:define name="layoutCenter">
-    <ui:include src="/fragment/tableDynamicModel.xhtml" />
-    <ui:include src="/popup/dialogDataNavigation.xhtml" />
+    <!-- <ui:include src="/fragment/tableDynamicModel.xhtml" /> -->
+   <ui:include src="/fragment/tableLazyDynamicModel.xhtml" />
+    <!-- <ui:include src="/popup/dialogDataNavigation.xhtml" /> -->
   </ui:define>
   
   <ui:define name="layoutBottom">
@@ -20,10 +21,19 @@
         <h:outputText value="BBBBB"/>
     </p:tab>
     </p:tabView> -->
-    <p:tabView value="#{navigationList.allData}" var="_tabItem" >
-    <p:tab title="#{_tabItem.shortName}" >
-        <h:outputText value="BBBBB"/>
-    </p:tab> 
-</p:tabView>
+    <h:form id="dynForm">
+    <p:tabView id="dynTabView" value="#{tableLazyDynamicModelInit.detailTab}" var="_tabItem" dynamic="true" styleClass="dynamicTableId" orientation="top">
+      <p:tab title="#{_tabItem.columnId}">
+        <ui:include src="/fragment/tableLazyDynamicModelDetail.xhtml" >
+          <!-- <ui:param name="detailDynamicModel" value="#{tableLazyDynamicModelInit.lazyModelDynamicDetail[_tabItem.columnId]}" /> -->
+          <ui:param name="detailDynamicModel" value="#{tableLazyDynamicModelInit.detailTableModel[_tabItem.columnId]}" />
+          <!-- <ui:param name="detailDynamicModel" value="#{tableLazyDynamicModelInit.detailTableModelList}" /> -->
+          <!-- <ui:param name="detailHeader" value="#{tableLazyDynamicModelInit.detailModelHeader}" /> -->
+          <ui:param name="detailHeader" value="#{tableLazyDynamicModelInit.detailMdoelHeaderMap[_tabItem.columnId]}" />
+          <ui:param name="idString" value="#{_tabItem.columnId}"/> 
+        </ui:include>
+      </p:tab>
+    </p:tabView>
+    </h:form>
   </ui:define>
 </ui:composition>

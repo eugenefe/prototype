@@ -58,7 +58,7 @@
         <h:outputText value="#{_irc.data.ircBucketMap.size()}" />
       </p:column> -->
       
-      <p:columns value="#{tableTermStructureInit.pivotTableHeader}" var="_column" width="40"   >
+      <p:columns value="#{tableTermStructureInit.pivotTableHeader}" var="_column" width="40" filterBy="data.ircName" >
         <f:facet name="header">
           <h:outputText value="#{_column}" />
         </f:facet>

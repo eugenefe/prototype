@@ -66,7 +66,7 @@ import com.lowagie.text.Header;
 @Name("tableDynVolatiltiyHisInit")
 @Scope(ScopeType.CONVERSATION)
 public class TableDynVolatilityHisInit {
-	@Logger
+/*	@Logger
 	private Log log;
 
 	@In
@@ -289,7 +289,7 @@ public class TableDynVolatilityHisInit {
 	public void setFilterPivotTableContent(
 			List<PivotTableModel<VolatilityHisId, TableDynamicColumn, TableDynamicContent>> filterPivotTableContent) {
 		this.filterPivotTableContent = filterPivotTableContent;
-	}
+	}*/
 
 	// ****************Getter and Setter***********************
 

@@ -10,11 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.el.ELContext;
+import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.drools.command.runtime.GetKnowledgeBaseCommand;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.jboss.seam.ScopeType;
@@ -27,6 +31,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.core.Conversation;
@@ -34,6 +39,8 @@ import org.jboss.seam.core.ConversationIdGenerator;
 import org.jboss.seam.core.Events;
 //import org.jboss.seam.framework.Query;
 import org.jboss.seam.log.Log;
+import org.primefaces.component.api.UIColumn;
+import org.primefaces.component.api.UIData;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -69,7 +76,7 @@ import com.lowagie.text.Header;
 @Name("tableDynamicModelInit")
 @Scope(ScopeType.CONVERSATION)
 public class TableDynamicModelInit<T> {
-	@Logger
+/*	@Logger
 	private Log log;
 
 	@In
@@ -83,11 +90,13 @@ public class TableDynamicModelInit<T> {
 
 	@RequestParameter
 	private String navigation;
-	
+
 	private String savedNavigation;
+
 	public String getSavedNavigation() {
 		return savedNavigation;
 	}
+
 	public void setSavedNavigation(String savedNavigation) {
 		this.savedNavigation = savedNavigation;
 	}
@@ -103,8 +112,13 @@ public class TableDynamicModelInit<T> {
 	private T selectedDynamicModel;
 
 	private List<TableDynamicColumn> pivotTableHeader;
-	private List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>> pivotTableContent;
-	private List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>> filterPivotTableContent;
+	// private List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>>
+	// pivotTableContent;
+//	@DataModel
+	private List<Map<String, String>> pivotTableContent;
+	// private List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>>
+	// filterPivotTableContent;
+	private List<Map<String, String>> filterPivotTableContent;
 
 	public TableDynamicModelInit() {
 		System.out.println("Construction TableDynamicModelInit");
@@ -114,33 +128,39 @@ public class TableDynamicModelInit<T> {
 	@Create
 	@Begin(join = true)
 	public void create() {
-		savedNavigation = navigation;
+		if (navigation != null) {
+			savedNavigation = navigation;
+		}
 		zzz();
 		initPivotTableHeader();
 
 		loadDynamicModel();
 		loadTable();
+		dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
+				.findComponent("formDynamicModel:tableDynamicModel");
+		String aaaa = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+		log.info("aaa:#0,#1", aaaa);
 	}
 
 	public void columeChange() {
+//		filterPivotTableContent = null;
+//		resetTable();
 		initPivotTableHeader();
 		loadTable();
 	}
-	
-//	@Observer("evtDynamicModelInitialize")
-//	@Begin(join = true)
-//	public void create(TreeNode superNode) {
-//		log.info("RootNode size:#0", superNode.getChildCount());
-//		this.superNode = superNode;
-//		this.rootNode = superNode.getChildren().get(0);
-//
-//		// this.rootNode = rootNode;
-//		initPivotTableHeader();
-//		loadDynamicModel();
-//		loadTable();
-//	}
 
-
+	// @Observer("evtDynamicModelInitialize")
+	// @Begin(join = true)
+	// public void create(TreeNode superNode) {
+	// log.info("RootNode size:#0", superNode.getChildCount());
+	// this.superNode = superNode;
+	// this.rootNode = superNode.getChildren().get(0);
+	//
+	// // this.rootNode = rootNode;
+	// initPivotTableHeader();
+	// loadDynamicModel();
+	// loadTable();
+	// }
 
 	// ******************************************
 	public void initPivotTableHeader() {
@@ -150,18 +170,20 @@ public class TableDynamicModelInit<T> {
 
 		if (selectedNodes == null || selectedNodes.length == 0) {
 			initSelection();
-//			log.info("in the SelectionNode size: #0", selectedNodes.length);
+			// log.info("in the SelectionNode size: #0", selectedNodes.length);
 		}
 		for (TreeNode node : selectedNodes) {
 			if (node.isLeaf()) {
 				if (node.getParent() != null && !node.getParent().equals(superNode)) {
 					temp = ComponentReflection.getRecursiveMethodName(node, rootNode);
-//					log.info("New Header: #0", ComponentReflection.getRecursiveMethodName(node, rootNode));
-					
+					// log.info("New Header: #0",
+					// ComponentReflection.getRecursiveMethodName(node,
+					// rootNode));
+
 					pivotTableHeader.add(new TableDynamicColumn(temp, temp));
 				}
 			}
-			
+
 		}
 	}
 
@@ -173,38 +195,58 @@ public class TableDynamicModelInit<T> {
 		// basedateBean.getBssd());
 		String query = "from " + savedNavigation;
 		dynamicModelList = session.createQuery(query).list();
-//		log.info("Query Result size:#0", dynamicModelList.size());
+		// log.info("Query Result size:#0", dynamicModelList.size());
 	}
 
 	public void loadTable() {
-		pivotTableContent = new ArrayList<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>>();
+		// pivotTableContent = new ArrayList<PivotTableModel<T,
+		// TableDynamicColumn, TableDynamicContent>>();
+		pivotTableContent = new ArrayList<Map<String, String>>();
 		// Collections.sort(pivotTableHeader);
 		Object navi;
 
 		for (T dyn : dynamicModelList) {
-			
-			Map<TableDynamicColumn, TableDynamicContent> tempContentMap = new HashMap<TableDynamicColumn, TableDynamicContent>();
+
+			// Map<TableDynamicColumn, TableDynamicContent> tempContentMap = new
+			// HashMap<TableDynamicColumn, TableDynamicContent>();
+			Map<String, String> tempContentMap = new HashMap<String, String>();
+
 			for (TableDynamicColumn header : pivotTableHeader) {
-//				log.info("Header :#0", header.getColProperties());
+				// log.info("Header :#0", header.getColProperties());
 				navi = dyn;
 				// log.info("header Prep:#0,#1", header.getColProperties());
 				try {
 					for (String prop : header.getColProperty()) {
 						Method temp = navi.getClass().getDeclaredMethod(prop);
-//						Field temp = navi.getClass().getDeclaredField(prop);
+						// Field temp = navi.getClass().getDeclaredField(prop);
 
-//						temp.setAccessible(true);
-//						navi = temp.get(navi);
-						
+						// temp.setAccessible(true);
+						// navi = temp.get(navi);
+
 						navi = temp.invoke(navi);
 					}
-					tempContentMap.put(header, new TableDynamicContent(String.valueOf(navi), 0));
+					// tempContentMap.put(header, new
+					// TableDynamicContent(String.valueOf(navi), 0));
+					tempContentMap.put(header.getColProperties(), String.valueOf(navi));
 				} catch (Exception e) {
 
 				}
 			}
-			pivotTableContent.add(new PivotTableModel<T, TableDynamicColumn, TableDynamicContent>(dyn, tempContentMap));
+			// pivotTableContent.add(new PivotTableModel<T, TableDynamicColumn,
+			// TableDynamicContent>(dyn, tempContentMap));
+			pivotTableContent.add(tempContentMap);
 			filterPivotTableContent = pivotTableContent;
+			
+			for(Map<String, String> aa : pivotTableContent){
+//				log.info("Colllll : #0,  #1", aa.get("getId.getVolId"));
+//				for(Map.Entry<String, String> entry : aa.entrySet()){
+//					log.info("Colllll : #0,  #1", entry.getKey(), entry.getValue());
+//				}
+//
+			}
+//			for(TableDynamicColumn aa : pivotTableHeader){
+//				log.info("Col22222222 : #0,  #1", aa.getColName(), aa.getColProperties());
+//			}
 		}
 		// log.info("In the Vcv Matrix:#0,#1", pivotTableContent.size());
 	}
@@ -227,7 +269,7 @@ public class TableDynamicModelInit<T> {
 		selectedNodes = new DefaultTreeNode[cnt];
 		log.info("in the SelectionNode : #0", cnt);
 		cnt = 0;
-		
+
 		for (TreeNode node : rootNode.getChildren()) {
 			temp = ComponentReflection.getRecursiveMethodName(node, rootNode);
 			if (node.isLeaf()) {
@@ -243,10 +285,11 @@ public class TableDynamicModelInit<T> {
 			}
 		}
 	}
+
 	// ***************************************************************
 	public void resetTable() {
 		DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
-				.findComponent("tabViewVcv:formVcvHis:tableVcvHis");
+				.findComponent("formDynamicModel:tableDynamicModel");
 		if (dataTable != null) {
 			// log.info("In the dataTable");
 			dataTable.setValueExpression("sortBy", null);
@@ -262,10 +305,11 @@ public class TableDynamicModelInit<T> {
 			klass = Class.forName(ENavigationData.valueOf(savedNavigation).getQualifiedName());
 
 			// rootNode = ComponentReflection.getPropertyTree(klass);
-//			rootNode = ComponentReflection.getMethodTree(klass).getChildren().get(0);
+			// rootNode =
+			// ComponentReflection.getMethodTree(klass).getChildren().get(0);
 			superNode = ComponentReflection.getMethodTree(klass);
 			rootNode = superNode.getChildren().get(0);
-			
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -345,7 +389,6 @@ public class TableDynamicModelInit<T> {
 	}
 
 	// ****************Getter and Setter***********************
-	
 
 	public List<TableDynamicColumn> getPivotTableHeader() {
 		return pivotTableHeader;
@@ -355,20 +398,42 @@ public class TableDynamicModelInit<T> {
 		this.pivotTableHeader = pivotTableHeader;
 	}
 
-	public List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>> getPivotTableContent() {
+	public List<Map<String, String>> getPivotTableContent() {
 		return pivotTableContent;
 	}
 
-	public void setPivotTableContent(List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>> pivotTableContent) {
+	public void setPivotTableContent(List<Map<String, String>> pivotTableContent) {
 		this.pivotTableContent = pivotTableContent;
 	}
 
-	public List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>> getFilterPivotTableContent() {
+	public List<Map<String, String>> getFilterPivotTableContent() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ELContext elContext= context.getELContext();
+		dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
+				.findComponent("formDynamicModel:tableDynamicModel");
+//		dataTable.setRowIndex(1);
+//		 log.info("Filter1:#0,#1,#2", dataTable.getId(), dataTable.getRowData());
+//				 , dataTable.getFilters().size(), filterPivotTableContent.size());
+//		for (Map.Entry<String, String> aa : dataTable.getFilters().entrySet()) {
+//			log.info("FilterZZ:#0,#1",dataTable.getColumns().size(), aa.getFilterBy());
+//			log.info("FilterZZ:#0,#1,#2",aa.getKey(), aa.getValue(), dataTable.getFilterMetadata());
+			
+//		}
+		ValueExpression filterByVE = context.getApplication().getExpressionFactory().createValueExpression(elContext, "#{_dynModel.getId_getVolId}", Object.class);
+		log.info("FilterZZ1zzzz:#0,#1,#2", String.valueOf(filterByVE.getValue(elContext)));
+//		for (Object aa :  dataTable.getFilterMetadata()) {
+//			log.info("FilterZZ:#0,#1,#2",(FilterM));
+			
+//		}
+//		for (UIColumn bb: dataTable.getColumns()) {
+////			log.info("FilterZZ:#0,#1",dataTable.getColumns().size(), aa.getFilterBy());
+//			log.info("Column : #0,#1, #2", bb.isDynamic(), bb.getFilterBy(), bb.getContainerClientId(context));
+//			
+//		}
 		return filterPivotTableContent;
 	}
 
-	public void setFilterPivotTableContent(
-			List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>> filterPivotTableContent) {
+	public void setFilterPivotTableContent(List<Map<String, String>> filterPivotTableContent) {
 		this.filterPivotTableContent = filterPivotTableContent;
 	}
 
@@ -388,4 +453,14 @@ public class TableDynamicModelInit<T> {
 		this.selectedNodes = selectedNodes;
 	}
 
+	private DataTable dataTable;
+
+	public DataTable getDataTable() {
+		return dataTable;
+	}
+
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
+*/
 }

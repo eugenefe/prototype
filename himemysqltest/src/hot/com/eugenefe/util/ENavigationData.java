@@ -16,6 +16,9 @@ public enum ENavigationData {
 	,PositionReturn(  "com.eugenefe.entity.PositionReturn")
 	,IrCurve( "com.eugenefe.entity.IrCurve")
 	,FxCash ("com.eugenefe.entity.FxCash")
+	,IntRate("com.eugenefe.entity.IntRate")
+	,Portfolio("com.eugenefe.entity.Portfolio")
+	,PortfolioReturn("com.eugenefe.entity.PortfolioReturn")
 	;
 
 	

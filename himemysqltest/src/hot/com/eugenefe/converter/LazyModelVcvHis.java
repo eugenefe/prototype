@@ -54,7 +54,7 @@ public class LazyModelVcvHis  extends LazyDataModel<VcvMatrixHis>{
         List<VcvMatrixHis> data = new ArrayList<VcvMatrixHis>();  
                 
         //filter  
-//        System.out.println("Before in the filter Market :"+ filters.keySet().size());
+        System.out.println("Before in the filter Market :"+ filters.keySet().size());
         for(VcvMatrixHis aa : datasource) {  
 //        	System.out.println("In the Loop");
         	boolean match = true;  

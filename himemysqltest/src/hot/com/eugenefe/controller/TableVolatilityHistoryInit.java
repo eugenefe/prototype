@@ -225,6 +225,9 @@ public class TableVolatilityHistoryInit {
 	}
 
 	public LazyDataModel<VolatilityHis> getLazyModelVolHis() {
+//		DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
+//				.findComponent("tabViewVcv:formLazyVolHis:tableLazyVolHis");
+//		 log.info("Filter1:#0,#1,#2", dataTable.getId(),dataTable.getMultiSortMeta(), dataTable.isLazy());
 		return lazyModelVolHis;
 	}
 

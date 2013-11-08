@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.primefaces.model.SelectableDataModel;
 
+import com.eugenefe.entity.IMarketVariableHis;
 import com.eugenefe.entity.IrCurve;
 import com.eugenefe.enums.EMaturity;
 

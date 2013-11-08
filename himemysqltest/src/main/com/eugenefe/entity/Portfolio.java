@@ -19,6 +19,10 @@ import javax.persistence.Transient;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.log.Log;
 
+import com.eugenefe.util.AnnoMethodTree;
+import com.eugenefe.util.AnnoNavigationFilter;
+import com.eugenefe.util.AnnoMethodTree.EColumnType;
+
 import sun.util.logging.resources.logging;
 
 /**
@@ -26,6 +30,7 @@ import sun.util.logging.resources.logging;
  */
 @Entity
 @Table(name = "PORTFOLIO")
+@AnnoNavigationFilter
 public class Portfolio implements IPortfolio, Serializable {
 	/**
 	 * 
@@ -75,6 +80,7 @@ public class Portfolio implements IPortfolio, Serializable {
 
 	@Id
 	@Column(name = "PORT_ID", nullable = false, length = 50)
+	@AnnoMethodTree(order=10, init=true)
 	public String getPortId() {
 		return this.portId;
 	}
@@ -86,6 +92,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	// @ManyToOne(fetch = FetchType.LAZY, targetEntity=Portfolio.class)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PARENT_PORT_ID")
+	@AnnoMethodTree(order=30, init=false)
 	public Portfolio getParentPortfolio() {
 		return this.parentPortfolio;
 	}
@@ -95,6 +102,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	}
 
 	@Column(name = "PORT_NAME", length = 50)
+	@AnnoMethodTree(order=20, init=true)
 	public String getPortName() {
 		return this.portName;
 	}
@@ -104,6 +112,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	}
 
 	@Column(name = "GROUP_ID", length = 20)
+	@AnnoMethodTree(order=40, init=true)
 	public String getGroupId() {
 		return this.groupId;
 	}
@@ -113,6 +122,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	}
 
 	@Column(name = "LEVEL1", length = 20)
+	@AnnoMethodTree(order=50, init=true)
 	public String getLevel1() {
 		return this.level1;
 	}
@@ -122,6 +132,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	}
 
 	@Column(name = "LEVEL2", length = 20)
+	@AnnoMethodTree(order=51, init=true)
 	public String getLevel2() {
 		return this.level2;
 	}
@@ -131,6 +142,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	}
 
 	@Column(name = "LEVEL3", length = 20)
+	@AnnoMethodTree(order=52, init=true)
 	public String getLevel3() {
 		return this.level3;
 	}
@@ -140,6 +152,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	}
 
 	@Column(name = "LEVEL4", length = 20)
+	@AnnoMethodTree(order=53, init=true)
 	public String getLevel4() {
 		return this.level4;
 	}
@@ -149,6 +162,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	}
 
 	@Column(name = "LEVEL5", length = 20)
+	@AnnoMethodTree(order=54, init=true)
 	public String getLevel5() {
 		return this.level5;
 	}
@@ -161,6 +175,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	// targetEntity=Portfolio.class)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parentPortfolio")
 //	@OneToMany(fetch = FetchType.EAGER, mappedBy = "parentPortfolio")
+	@AnnoMethodTree(order=60, init=false, type=EColumnType.List)
 	public List<Portfolio> getChildPortfolios() {
 //		System.out.println("Call DB");
 		return this.childPortfolios;
@@ -181,6 +196,7 @@ public class Portfolio implements IPortfolio, Serializable {
 	// }
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "portfolio")
+	@AnnoMethodTree(order=70, init=false, type= EColumnType.List)
 	public List<PortfolioReturn> getPortfolioReturns() {
 		return portfolioReturns;
 	}

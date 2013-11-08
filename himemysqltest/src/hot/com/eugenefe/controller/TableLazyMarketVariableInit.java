@@ -109,6 +109,7 @@ public class TableLazyMarketVariableInit {
 			onViewFullMarketVariables();
 		}
 //		selectedMarketVariable = marketVariables.get(0);
+//		dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formLazyMarketVariables:tableLazyMarketVariables");
 	}
 
 	public void onViewFullMarketVariables() {
@@ -147,6 +148,13 @@ public class TableLazyMarketVariableInit {
 	    }
 	}
 
-	
+	private DataTable dataTable;
+
+	public DataTable getDataTable() {
+		return dataTable;
+	}
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
 
 }

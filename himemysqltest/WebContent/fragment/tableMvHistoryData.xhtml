@@ -35,7 +35,7 @@
       selectionMode="single" selection="#{selIMV}" rowKey="#{_mvHis.bssd}"
       sortMode="multiple"
       resizableColumns="true" 
-      stickyHeader="true"
+      stickyHeader="false"
       paginator="true" paginatorPosition="bottom" rows="15"
       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
       rowsPerPageTemplate="15,25,50" 
@@ -60,7 +60,10 @@
           <h:outputText value="#{messages.currentPrice}" />
         </f:facet>
         <h:outputText value="#{_mvHis.currentPrice}" style="float:right">
-          <f:convertNumber pattern="#,###.####" />
+          <!-- <f:convertNumber pattern="#,###.####" currencySymbol="$" type="currency"/> -->
+          <!-- <f:convertNumber  currencySymbol="￦" type="currency" locale="ko_KR"/> -->
+          <f:convertNumber  type="currency" locale="ko_KR"/>
+          <!-- <f:convertNumber  type="currency" locale="#{facesContext.viewRoot.locale}"/> -->
           <!-- <f:convertNumber  pattern="\u00A4#,##0"/> -->
         </h:outputText>
       </p:column>

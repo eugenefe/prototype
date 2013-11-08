@@ -61,6 +61,7 @@ public class TableTermStructureInit {
 	public void create() {
 		loadIrCurve();
 		loadPivotTable();
+		dataTable =(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("tabViewIrCurve:formTermStructure:tableTermStructure");
 	}
 
 	// @Observer(value ={
@@ -151,10 +152,28 @@ public class TableTermStructureInit {
 	}
 
 	public List<PivotTableModel<IrCurve, EMaturity, IntRate>> getFilterPivotTableContent() {
+		log.info("Filter1:#0,#1,#2", dataTable.getId(),dataTable.getFilters().size());
+//		log.info("Filter1:#0,#1,#2", dataTable.getId(), dataTable.getFilters().size(),this.filterPivotTableContent.size());
+		for(String aa: dataTable.getFilters().keySet()){
+//			log.info("Filter:#0,#1", aa, dataTable.getFilters().get(aa));
+		}
 		return filterPivotTableContent;
 	}
 
 	public void setFilterPivotTableContent(List<PivotTableModel<IrCurve, EMaturity, IntRate>> filterPivotTableContent) {
 		this.filterPivotTableContent = filterPivotTableContent;
 	}
+	
+	
+	private DataTable dataTable;
+
+	public DataTable getDataTable() {
+		return dataTable;
+	}
+
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
+	
+	
 }

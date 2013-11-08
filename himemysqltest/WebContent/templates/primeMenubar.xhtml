@@ -1,7 +1,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
-  xmlns:s="http://jboss.org/schema/seam/taglib"
-  xmlns:c="http://java.sun.com/jsp/jstl/core"  >
+  xmlns:s="http://jboss.org/schema/seam/taglib" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <h:form id="formMenubar">
 
     <p:growl id="growl" showDetail="true" />
@@ -143,27 +142,29 @@
           <p:menuitem value="File" url="#" />
         </p:submenu>
         <p:separator />
-        <p:menuitem value="#{messages.aboutUs}" actionListener="#{navigationMenu.save}"/>
+        <p:menuitem value="#{messages.aboutUs}" />
       </p:submenu>
 
 
-      <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
-          <p:submenu label="Text" >
-            <p:menuitem value="#{messages.irCurve}" outcome="/view/v900DataNavigation" includeViewParams="true">
-              <f:param name="navigation" value="IrCurve"></f:param>
-            </p:menuitem>
-            <p:menuitem value="#{messages.volatilityHis}" outcome="/view/v900DataNavigation" includeViewParams="true">
-              <f:param name="navigation" value="VolatilityHis"></f:param>
-            </p:menuitem>
-            <p:menuitem value="#{messages.fxCash}" outcome="/view/v900DataNavigation" includeViewParams="true" >
-              <f:param name="navigation" value="FxCash"></f:param>
-            </p:menuitem>
-            
-          </p:submenu>
-          <p:menuitem value="File" url="#" />
+     <!--  <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
+        <p:submenu label="Text">
+          <p:menuitem value="#{messages.irCurve}" outcome="/view/v900DataNavigation" includeViewParams="true">
+            <f:param name="navigation" value="IrCurve"></f:param>
+          </p:menuitem>
+          <p:menuitem value="#{messages.volatilityHis}" outcome="/view/v900DataNavigation" includeViewParams="true">
+            <f:param name="navigation" value="VolatilityHis"></f:param>
+          </p:menuitem>
+          <p:menuitem value="#{messages.fxCash}" outcome="/view/v900DataNavigation" includeViewParams="true" target="_blank">
+            <f:param name="navigation" value="FxCash"></f:param>
+          </p:menuitem>
+
         </p:submenu>
-        
-       <!--  <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
+        <p:menuitem value="File" url="#" />
+      </p:submenu> -->
+
+
+
+      <!-- <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
           <p:submenu label="bbb">
             <c:forEach var="_klz" items="#{navigationList.allData}">
             <p:menuitem value="#{_klz.shortName}" outcome="/view/v900DataNavigation" includeViewParams="true">
@@ -173,18 +174,18 @@
           </p:submenu> 
         </p:submenu> -->
 
-
-      <!-- <p:menuitem value="#{messages.menuNavigationData}">
-        <p:commandLink id="dynaButton" value="Show" styleClass="ui-menuitem-link ui-corner-all" />
-        <s:link id="dynaButton" view="#{configAction.getViewUrl('DataNavigation')}" value="#{messages.menuDataNaigation}"
-          propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
-      </p:menuitem> -->
+      <p:menuitem >
+      <!-- <p:menuitem value="#{messages.menuNavigationData}" styleClass="ui-menu-parent"> -->
+        <p:commandLink id="dynaButton" value="#{messages.menuNavigationData}" styleClass="ui-menuitem-link ui-corner-all ui-menu .ui-menu-parent" />
+        <!-- <s:link id="dynaButton" view="#{configAction.getViewUrl('DataNavigation')}" value="#{messages.menuDataNaigation}"
+          propagation="none" styleClass="ui-menuitem-link ui-corner-all" /> -->
+      </p:menuitem>
 
 
       <f:facet name="options">
         <!-- <p:panelGrid columns="2" style="padding: 10px; border:none; float:right ;"> -->
         <p:panelGrid columns="3">
-          
+
           <!-- <p:menubar model="#{navigationMenu.menuModel}" style="border: none"/> -->
           <s:link id="toolbarLogin" view="/view/login.xhtml" value="#{messages.logIn}"
             rendered="#{not identity.loggedIn}" propagation="none" />
@@ -206,6 +207,8 @@
       </f:facet>
 
     </p:menubar>
+
+
     
     
     <p:tieredMenu id="tiered" overlay="true" trigger="dynaButton" model="#{navigationMenu.menuModel}" my="left top" at="left bottom"/>

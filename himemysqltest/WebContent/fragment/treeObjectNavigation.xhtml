@@ -19,19 +19,29 @@
         <p:ajax event="valueChange" update="@(form)"  listener="#{treeObjectNavigationInit.create}"/>
       </p:selectOneMenu> -->
       
-       
-        <p:tree id="treeObjectNavigation" value="#{treeObjectNavigationInit.rootNode}" var="_node" 
+     
+        <p:tree id="treeObjectNavigation" value="#{treeObjectNavigationInit.superNode}" var="_node" 
           animate="true" highlight="true" orientation="vertical" 
-          selectionMode="checkbox" selection="#{tableDynamicModelInit.selectedNodes}"
-          draggable="true" droppable="true" dragdropScope="demo"
+          selectionMode="checkbox"  selection="#{tableLazyDynamicModelInit.selectedNodes}"
+          draggable="false" droppable="true" 
           style="width:95%">
           
           <!-- <p:ajax event="dragdrop" update="@(form)" /> --> 
           <!-- <p:ajax event="select" listener="#{portfolioSelectAction.onNodeSelect}" update="@(.ui-datatable)" /> -->
 
-          <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
-            <h:outputText value="#{_node.name}"  />
+          <!-- <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+            <h:outputText value="#{_node.columnName}"  />
+          </p:treeNode> -->
+          <p:treeNode >
+            <h:outputText value="#{_node.columnName}"  />
           </p:treeNode>
+         <!--  <p:treeNode type="collection" icon="ui-icon-image">
+            <h:outputText value="#{_node.columnName}"  />
+          </p:treeNode>
+          <p:treeNode type="prop" icon="ui-icon-video">
+            <h:outputText value="#{_node.columnName}"  />
+          </p:treeNode>
+ -->
         </p:tree>
                 
          <!-- <p:commandButton value="#{messages.submitButton}" actionListener="#{treeObjectNavigationInit.afterSelection1}" 
@@ -39,7 +49,9 @@
         
         <!-- onclick="wgDlgRfSelect.hide()" update=":tabViewVcv:formVcvMatrix:tableVcvMatrix" --> 
         
-        <p:commandButton value="#{messages.submitButton}" action="#{tableDynamicModelInit.columeChange}" update="@(form)" 
+        <!-- <p:commandButton value="#{messages.submitButton}" action="#{tableDynamicModelInit.columeChange}" update="@(form)" 
+          style="float:left" /> -->
+        <p:commandButton value="#{messages.submitButton}" action="#{tableLazyDynamicModelInit.columeChange}" update="@(form)" 
           style="float:left" />
 
   </h:form>

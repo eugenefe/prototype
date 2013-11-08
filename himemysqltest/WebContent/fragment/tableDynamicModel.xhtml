@@ -4,29 +4,31 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 
-  <h:form id="formDynamicModel">
+  <h:form id="formDynamicModel" prependId="false">
     <p:dataTable id="tableDynamicModel" value="#{tableDynamicModelInit.pivotTableContent}" var="_dynModel"
       emptyMessage="No History Data found with given criteria. Change the Dates"
       selection="#{tableDynamicModelInit.selectedDynamicModel}" selectionMode="single" 
-      rowKey="#{_dynModel.data}"
+      rowKey="#{_dynModel}"
       filteredValue="#{tableDynamicModelInit.filterPivotTableContent}"
       sortMode="multiple"
       resizableColumns="true" 
-      stickyHeader="true"
+      stickyHeader="false"
       paginatorAlwaysVisible="true"
       paginator="true" paginatorPosition="bottom" rows="15"
       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
       rowsPerPageTemplate="15,25,50" 
       style="margin: 0.5em; border-top-left-radius: 8px; border-top-right-radius: 8px">
 
+      <!-- <p:column headerText="AAA" filterBy="data">
+        <p:outputLabel  value="BBB"></p:outputLabel>
+      </p:column> -->
       <p:columns value="#{tableDynamicModelInit.pivotTableHeader}" var="column" columnIndexVar="colIndex" width="80"
-       sortBy="#{_dynModel.contentMap[column].stringValue}"
-       filterBy="#{_dynModel.contentMap[column].stringValue}" filterMatchMode="contains" 
+       sortBy="#{column.colProperties}" filterBy="#{column.colProperties}" filterMatchMode="contains" 
        >
-        <f:facet name="header">  
+        <f:facet  name="header" >  
                 <h:outputText value="#{column.colName}" />  
          </f:facet>
-        <h:outputText value="#{_dynModel.contentMap[column].stringValue}" style="float:right" >
+        <h:outputText id="AZZZZ" value="#{_dynModel[column.colProperties]}" style="float:right" >
         </h:outputText>
       </p:columns>
 
@@ -34,12 +36,19 @@
     
    <p:contextMenu for="formDynamicModel">
       <p:menuitem value="#{messages.showChart}" id="qqqa" onclick="wgDialogDataNavigation.show()"/>
-      <p:menuitem >
+      <p:menuitem value="#{messages.fxCash}" includeViewParams="true" >
        <h:commandLink value="#{messages.exportToExcel}" styleClass="ui-menuitem-link ui-corner-all">
+        <p:dataExporter type="xls" target="tableDynamicModel" fileName="#{messages.dataNavigation}" />
+       </h:commandLink>
+              <f:param name="navigation" value="FxCash"></f:param>
+       </p:menuitem>
+      
+       
+<!--        <s:link value="#{messages.exportToExcel}" styleClass="ui-menuitem-link ui-corner-all" conversationName="">
         <p:graphicImage value="/img/primefaces/excel.png" />
         <p:dataExporter type="xls" target="tableDynamicModel" fileName="#{messages.dataNavigation}" />
-      </h:commandLink>
-      </p:menuitem>
+      </s:link>
+      </p:menuitem> -->
     </p:contextMenu>
         
       
