@@ -19,6 +19,8 @@ import javax.validation.constraints.NotNull;
 //import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.FilterJoinTable;
 
+import com.eugenefe.util.AnnoMethodTree;
+import com.eugenefe.util.AnnoNavigationFilter;
 import com.eugenefe.util.MarketVariableType;
 
 /**
@@ -26,6 +28,7 @@ import com.eugenefe.util.MarketVariableType;
  */
 @Entity
 @Table(name = "INT_RATE_HIS")
+@AnnoNavigationFilter
 public class IntRateHis implements java.io.Serializable, IMarketVariableHis {
 
 	private IntRateHisId id;
@@ -54,6 +57,7 @@ public class IntRateHis implements java.io.Serializable, IMarketVariableHis {
 			@AttributeOverride(name = "bssd", column = @Column(name = "BSSD", nullable = false, length = 8)),
 			@AttributeOverride(name = "irId", column = @Column(name = "IR_ID", nullable = false, length = 20)) })
 	@NotNull
+	@AnnoMethodTree(order=10, init=true)
 	public IntRateHisId getId() {
 		return this.id;
 	}
@@ -66,6 +70,7 @@ public class IntRateHis implements java.io.Serializable, IMarketVariableHis {
 	@JoinColumn(name = "BSSD", nullable = false, insertable = false, updatable = false)
 	@NotNull
 //	@FilterJoinTable(name="filterBtwnDate" , condition = "id.bssd between :stBssd and : endBssd")
+	@AnnoMethodTree(order=10, init=false)
 	public Basedate getBasedate() {
 		return this.basedate;
 	}
@@ -77,6 +82,7 @@ public class IntRateHis implements java.io.Serializable, IMarketVariableHis {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IR_ID", nullable = false, insertable = false, updatable = false)
 	@NotNull
+	@AnnoMethodTree(order=10, init=false)
 	public IntRate getInterestRate() {
 		return this.interestRate;
 	}
@@ -86,6 +92,7 @@ public class IntRateHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "INT_RATE", precision = 10, scale = 4)
+	@AnnoMethodTree(order=10, init=true)
 	public BigDecimal getIntRate() {
 		return this.intRate;
 	}

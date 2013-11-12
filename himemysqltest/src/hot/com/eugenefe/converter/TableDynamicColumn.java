@@ -23,6 +23,7 @@ public class TableDynamicColumn  implements Comparable<TableDynamicColumn>{
 	private boolean initialzied;
 	private String alignFormat;
 	private List<String> fullColumns;
+	private String returnType;
 	
 	
 	public TableDynamicColumn(String columnId, String columnName, AnnoMethodTree.EColumnType columnType
@@ -141,6 +142,16 @@ public class TableDynamicColumn  implements Comparable<TableDynamicColumn>{
 
 	public void setInTheCollection(boolean inTheCollection) {
 		this.inTheCollection = inTheCollection;
+	}
+
+
+	public String getReturnType() {
+		return returnType;
+	}
+
+
+	public void setReturnType(String returnType) {
+		this.returnType = returnType;
 	}
 
 

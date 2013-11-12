@@ -7,9 +7,9 @@
   <h:form id="formDynamicModel">
     <p:dataTable id="tableDynamicModel" value="#{tableLazyDynamicModelInit.lazyModelDynamic}" var="_dynModel"
       emptyMessage="No History Data found with given criteria. Change the Dates"
-      selection="#{tableLazyDynamicModelInit.selectedDynamicModel}" selectionMode="single"      
-      rowKey="#{_dynModel}" 
-      filteredValue="#{tableLazyDynamicModelInit.filterPivotTableContent}"
+      selection="#{tableLazyDynamicModelInit.selectedDynamicModel}" selectionMode="single"    
+      rowKey="#{_dynModel}"
+       
       lazy="true"
       sortMode="multiple"
       resizableColumns="true" 
@@ -20,16 +20,16 @@
       rowsPerPageTemplate="10,15,25,50" 
       style="margin: 0.5em; border-top-left-radius: 8px; border-top-right-radius: 8px">
      
-      <p:ajax event="rowSelect" listener="#{tableLazyDynamicModelInit.columeChange()}" update="@(.dynamicTableId)"/>
+      <p:ajax event="rowSelect" listener="#{tableLazyDynamicModelInit.selectDynamicModel}" update="@(.dynamicTableId)"/>
      
       <p:columns  value="#{tableLazyDynamicModelInit.pivotTableHeader}" var="column" columnIndexVar="colIndex" width="80"
-       filterBy="#{_dynModel[column.columnId]}"   sortBy="#{column.columnId}"  filterStyle="width:100%"    >
+       filterBy="#{_dynModel[column.columnId]}"   sortBy="#{_dynModel[column.columnId]}"  filterStyle="width:100%"    >
         <f:facet name="header">  
                 <h:outputText value="#{column.columnName}" />
          </f:facet>
         <h:outputText value="#{_dynModel[column.columnId]}" style="#{column.alignFormat}"  >
           <!-- <f:convertNumber  type="currency" currencySymbol="$" pattern="#0.000" /> -->
-          <f:convertNumber  type="currency" locale="ko_KR"  />
+          <!-- <f:convertNumber  type="currency" locale="ko_KR"  /> -->
           <!-- <f:convertNumber   pattern="#0.000" /> -->
         <!-- <h:outputText value="#{contentMap[column.colName].stringValue}" style="float:right" > -->
         

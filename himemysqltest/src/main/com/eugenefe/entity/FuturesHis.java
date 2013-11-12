@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.eugenefe.util.AnnoMethodTree;
+import com.eugenefe.util.AnnoNavigationFilter;
 import com.eugenefe.util.MarketVariableType;
 
 /**
@@ -23,6 +25,7 @@ import com.eugenefe.util.MarketVariableType;
  */
 @Entity
 @Table(name = "FUTURES_HIS")
+@AnnoNavigationFilter
 public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 
 	private FuturesHisId id;
@@ -75,6 +78,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 			@AttributeOverride(name = "bssd", column = @Column(name = "BSSD", nullable = false, length = 8)),
 			@AttributeOverride(name = "futuresId", column = @Column(name = "FUTURES_ID", nullable = false, length = 20)) })
 	@NotNull
+	@AnnoMethodTree(order=10, init=true)
 	public FuturesHisId getId() {
 		return this.id;
 	}
@@ -86,6 +90,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "FUTURES_ID", nullable = false, insertable = false, updatable = false)
 	@NotNull
+	@AnnoMethodTree(order=20, init=false)
 	public Futures getFutures() {
 		return this.futures;
 	}
@@ -97,6 +102,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BSSD", nullable = false, insertable = false, updatable = false)
 	@NotNull
+	@AnnoMethodTree(order=30, init=false)
 	public Basedate getBasedate() {
 		return this.basedate;
 	}
@@ -106,6 +112,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "BASE_PRICE", scale = 4)
+	@AnnoMethodTree(order=40, init=true, align="right")
 	public BigDecimal getBasePrice() {
 		return this.basePrice;
 	}
@@ -115,6 +122,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "OPEN_PRICE", scale = 4)
+	@AnnoMethodTree(order=41, init=true, align="right")
 	public BigDecimal getOpenPrice() {
 		return this.openPrice;
 	}
@@ -124,6 +132,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "HIGH_PRICE", scale = 4)
+	@AnnoMethodTree(order=42, init=true, align="right")
 	public BigDecimal getHighPrice() {
 		return this.highPrice;
 	}
@@ -133,6 +142,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "LOW_PRICE", scale = 4)
+	@AnnoMethodTree(order=43, init=true, align="right")
 	public BigDecimal getLowPrice() {
 		return this.lowPrice;
 	}
@@ -142,6 +152,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "CLOSE_PRICE", scale = 4)
+	@AnnoMethodTree(order=44, init=true, align="right")
 	public BigDecimal getClosePrice() {
 		return this.closePrice;
 	}
@@ -151,6 +162,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 	@Override
 	@Column(name = "VOLUME", scale = 0)
+	@AnnoMethodTree(order=50, init=true, align="right")
 	public BigDecimal getVolume() {
 		return this.volume;
 	}
@@ -160,6 +172,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 	@Override
 	@Column(name = "VOLUME_AMT", scale = 0)
+	@AnnoMethodTree(order=51, init=true, align="right")
 	public BigDecimal getVolumeAmt() {
 		return this.volumeAmt;
 	}
@@ -169,6 +182,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "DELTA", scale = 4)
+	@AnnoMethodTree(order=61, init=true, align="right")
 	public BigDecimal getDelta() {
 		return this.delta;
 	}
@@ -196,6 +210,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "THETA", scale = 4)
+	@AnnoMethodTree(order=64, init=true, align="right")
 	public BigDecimal getTheta() {
 		return this.theta;
 	}
@@ -205,6 +220,7 @@ public class FuturesHis implements java.io.Serializable, IMarketVariableHis {
 	}
 
 	@Column(name = "RHO", scale = 4)
+	@AnnoMethodTree(order=65, init=true, align="right")
 	public BigDecimal getRho() {
 		return this.rho;
 	}

@@ -33,6 +33,7 @@ import org.jboss.seam.log.Log;
 import org.mvel2.ast.WithNode.ParmValuePair;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.datatable.DataTable;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -83,7 +84,7 @@ public class TableLazyDynamicModelInit<T> {
 	// private List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>>
 	// pivotTableContent;
 
-	// @DataModel
+//	 @DataModel
 	private List<Map<String, String>> pivotTableContent;
 	private List<Map<String, String>> filterPivotTableContent;
 	// private List<PivotTableModelNew<T, TableDynamicColumn, TableDynamicContent>> filterPivotTableContent;
@@ -143,9 +144,22 @@ public class TableLazyDynamicModelInit<T> {
 //		dataTable.reset();
 		// resetTable();
 		changePivotTableHeader();
-		loadDetailTable();
 		// loadDynamicModel();
 		loadTable();
+//		loadDetailTable();
+	}
+	public void selectDynamicModel(SelectEvent event){
+		dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
+//				.findComponent("dynForm:dynTabView:formDynamicModelDetail:tableDynamicModelDetail");
+		.findComponent(":dynForm:dynTabView:formDynamicModelDetail:tableDynamicModelDetail");
+		dataTable.reset();
+		
+		if(detailTab!=null && detailTab.size()>0){
+			log.info("In the Selection :#0,#1,#2", event.getObject(),detailTab.size(),dataTable);
+			
+			loadDetailTable();
+		}
+		
 	}
 
 	// ******************************************
@@ -272,9 +286,9 @@ public class TableLazyDynamicModelInit<T> {
 			tempContentMap.put("getStringId", dyn.toString());
 			pivotTableContent.add(tempContentMap);
 			filterPivotTableContent = pivotTableContent;
-
-			lazyModelDynamic = new LazyModelDynamic(pivotTableContent);
 		}
+		lazyModelDynamic = new LazyModelDynamic(pivotTableContent);
+		log.info("Load Table:#0", pivotTableContent);
 	}
 
 	public void loadDetailTable() {
@@ -321,7 +335,7 @@ public class TableLazyDynamicModelInit<T> {
 								naviLoop = temp.invoke(naviLoop);
 							}
 							tempContentMap.put(detailHeader.getColumnId(), String.valueOf(naviLoop));
-//							tempContentMap.put("getStringId", naviLoop.toString());
+//							tempContentMap.put("getStringId", entry.toString());
 						}
 						tempContentMapList.add(tempContentMap);
 						log.info("TempContentMap:#0,#1", tempContentMap, tempContentMapList);
@@ -341,7 +355,7 @@ public class TableLazyDynamicModelInit<T> {
 								naviLoop = temp.invoke(naviLoop);
 							}
 							tempContentMap.put(detailHeader.getColumnId(), String.valueOf(naviLoop));
-//							tempContentMap.put("getStringId", naviLoop.toString());
+//							tempContentMap.put("getStringId", entry.getValue().toString());
 						}
 						tempContentMapList.add(tempContentMap);
 						log.info("TempContentMap:#0,#1", tempContentMap, tempContentMapList);
@@ -388,6 +402,9 @@ public class TableLazyDynamicModelInit<T> {
 	}
 
 	public List<Map<String, String>> getPivotTableContent() {
+		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+		String selection = params.get("formDynamicModel:tableDynamicModel" + "_selection");
+		 log.info("FilterSelection:#0,#1",selection,params);
 		return pivotTableContent;
 	}
 
@@ -396,7 +413,9 @@ public class TableLazyDynamicModelInit<T> {
 	}
 
 	public List<Map<String, String>> getFilterPivotTableContent() {
-
+		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+		String selection = params.get("formDynamicModel:tableDynamicModel" + "_selection");
+		 log.info("FilterSelection:#0,#1",selection,params);
 		// FacesContext context = FacesContext.getCurrentInstance();
 		// ELContext elContext= context.getELContext();
 		dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot()

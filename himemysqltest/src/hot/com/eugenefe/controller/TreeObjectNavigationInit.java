@@ -1,87 +1,33 @@
 package com.eugenefe.controller;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.ejb.Remove;
-import javax.el.ELContext;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
-import org.hibernate.Filter;
-import org.hibernate.Session;
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
-import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
-import org.jboss.seam.contexts.Contexts;
-import org.jboss.seam.core.Conversation;
-import org.jboss.seam.core.ConversationIdGenerator;
-import org.jboss.seam.core.Events;
-//import org.jboss.seam.framework.Query;
 import org.jboss.seam.log.Log;
-import org.primefaces.component.datatable.DataTable;
-import org.primefaces.component.tree.Tree;
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.NodeSelectEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.DualListModel;
-import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.TreeNode;
 
-import com.eugenefe.converter.LazyModelMarketVariable;
-import com.eugenefe.converter.LazyModelVcvHis;
-import com.eugenefe.converter.LazyModelVolatilityHis;
 import com.eugenefe.converter.TableDynamicColumn;
-import com.eugenefe.entity.IntRate;
-import com.eugenefe.entity.IntRateHis;
-import com.eugenefe.entity.IrCurve;
-import com.eugenefe.entity.MarketVariable;
-import com.eugenefe.entity.VcvMatrix;
-import com.eugenefe.entity.VcvMatrixHis;
-import com.eugenefe.entity.Volatility;
-import com.eugenefe.entity.VolatilityHis;
-import com.eugenefe.entity.VolatilityHisId;
-import com.eugenefe.enums.EMaturity;
 import com.eugenefe.util.AnnoMethodTree;
-import com.eugenefe.util.AnnoMethodTree.EColumnType;
 import com.eugenefe.util.AnnoNavigationFilter;
-import com.eugenefe.util.ColumnModel;
-import com.eugenefe.util.ComponentReflection;
-import com.eugenefe.util.ComponentReflectionNew;
-import com.eugenefe.util.CrossTableModelOld;
 import com.eugenefe.util.ENavigationData;
-import com.eugenefe.util.FlagBean;
-import com.eugenefe.util.MarketVariableType;
-import com.eugenefe.util.NamedQuery;
-import com.eugenefe.util.PivotTableModel;
+//import org.jboss.seam.framework.Query;
 
 @Name("treeObjectNavigationInit")
 @Scope(ScopeType.CONVERSATION)
@@ -115,6 +61,7 @@ public class TreeObjectNavigationInit {
 		dupl = new HashSet<Class>();
 
 		try {
+			log.info("Navigation:#0", navigation);
 			klass = Class.forName(ENavigationData.valueOf(navigation).getQualifiedName());
 			classStack.add(klass.getName());
 			
@@ -171,13 +118,25 @@ public class TreeObjectNavigationInit {
 		Class<?> methodRtnKlazz;
 		Class<?> genericTypeKlazz;
 		double orderScale;
+		int idx=0;
 		String temp = "";
 		String tempParent;
 		
 		Method[] tempMethod = klazz.getDeclaredMethods();
 		sortMethod(tempMethod);
-
+		
+//		Class rtnType;
+//		Class mapClass, listClass;
+//
+//		try {
+//			mapClass = Class.forName("java.util.Map");
+//			listClass = Class.forName("java.util.List");
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+		
 		TableDynamicColumn parentColumn = (TableDynamicColumn) node.getData();
+		TableDynamicColumn tempColumn;
 		
 //		if (parentColumn.getParentColumnId() != null) {
 		if(parentColumn.getParentColumn()!=null){
@@ -235,12 +194,28 @@ public class TreeObjectNavigationInit {
 				temp = tempParent + mtd.getName();
 				AnnoMethodTree anno = mtd.getAnnotation(AnnoMethodTree.class);
 				orderScale = Math.pow(0.1, parentColumn.getColumnLevel() + 1);
-
-//				TreeNode childNode = new DefaultTreeNode(isInCollection?"collection":"prop", new TableDynamicColumn(temp, messages.get(mtd.getName())
-						TreeNode childNode = new DefaultTreeNode(new TableDynamicColumn(temp, messages.get(mtd.getName())		
-								,anno.type(), parentColumn, parentColumn.getColumnLevel() + 1
-								,isInCollection
-								,parentColumn.getColumnOrder()+ anno.order() * orderScale, anno.init(), anno.align()), node);
+				tempColumn = new TableDynamicColumn(temp, messages.get(mtd.getName()),anno.type()
+						, parentColumn, parentColumn.getColumnLevel() + 1	,isInCollection
+						, parentColumn.getColumnOrder()+ anno.order() * orderScale, anno.init(), anno.align());
+				
+				
+//				if(listClass.equals(mtd.getReturnType())){
+//					rtnType= (Class)((ParameterizedType)mtd.getGenericReturnType()).getActualTypeArguments()[0];
+//					tempColumn.setReturnType(methodRtnKlazz.getName());
+//				}
+//				else if(mapClass.equals(mtd.getReturnType())){
+//					rtnType= (Class)((ParameterizedType)mtd.getGenericReturnType()).getActualTypeArguments()[1];
+//					tempColumn.setReturnType(methodRtnKlazz.getName());
+//				}
+				tempColumn.setReturnType(methodRtnKlazz.getSimpleName());
+				
+				log.info("XXXXX:#0", tempColumn.getReturnType());
+				
+				TreeNode childNode = new DefaultTreeNode(tempColumn, node);
+//						TreeNode childNode = new DefaultTreeNode(new TableDynamicColumn(temp, messages.get(mtd.getName())		
+//								,anno.type(), parentColumn, parentColumn.getColumnLevel() + 1
+//								,isInCollection
+//								,parentColumn.getColumnOrder()+ anno.order() * orderScale, anno.init(), anno.align()), node);
 
 				if (methodRtnKlazz.isAnnotationPresent(AnnoNavigationFilter.class)) {	
 					classStack.add(methodRtnKlazz.getName());

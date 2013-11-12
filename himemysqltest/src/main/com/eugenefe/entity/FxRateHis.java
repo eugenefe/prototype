@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.eugenefe.util.AnnoMethodTree;
+import com.eugenefe.util.AnnoNavigationFilter;
 import com.eugenefe.util.MarketVariableType;
 
 /**
@@ -23,6 +25,7 @@ import com.eugenefe.util.MarketVariableType;
  */
 @Entity
 @Table(name = "FX_RATE_HIS")
+@AnnoNavigationFilter
 public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 
 	private FxRateHisId id;
@@ -64,6 +67,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 			@AttributeOverride(name = "bssd", column = @Column(name = "BSSD", nullable = false, length = 8)),
 			@AttributeOverride(name = "fxId", column = @Column(name = "FX_ID", nullable = false, length = 20)) })
 	@NotNull
+	@AnnoMethodTree(order=10, init=true)
 	public FxRateHisId getId() {
 		return this.id;
 	}
@@ -75,6 +79,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BSSD", nullable = false, insertable = false, updatable = false)
 	@NotNull
+	@AnnoMethodTree(order=20, init=false)
 	public Basedate getBasedate() {
 		return this.basedate;
 	}
@@ -86,6 +91,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "FX_ID", nullable = false, insertable = false, updatable = false)
 	@NotNull
+	@AnnoMethodTree(order=30, init=false)
 	public FxCash getFxCash() {
 		return this.fxCash;
 	}
@@ -95,6 +101,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	}
 
 	@Column(name = "BASE_PRICE", scale = 4)
+	@AnnoMethodTree(order=40, init=true, align="right")
 	public BigDecimal getBasePrice() {
 		return this.basePrice;
 	}
@@ -104,6 +111,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	}
 
 	@Column(name = "OPEN_PRICE", scale = 4)
+	@AnnoMethodTree(order=41, init=true, align="right")
 	public BigDecimal getOpenPrice() {
 		return this.openPrice;
 	}
@@ -113,6 +121,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	}
 
 	@Column(name = "HIGH_PRICE", scale = 4)
+	@AnnoMethodTree(order=42, init=true, align="right")
 	public BigDecimal getHighPrice() {
 		return this.highPrice;
 	}
@@ -122,6 +131,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	}
 
 	@Column(name = "LOW_PRICE", scale = 4)
+	@AnnoMethodTree(order=43, init=true, align="right")
 	public BigDecimal getLowPrice() {
 		return this.lowPrice;
 	}
@@ -131,6 +141,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	}
 
 	@Column(name = "CLOSE_PRICE", scale = 4)
+	@AnnoMethodTree(order=44, init=true, align="right")
 	public BigDecimal getClosePrice() {
 		return this.closePrice;
 	}
@@ -140,6 +151,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	}
 	@Override
 	@Column(name = "VOLUME", scale = 0)
+	@AnnoMethodTree(order=51, init=true, align="right")
 	public BigDecimal getVolume() {
 		return this.volume;
 	}
@@ -149,6 +161,7 @@ public class FxRateHis implements java.io.Serializable , IMarketVariableHis{
 	}
 	@Override
 	@Column(name = "VOLUME_AMT", scale = 0)
+	@AnnoMethodTree(order=52, init=true, align="right")
 	public BigDecimal getVolumeAmt() {
 		return this.volumeAmt;
 	}

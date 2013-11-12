@@ -1,9 +1,14 @@
 package com.eugenefe.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.eugenefe.util.AnnoMethodTree;
+import com.eugenefe.util.AnnoNavigationFilter;
+@Embeddable
+@AnnoNavigationFilter
 public class IrcBucketId implements java.io.Serializable {
 
 		private String ircId;
@@ -19,6 +24,7 @@ public class IrcBucketId implements java.io.Serializable {
 
 		@Column(name = "IRC_ID", nullable = false)
 		@NotNull
+		@AnnoMethodTree(order=10, init=true)
 		public String getIrcId() {
 			return this.ircId;
 		}
@@ -30,6 +36,7 @@ public class IrcBucketId implements java.io.Serializable {
 		@Column(name = "MATURITY_ID", nullable = false, length = 20)
 		@NotNull
 		@Size(max = 20)
+		@AnnoMethodTree(order=20, init=true)
 		public String getMaturityId() {
 			return this.maturityId;
 		}
