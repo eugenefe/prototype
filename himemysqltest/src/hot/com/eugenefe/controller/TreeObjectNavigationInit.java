@@ -183,10 +183,10 @@ public class TreeObjectNavigationInit {
 				if (genericTypeKlazz != null) {
 					methodRtnKlazz = genericTypeKlazz;
 				}
-				log.info("Before Continue :#0,#1", mtd.getName(),methodRtnKlazz.getName());
+//				log.info("Before Continue :#0,#1", mtd.getName(),methodRtnKlazz.getName());
 				
 				if(classStack.contains(methodRtnKlazz.getName())&& classStack.size()>1){
-					log.info("IN Continue :#0,#1,#2", methodRtnKlazz.getName(),classStack, classStack.size());
+//					log.info("IN Continue :#0,#1,#2", methodRtnKlazz.getName(),classStack, classStack.size());
 //					classStack.remove(klazz.getName());	
 					continue;
 				}
@@ -209,7 +209,7 @@ public class TreeObjectNavigationInit {
 //				}
 				tempColumn.setReturnType(methodRtnKlazz.getSimpleName());
 				
-				log.info("XXXXX:#0", tempColumn.getReturnType());
+//				log.info("XXXXX:#0", tempColumn.getReturnType());
 				
 				TreeNode childNode = new DefaultTreeNode(tempColumn, node);
 //						TreeNode childNode = new DefaultTreeNode(new TableDynamicColumn(temp, messages.get(mtd.getName())		

@@ -288,7 +288,7 @@ public class TableLazyDynamicModelInit<T> {
 			filterPivotTableContent = pivotTableContent;
 		}
 		lazyModelDynamic = new LazyModelDynamic(pivotTableContent);
-		log.info("Load Table:#0", pivotTableContent);
+//		log.info("Load Table:#0", pivotTableContent);
 	}
 
 	public void loadDetailTable() {
@@ -368,13 +368,13 @@ public class TableLazyDynamicModelInit<T> {
 				log.info("Method Call Exception :#0", detailTab);
 			}
 		}	
-		log.info("Model2 :#0, #1", detailTableModel, lazyModelDynamicDetail);
-		for(Map.Entry<String, LazyModelDynamic> entry : lazyModelDynamicDetail.entrySet()){
-			log.info("Model20 :#0, #1", entry.getKey(), entry.getValue());
-			for( Map<String, String> map : entry.getValue().getDatasource()){
-				log.info("Model21 :#0, #1", map);
-			}
-		}
+//		log.info("Model2 :#0, #1", detailTableModel, lazyModelDynamicDetail);
+//		for(Map.Entry<String, LazyModelDynamic> entry : lazyModelDynamicDetail.entrySet()){
+//			log.info("Model20 :#0, #1", entry.getKey(), entry.getValue());
+//			for( Map<String, String> map : entry.getValue().getDatasource()){
+//				log.info("Model21 :#0, #1", map);
+//			}
+//		}
 		
 	}
 	

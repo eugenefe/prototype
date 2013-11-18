@@ -14,6 +14,8 @@ import org.jboss.seam.deployment.HotDeploymentStrategy;
 import org.jboss.seam.deployment.StandardDeploymentStrategy;
 import org.jboss.seam.log.Log;
 
+import com.eugenefe.jna.IPlainOption;
+
 @Name("annotaionLoad")
 @Scope(ScopeType.APPLICATION)
 @Startup
@@ -66,5 +68,8 @@ public class AnnotationLoad {
 			}
 			   
 		   }
+		   double pv = IPlainOption.pricer.BSOption(1, 100, 100, 0.1, 0.1, 0.03, 0.03, 0, 0.2);
+		   System.out.println("value: " + pv);
+		   
 	   }
 }
