@@ -46,7 +46,7 @@ import org.hibernate.annotations.Parameter;
 import org.jboss.seam.annotations.Name;
 
 import com.eugenefe.util.AnnoMethodTree;
-import com.eugenefe.util.AnnoMethodTree.EColumnType;
+import com.eugenefe.util.EColumnType;
 import com.eugenefe.util.AnnoNavigationFilter;
 
 /**

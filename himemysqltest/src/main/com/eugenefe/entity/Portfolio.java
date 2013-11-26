@@ -21,7 +21,7 @@ import org.jboss.seam.log.Log;
 
 import com.eugenefe.util.AnnoMethodTree;
 import com.eugenefe.util.AnnoNavigationFilter;
-import com.eugenefe.util.AnnoMethodTree.EColumnType;
+import com.eugenefe.util.EColumnType;
 
 import sun.util.logging.resources.logging;
 

@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import org.primefaces.model.TreeNode;
 import com.eugenefe.converter.TableDynamicColumn;
 import com.eugenefe.util.AnnoMethodTree;
 import com.eugenefe.util.AnnoNavigationFilter;
+import com.eugenefe.util.EColumnType;
 import com.eugenefe.util.ENavigationData;
 //import org.jboss.seam.framework.Query;
 
@@ -66,7 +68,7 @@ public class TreeObjectNavigationInit {
 			classStack.add(klass.getName());
 			
 			rootNode = new DefaultTreeNode(new TableDynamicColumn(klass.getSimpleName(), klass.getSimpleName(),
-					AnnoMethodTree.EColumnType.String, null, 0, false, 1, true, "left"), superNode);
+					EColumnType.String, null, 0, false, 1, true, "left"), superNode);
 			rootNode.setExpanded(true);
 
 			recursiveTableCoulumn(klass, rootNode);
@@ -83,7 +85,7 @@ public class TreeObjectNavigationInit {
 		}
 	}
 
-	@Factory(value = "initPivotTableHeader", scope = ScopeType.CONVERSATION)
+//	@Factory(value = "initPivotTableHeader", scope = ScopeType.CONVERSATION)
 	public void initTree(TreeNode rootNode) {
 		initPivotTableHeader = new ArrayList<TableDynamicColumn>();
 		TableDynamicColumn temp;
@@ -91,18 +93,18 @@ public class TreeObjectNavigationInit {
 
 		for (TreeNode node : rootNode.getChildren()) {
 			temp = ((TableDynamicColumn) node.getData());
-			if (temp.isInitialzied()) {
+			if (temp.isInitialzied()&& !temp.getColumnType().isCollection()) {
 				node.setSelected(true);
-				node.setExpanded(true);
 				if (node.isLeaf()) {
 					initPivotTableHeader.add(temp);
 				}
 				for (TreeNode subNode : node.getChildren()) {
 					subTemp = (TableDynamicColumn) subNode.getData();
-					if (subTemp.isInitialzied()) {
+					if (subTemp.isInitialzied() ) {
 						subNode.setSelected(true);
 						// subNode.setExpanded(true);
-						if (subNode.isLeaf()) {
+						if (subNode.isLeaf()&& !temp.getColumnType().isCollection()) {
+							node.setExpanded(true);
 							initPivotTableHeader.add(((TableDynamicColumn) subNode.getData()));
 						}
 					}
@@ -110,6 +112,75 @@ public class TreeObjectNavigationInit {
 			}
 		}
 	}
+	@Factory(value = "initPivotTableHeader", scope = ScopeType.CONVERSATION)
+	private void initHeader(List<TreeNode> childrenNodes){
+		initPivotTableHeader = new ArrayList<TableDynamicColumn>();
+		initDetailTab = new ArrayList<TableDynamicColumn>();
+		initDetailModelHeaderMap = new HashMap<String, List<TableDynamicColumn>>();
+		List<TableDynamicColumn> tempList ;
+		
+		TableDynamicColumn temp;
+		TableDynamicColumn subTemp;
+		 
+		
+		TableDynamicColumn tempHeader;		
+		for (TreeNode node : childrenNodes) {
+			tempHeader = ((TableDynamicColumn) node.getData());
+			if(tempHeader.getColumnType().isCollection()){
+				initDetailTab.add(tempHeader);
+//				for(TreeNode subNode : node.getChildren()){
+					tempList = new ArrayList<TableDynamicColumn>();
+					initRec(tempList,node.getChildren());
+					initDetailModelHeaderMap.put(tempHeader.getColumnId(), tempList);
+//				}
+			}
+			else if (node.isLeaf() ){
+					initPivotTableHeader.add(tempHeader);
+			}
+		}	
+		
+	}
+	
+	private void initRec(List<TableDynamicColumn> list, List<TreeNode> nodes){
+		TableDynamicColumn tempHeader;		
+		for(TreeNode node : nodes) {
+			tempHeader = ((TableDynamicColumn) node.getData());
+
+			switch (tempHeader.getColumnType()){
+			case Entity : 
+				initRec(list, node.getChildren());
+			case List:
+				break;
+			
+			case Map:
+				break;
+			default :
+				list.add(new TableDynamicColumn(tempHeader.getColumnId().replace(tempHeader.getColumnId()+"_", "")
+							, tempHeader.getColumnName(), tempHeader.getColumnType(), tempHeader, tempHeader.getColumnLevel(), false
+							, tempHeader.getColumnOrder(), false, tempHeader.getAlignFormat()));
+					
+			}	
+
+		}
+	}
+	
+//	@Out(value="xxx", scope=ScopeType.CONVERSATION)
+	private Map<String, List<TableDynamicColumn>> initDetailModelHeaderMap;
+//	@Out(value="yyy" , scope=ScopeType.CONVERSATION)
+	private List<TableDynamicColumn> initDetailTab;
+	public Map<String, List<TableDynamicColumn>> getInitDetailModelHeaderMap() {
+		return initDetailModelHeaderMap;
+	}
+	public void setInitDetailModelHeaderMap(Map<String, List<TableDynamicColumn>> initDetailModelHeaderMap) {
+		this.initDetailModelHeaderMap = initDetailModelHeaderMap;
+	}
+	public List<TableDynamicColumn> getInitDetailTab() {
+		return initDetailTab;
+	}
+	public void setInitDetailTab(List<TableDynamicColumn> initDetailTab) {
+		this.initDetailTab = initDetailTab;
+	}
+
 	private List<String> classStack = new ArrayList<String>();
 	private boolean isInCollection=false ;
 	private int collectionNodeLevel =1;

@@ -5,22 +5,48 @@
   <!-- <h:form id="formNotificationBar"> -->
   <p:notificationBar position="top" effect="slide" widgetVar="notiBar" autoDisplay="true"
     style="width:100%; height:66px; padding: 0px ; border:none ; opacity:1 ; background-color : #616161 ; background-image: url('./../img/path.jpg'); ">
-    <p:panel  style="border:none ; margin:0px ; width:100% ; opacity: 1; background:none" >
-      <p:menubar autoDisplay="false" style="border:none; opacity: 1; background:none" >
+    <p:panel style="border:none ; margin:0px ; width:100% ; opacity: 1; background:none">
+      <p:menubar autoDisplay="false" style="border:none; opacity: 1; background:none" styleClass="takion77-menu">
         <p:menuitem value="#{messages.menuHome}" icon="img_home_nav"
-          url="http://localhost:8080/himemysqltest/view/home.seam" style="color:Lime; font-weight:900" styleClass="takion77-menu">
+          url="http://localhost:8080/himemysqltest/view/home.seam">
         </p:menuitem>
-        <p:submenu label="#{messages.submenuMarketVariable}" icon="img_markget_variable" styleClass="takion77-menu">
-              <p:submenu label="#{messages.submenuViewHistoryData}" style="color:Lime; font-weight:900" >
-                <p:menuitem url="http://localhost:8080/himemysqltest/view/v101ViewHistoryData.seam" value="#{messages.marketVariable}"
-                        icon="img_markget_variable" includeViewParams="true" style="color:Lime; font-weight:900">
-                        <f:param name="flagDataTable" value="All" />
-                </p:menuitem>        
-              </p:submenu>
-            </p:submenu>
-        <p:menuitem value="#{messages.hideMenubar}" url="#" onclick="PF('notiBar').hide()" style="float:right; color:WhiteSmoke " />
+        <p:submenu label="#{messages.submenuMarketVariable}" icon="img_markget_variable">
+          <p:submenu label="#{messages.submenuViewHistoryData}">
+            <p:menuitem url="http://localhost:8080/himemysqltest/view/v101ViewHistoryData.seam"
+              value="#{messages.marketVariable}" icon="img_markget_variable" includeViewParams="true"
+              style="color:Lime; font-weight:900">
+              <f:param name="flagDataTable" value="All" />
+            </p:menuitem>
+
+            <p:menuitem url="http://localhost:8080/himemysqltest/view/v101ViewHistoryData.seam"
+              value="#{messages.menubOnlyRiskFactors}" includeViewParams="true">
+              <f:param name="flagDataTable" value="Rf" />
+            </p:menuitem>
+
+            <p:menuitem url="http://localhost:8080/himemysqltest/view/v101ViewHistoryData.seam"
+              value="#{messages.menubOnlyProducts}" includeViewParams="true">
+              <f:param name="flagDataTable" value="Prod" />
+            </p:menuitem>
+          </p:submenu>
+
+           <p:menuitem url="http://localhost:8080/himemysqltest/view/v130RfVcvMatrix.seam"
+            value="#{messages.menubarVcvMatrix}" />
+          <!--<p:menuitem url="http://localhost:8080/himemysqltest/view/v101ViewHistoryData.seam"
+            value="#{messages.menubarFxMatrix}" />
+          </p:menuitem> -->
+        </p:submenu>
+          <!-- <p:menuitem value="#{messages.hideMenubar}" url="#" onclick="PF('notiBar').hide()" /> -->
+        <f:facet name="options">
+          <p:panelGrid columns="1" style="float:right; width: 10px">
+            <p:menu styleClass="takion77-menu" style="border:none; background:none; float:right">
+              <p:menuitem value="#{messages.hideMenubar}" url="#" onclick="PF('notiBar').hide()" style="float:right"/>
+            </p:menu>
+            <!-- <s:link value="#{messages.hideMenubar}" onclick="PF('notiBar').hide()" style="float:right; color:LawnGreen "
+              styleClass="ui-menuitem-link ui-corner-all" /> -->
+          </p:panelGrid>
+        </f:facet>
       </p:menubar>
-           <!-- <f:facet name="actions">
+      <!-- <f:facet name="actions">
            <p:tieredMenu style="width: 200px">
 
             <p:submenu label="#{messages.submenuMarketVariable}" icon="img_markget_variable">

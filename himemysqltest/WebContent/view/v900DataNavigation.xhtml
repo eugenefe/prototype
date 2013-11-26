@@ -20,12 +20,12 @@
     <p:tabView id="dynTabView" value="#{tableLazyDynamicModelInit.detailTab}" var="_tabItem" dynamic="true" styleClass="dynamicTableId" orientation="top">
       <p:tab title="#{_tabItem.columnId}_#{_tabItem.returnType}">
         <ui:include src="/fragment/tableLazyDynamicModelDetail.xhtml" >
+          <ui:param name="className" value="#{_tabItem.returnType}"/> 
           <ui:param name="detailDynamicModel" value="#{tableLazyDynamicModelInit.lazyModelDynamicDetail[_tabItem.columnId]}" />
           <!-- <ui:param name="detailDynamicModel" value="#{tableLazyDynamicModelInit.detailTableModel[_tabItem.columnId]}" /> -->
           <!-- <ui:param name="detailDynamicModel" value="#{tableLazyDynamicModelInit.detailTableModelList}" /> -->
           <!-- <ui:param name="detailHeader" value="#{tableLazyDynamicModelInit.detailModelHeader}" /> -->
           <ui:param name="detailHeader" value="#{tableLazyDynamicModelInit.detailMdoelHeaderMap[_tabItem.columnId]}" />
-          <ui:param name="className" value="#{_tabItem.returnType}"/> 
         </ui:include>
       </p:tab>
     </p:tabView>

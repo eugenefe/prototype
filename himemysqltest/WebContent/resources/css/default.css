@@ -624,9 +624,33 @@ overflow: auto;
 	background: url("./../../img/paht.jpg") ;
 }
 
-.takion77-menu .ui-widget-header .ui-state-hover {
-	background: white;
+.takion77-menu .ui-state-hover {
+	background-color: blue;
+	background-image :none;
 }
+
+/* .takion77-menu .ui-widget-content .ui-state-hover {
+	background-color: red;
+	background-image :none;
+	background-color :grey;
+	border: grey;
+} */
+
+/* .takion77-menu .ui-state-hover a, .ui-state-hover a:hover { ****** latter one is not attached to .takion77-menu*/
+.takion77-menu .ui-state-hover a {
+	color: YellowGreen;
+	text-decoration: none;
+}
+
+.takion77-menu .ui-state-hover a:hover {
+	color: Yellow;
+	text-decoration: none;
+}
+
+/* .takion77-menu .ui-menu-list{
+	background-color :Yellow;
+	background-image :none;
+} */
 
 .takion77-menu .ui-menuitem-text {
 	color :Lime;
@@ -634,20 +658,26 @@ overflow: auto;
 
 .takion77-menu .ui-menuitem-active {
 	background-color :grey;
+	border: grey;
 }
 
 .takion77-menu .ui-menuitem-link {
-	background-color :grey;
+	/* background-color :yellow; */
+	background:none;
+	
 }
 
 .takion77-menu .ui-menuitem-parent {
-	background-color :grey;
+	background-color :orange;
 }
 
-.takion77-menu .ui-widget-content {
-	background-color :grey;
+.takion77-menu .ui-menuitem-child {
+	background-color :orange;
 }
 
-.takion77-menu .ui-state-hover {
-	background: white;
-}
+/* .takion77-menu .ui-widget-content {
+	background-color:white;
+	background-color :grey;
+	border: grey;
+} */
+

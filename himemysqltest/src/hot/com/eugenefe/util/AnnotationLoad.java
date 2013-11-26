@@ -1,6 +1,7 @@
 package com.eugenefe.util;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Set;
 
 import org.jboss.seam.ScopeType;
@@ -68,8 +69,13 @@ public class AnnotationLoad {
 			}
 			   
 		   }
-		   double pv = IPlainOption.pricer.BSOption(1, 100, 100, 0.1, 0.1, 0.03, 0.03, 0, 0.2);
-		   System.out.println("value: " + pv);
+//		   double pv = IPlainOption.pricer.BSOption(1, 100, 100, 0.1, 0.1, 0.03, 0.03, 0, 0.2);
+//		   System.out.println("value: " + pv);
 		   
+		   
+		   List<EMenuGroup> aa = EMenuGroup.valueOf("Product").getChidrenGroup();
+		   for(EMenuGroup kk : aa){
+			   System.out.println("EMenuGroup:"+ aa);
+		   }
 	   }
 }

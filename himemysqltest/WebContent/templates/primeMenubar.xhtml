@@ -84,9 +84,12 @@
           <s:link id="menubarFxMatrix" view="#{configAction.getViewUrl('ForexMatrix')}"
             value="#{messages.menubarFxMatrix}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
         </p:menuitem>
-
-        <p:menuitem value="Workspace" url="http://localhost:8080/himemysqltest/view/v130RfVcvMatrix.seam" />
-        <p:menuitem value="Workspace1" url="#{messages.url2}#{configAction.getViewUrl('VcvMatrix')}" />
+        
+        <p:menuitem value="ViewTest" url="http://localhost:8080/himemysqltest/view/viewTest.seam" />
+        <p:menuitem>
+          <s:link view="/view/viewTest.xhtml" value="ViewTestWithLink" propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
+        </p:menuitem>
+        
       </p:submenu>
 
 
@@ -146,7 +149,16 @@
         <p:menuitem value="#{messages.aboutUs}" />
       </p:submenu>
 
-
+      <p:submenu label="#{messages.pricer}" icon="img_help">
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v990Pricer.seam" value="#{messages.settings}"
+          icon="img_setting">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
+        <p:separator />
+        <p:menuitem value="Workspace" url="#" />
+        <p:menuitem value="File" url="#" />
+     </p:submenu>
+      
      <!--  <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
         <p:submenu label="Text">
           <p:menuitem value="#{messages.irCurve}" outcome="/view/v900DataNavigation" includeViewParams="true">

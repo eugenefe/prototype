@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.eugenefe.util.AnnoMethodTree;
-import com.eugenefe.util.AnnoMethodTree.EColumnType;
+import com.eugenefe.util.EColumnType;
 import com.eugenefe.util.AnnoNavigationFilter;
 
 /**

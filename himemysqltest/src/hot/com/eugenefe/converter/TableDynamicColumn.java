@@ -2,19 +2,14 @@ package com.eugenefe.converter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.jboss.seam.annotations.Create;
-import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Name;
-
-import com.eugenefe.util.AnnoMethodTree;
+import com.eugenefe.util.EColumnType;
 
 
 public class TableDynamicColumn  implements Comparable<TableDynamicColumn>{
 	private String columnId;
 	private String columnName;
-	private AnnoMethodTree.EColumnType columnType;
+	private EColumnType columnType;
 //	private String parentColumnId;
 	private TableDynamicColumn parentColumn;
 	private int columnLevel;
@@ -26,7 +21,7 @@ public class TableDynamicColumn  implements Comparable<TableDynamicColumn>{
 	private String returnType;
 	
 	
-	public TableDynamicColumn(String columnId, String columnName, AnnoMethodTree.EColumnType columnType
+	public TableDynamicColumn(String columnId, String columnName, EColumnType columnType
 //								,String parentColumnId
 								,TableDynamicColumn parentColumn
 								, int columnLevel, boolean inTheCol, double columnOrder, boolean init, String align) {
@@ -125,12 +120,12 @@ public class TableDynamicColumn  implements Comparable<TableDynamicColumn>{
 	}
 
 
-	public AnnoMethodTree.EColumnType getColumnType() {
+	public EColumnType getColumnType() {
 		return columnType;
 	}
 
 
-	public void setColumnType(AnnoMethodTree.EColumnType columnType) {
+	public void setColumnType(EColumnType columnType) {
 		this.columnType = columnType;
 	}
 
