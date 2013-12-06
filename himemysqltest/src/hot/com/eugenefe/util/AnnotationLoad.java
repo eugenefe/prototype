@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
@@ -78,4 +79,6 @@ public class AnnotationLoad {
 			   System.out.println("EMenuGroup:"+ aa);
 		   }
 	   }
+	   
+	   
 }

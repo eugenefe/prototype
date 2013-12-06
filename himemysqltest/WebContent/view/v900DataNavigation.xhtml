@@ -18,7 +18,8 @@
   <ui:define name="layoutBottom">
     <h:form id="dynForm">
     <p:tabView id="dynTabView" value="#{tableLazyDynamicModelInit.detailTab}" var="_tabItem" dynamic="true" styleClass="dynamicTableId" orientation="top">
-      <p:tab title="#{_tabItem.columnId}_#{_tabItem.returnType}">
+      <!-- <p:tab title="#{_tabItem.columnId}_#{_tabItem.returnType}"> -->
+      <p:tab title="#{messages[_tabItem.columnId]}">
         <ui:include src="/fragment/tableLazyDynamicModelDetail.xhtml" >
           <ui:param name="className" value="#{_tabItem.returnType}"/> 
           <ui:param name="detailDynamicModel" value="#{tableLazyDynamicModelInit.lazyModelDynamicDetail[_tabItem.columnId]}" />

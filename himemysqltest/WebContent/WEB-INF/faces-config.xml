@@ -8,8 +8,8 @@
   <application>
     <locale-config>
       <default-locale>en</default-locale>
-      <supported-locale>ko</supported-locale>
-      <!-- <supported-locale>ko_KR</supported-locale> -->
+      <!-- <supported-locale>ko</supported-locale> -->
+      <supported-locale>ko_KR</supported-locale>
       <supported-locale>fr</supported-locale>
       <supported-locale>en</supported-locale>
     </locale-config>
