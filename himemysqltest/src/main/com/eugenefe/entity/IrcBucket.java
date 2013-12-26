@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
@@ -75,9 +76,11 @@ public class IrcBucket implements java.io.Serializable {
 //	public void setMaturityId(String maturityId) {
 //		this.maturityId = maturityId;
 //	}
-	@Column(name = "MATURITY_ID", nullable = false, insertable = false, updatable = false)
-	@Enumerated
-	@AnnoMethodTree(order=11, init=true)
+	
+//	@Column(name = "MATURITY_ID", nullable = false, insertable = false, updatable = false)
+//	@Enumerated
+//	@AnnoMethodTree(order=11, init=true)
+	@Transient
 	public EMaturity getMaturityId() {
 		return maturityId;
 	}

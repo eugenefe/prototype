@@ -89,6 +89,7 @@ public class Position implements IPortfolio, Serializable {
 	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "COUNTERTPARTY_ID")
 	@JoinColumn(name = "COUNTERPARTY_ID")
 	public Counterparty getCounterparty() {
 		return counterparty;
@@ -153,6 +154,7 @@ public class Position implements IPortfolio, Serializable {
 	}
 	
 	@Column(name = "POS_AMT", scale = 4)
+//	@Transient
 	public BigDecimal getPosAmt() {
 		return posAmt;
 	}

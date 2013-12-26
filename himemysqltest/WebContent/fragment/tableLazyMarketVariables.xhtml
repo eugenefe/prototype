@@ -19,7 +19,7 @@
       <!--       <p:ajax event="rowSelect" listener="#{tableLazyMarketVariableAction.onRowSelect}" update="@(form, .ui-tabs)" disabled="#{not flagUpdateFull}"/>
       <p:ajax event="rowSelect" listener="#{tableLazyMarketVariableAction.onRowSelect}" update="@(.ui-datatable)" disabled="#{flagUpdateFull}"/> -->
       <p:ajax event="rowSelect" listener="#{tableMvHisDataAction.onMvSelection}" update="@(.ui-datatable)" />
-      <p:ajax event="rowSelect" listener="#{tablePositionAction.onMvSelection}" update="@(form)" disabled="#{flagDisablePosition}"/>
+      <!-- <p:ajax event="rowSelect" listener="#{tablePositionAction.onMvSelection}" update="@(form)" disabled="#{flagDisablePosition}"/> -->
 
       <p:column id="colMvType" sortBy="#{_mv.mvType}" filterBy="#{_mv.mvType}" filterMatchMode="contains"
         filterOptions="#{paraSelectOneMvType}">

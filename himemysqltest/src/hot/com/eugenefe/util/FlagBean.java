@@ -64,7 +64,8 @@ public class FlagBean {
 	    	vol =true;               // volatilty or correlation
 	    	flagVcvRfType="IR";			   //VcvMatrix default Rf Type
 	    	vcvMethod = "EWMA_1DAY";		// default VCV Method Id
-	    	flagInterval = EMaturity.M01.name();
+//	    	TODO : xhmtl 에 radion 버튼 정의 부분 수정이 필요하다
+	    	flagInterval = EMaturity.Y01.name();    //default radio button
 	    	navigationData = ENavigationData.IrCurve;
 	 }	
 	
