@@ -34,7 +34,7 @@ import org.hibernate.cfg.AnnotatedClassType;
 
 import com.eugenefe.enums.EMaturity;
 import com.eugenefe.util.AnnoMethodTree;
-import com.eugenefe.util.AnnoMethodTree.EColumnType;
+import com.eugenefe.util.EColumnType;
 import com.eugenefe.util.AnnoNavigationFilter;
 
 /**

@@ -10,10 +10,10 @@ import java.lang.reflect.Method;
 @Retention(RetentionPolicy.RUNTIME)
 //@Retention(RetentionPolicy.CLASS)
 public @interface AnnoMethodTree {
-	public enum EColumnType { String, Number, Map, List };
+//	public enum EColumnType { String, Number, Map, List };
 	
-	EColumnType type() default EColumnType.String;
 	int order();
-	boolean init(); 
-	String align() default "left";
+	boolean init() 			default true; 
+	EColumnType type()      default EColumnType.String;
+	String align() 			default "left";
 }

@@ -45,8 +45,8 @@ import com.eugenefe.entity.IrCurve;
 import com.eugenefe.enums.EMaturity;
 import com.eugenefe.util.AnnoMethodTree;
 import com.eugenefe.util.ComponentReflection;
+import com.eugenefe.util.EColumnType;
 import com.eugenefe.util.ENavigationData;
-import com.eugenefe.util.AnnoMethodTree.EColumnType;
 
 //import org.jboss.seam.framework.Query;
 
@@ -79,7 +79,14 @@ public class TableLazyDynamicModelInit<T> {
 
 	@In("#{initPivotTableHeader}")
 	private List<TableDynamicColumn> initPivotTableHeader;
-
+	
+//	@In("#{xxx}")
+//	private List<TableDynamicColumn> initDetailTab;
+//	
+//	@In(value= "#{yyy}")
+//	private Map<String,List<TableDynamicColumn>> initDetailModelHeaderMap;
+//	
+	
 	private List<TableDynamicColumn> pivotTableHeader;
 	// private List<PivotTableModel<T, TableDynamicColumn, TableDynamicContent>>
 	// pivotTableContent;
@@ -117,7 +124,12 @@ public class TableLazyDynamicModelInit<T> {
 			savedNavigation = navigation;
 		}
 		pivotTableHeader = initPivotTableHeader;
-
+//		detailTab = initDetailTab;
+//		detailMdoelHeaderMap = initDetailModelHeaderMap;
+//		if(detailTab == null){
+//			log.info("In Creation AAAA Null");
+//		}
+//		log.info("In Creation AAAA:#0, #1", detailTab.size());
 		loadDynamicModel();
 		loadTable();
 
@@ -186,8 +198,9 @@ public class TableLazyDynamicModelInit<T> {
 				continue;
 			}
 			tempParentHeader = ((TableDynamicColumn) node.getParent().getData());
-			if(tempParentHeader.getColumnType().equals(EColumnType.Map)
-					||tempParentHeader.getColumnType().equals(EColumnType.List)){
+//			if(tempParentHeader.getColumnType().equals(EColumnType.Map)
+//					||tempParentHeader.getColumnType().equals(EColumnType.List)){
+			if(tempParentHeader.getColumnType().isCollection()){
 				tempTab.add(tempParentHeader);
 			}
 		}
