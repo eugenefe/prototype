@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.eugenefe.util.AnnoMethodTree;
 import com.eugenefe.util.EColumnType;
@@ -215,9 +216,5 @@ public class Hifive implements java.io.Serializable {
 	public void setPricings(List<Pricing> pricings) {
 		this.pricings = pricings;
 	}
-
-	
-	
-	
 
 }

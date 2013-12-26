@@ -150,12 +150,15 @@
       </p:submenu>
 
       <p:submenu label="#{messages.pricer}" icon="img_help">
-        <p:menuitem url="http://localhost:8080/himemysqltest/view/v990Pricer.seam" value="#{messages.settings}"
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v990Pricer.seam" value="#{messages.pricer}"
           icon="img_setting">
           <s:conversationPropagation type="begin" />
         </p:menuitem>
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v991PricerInfo.seam" value="#{messages.productPricer}">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
         <p:separator />
-        <p:menuitem value="Workspace" url="#" />
+        
         <p:menuitem value="File" url="#" />
      </p:submenu>
       
