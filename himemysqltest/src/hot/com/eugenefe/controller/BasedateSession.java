@@ -60,7 +60,7 @@ public class BasedateSession implements Serializable {
 		
 		baseDate = cal.getTime();
 		endDate =cal.getTime();
-		stDate = cal.minusTerm(EMaturity.M06, true).getTime();
+		stDate = cal.minusTerm(EMaturity.Y01, true).getTime();
 	}
 
 	// @Create
