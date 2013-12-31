@@ -12,7 +12,7 @@
 
     <!-- <p:menubar autoDisplay="false" style="border:none; opacity: 0.7; background-color: green"> -->
     <p:menubar autoDisplay="false" style="border:none;">
-      <p:menuitem value="#{messages.menuHome}" icon="img_home_nav" 
+      <p:menuitem value="#{messages.menuHome}" icon="img_home_nav"
         url="http://localhost:8080/himemysqltest/view/home.seam">
         <!-- <s:link id="menubarHome" view="#{configAction.getViewUrl('Home')}" value="#{messages.Home}" 
           propagation="none"  styleClass="ui-menuitem-link ui-corner-all" >
@@ -84,12 +84,13 @@
           <s:link id="menubarFxMatrix" view="#{configAction.getViewUrl('ForexMatrix')}"
             value="#{messages.menubarFxMatrix}" propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
         </p:menuitem>
-        
+
         <p:menuitem value="ViewTest" url="http://localhost:8080/himemysqltest/view/viewTest.seam" />
         <p:menuitem>
-          <s:link view="/view/viewTest.xhtml" value="ViewTestWithLink" propagation="none" styleClass="ui-menuitem-link ui-corner-all" />
+          <s:link view="/view/viewTest.xhtml" value="ViewTestWithLink" propagation="none"
+            styleClass="ui-menuitem-link ui-corner-all" />
         </p:menuitem>
-        
+
       </p:submenu>
 
 
@@ -122,7 +123,55 @@
         </p:menuitem>
       </p:submenu>
 
+      <p:submenu label="#{messages.pricer}" >
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v600PricerInfo.seam" value="#{messages.dashboard}">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
+        <p:separator />
 
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v610PricerInfo.seam" value="#{messages.portfolio}">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v620PricerInfo.seam"
+          value="#{messages.priceValidation}">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
+        <p:submenu label="#{messages.detailView}" >
+          <p:menuitem url="http://localhost:8080/himemysqltest/view/v631PricerInfo.seam"
+            value="#{messages.byUnderlying}">
+            <s:conversationPropagation type="begin" />
+          </p:menuitem>
+          <p:menuitem url="http://localhost:8080/himemysqltest/view/v632PricerInfo.seam"
+            value="#{messages.byCounterParty}">
+            <s:conversationPropagation type="begin" />
+          </p:menuitem>
+          <p:menuitem url="http://localhost:8080/himemysqltest/view/v633PricerInfo.seam"
+            value="#{messages.byVolatility}">
+            <s:conversationPropagation type="begin" />
+          </p:menuitem>
+          <p:menuitem url="http://localhost:8080/himemysqltest/view/v634PricerInfo.seam" value="#{messages.byDiscount}">
+            <s:conversationPropagation type="begin" />
+          </p:menuitem>
+        </p:submenu>
+        <p:separator />
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v650PricerInfo.seam" value="#{messages.simulation}">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
+        <p:separator />
+
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v690PricerInfo.seam" value="#{messages.pricerSetting}"
+          icon="img_setting">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
+        <p:separator />
+
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v695Pricer.seam" value="#{messages.pricerWorking}">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
+        <p:menuitem url="http://localhost:8080/himemysqltest/view/v696PricerInfo.seam" value="#{messages.productPricerWorking}">
+          <s:conversationPropagation type="begin" />
+        </p:menuitem>
+      </p:submenu>
 
       <p:submenu label="#{messages.limitManagement}" icon="img_limit">
         <p:menuitem>
@@ -149,20 +198,9 @@
         <p:menuitem value="#{messages.aboutUs}" />
       </p:submenu>
 
-      <p:submenu label="#{messages.pricer}" icon="img_help">
-        <p:menuitem url="http://localhost:8080/himemysqltest/view/v990Pricer.seam" value="#{messages.pricer}"
-          icon="img_setting">
-          <s:conversationPropagation type="begin" />
-        </p:menuitem>
-        <p:menuitem url="http://localhost:8080/himemysqltest/view/v991PricerInfo.seam" value="#{messages.productPricer}">
-          <s:conversationPropagation type="begin" />
-        </p:menuitem>
-        <p:separator />
-        
-        <p:menuitem value="File" url="#" />
-     </p:submenu>
-      
-     <!--  <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
+
+
+      <!--  <p:submenu label="#{messages.menuNavigationData}" icon="ui-icon-search">
         <p:submenu label="Text">
           <p:menuitem value="#{messages.irCurve}" outcome="/view/v900DataNavigation" includeViewParams="true">
             <f:param name="navigation" value="IrCurve"></f:param>
@@ -190,9 +228,10 @@
           </p:submenu> 
         </p:submenu> -->
 
-      <p:menuitem >
-      <!-- <p:menuitem value="#{messages.menuNavigationData}" styleClass="ui-menu-parent"> -->
-        <p:commandLink id="dynaButton" value="#{messages.menuNavigationData}" styleClass="ui-menuitem-link ui-corner-all ui-menu .ui-menu-parent" />
+      <p:menuitem>
+        <!-- <p:menuitem value="#{messages.menuNavigationData}" styleClass="ui-menu-parent"> -->
+        <p:commandLink id="dynaButton" value="#{messages.menuNavigationData}"
+          styleClass="ui-menuitem-link ui-corner-all ui-menu .ui-menu-parent" />
         <!-- <s:link id="dynaButton" view="#{configAction.getViewUrl('DataNavigation')}" value="#{messages.menuDataNaigation}"
           propagation="none" styleClass="ui-menuitem-link ui-corner-all" /> -->
       </p:menuitem>
@@ -225,9 +264,10 @@
     </p:menubar>
 
 
-    
-    
-    <p:tieredMenu id="tiered" overlay="true" trigger="dynaButton" model="#{navigationMenu.menuModel}" my="left top" at="left bottom"/>
+
+
+    <p:tieredMenu id="tiered" overlay="true" trigger="dynaButton" model="#{navigationMenu.menuModel}" my="left top"
+      at="left bottom" />
     <!-- <p:menu overlay="true" trigger="dynaButton" model="#{navigationMenu.menuModel}" my="left top" at="left bottom" /> -->
     <!-- <p:menubar model="#{navigationMenu.menuModel}"/> -->
 
