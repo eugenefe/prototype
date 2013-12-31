@@ -5,11 +5,13 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" 
              version="2.0">
              
-<!--    <persistence-unit name="himemysqltest" transaction-type="JTA">
+   <!-- <persistence-unit name="himemysqltest" transaction-type="JTA">
       <provider>org.hibernate.ejb.HibernatePersistence</provider>
-      <jta-data-source>java:/himemysqltestDatasource</jta-data-source>
+      <jta-data-source>java:/pubMysqlDS</jta-data-source>
       <properties>
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+         <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLMyISAMDialect"/>
+         
          <property name="hibernate.hbm2ddl.auto" value="validate"/>
          <property name="hibernate.show_sql" value="true"/>
          <property name="hibernate.format_sql" value="true"/>
@@ -25,7 +27,7 @@
          <property name="hibernate.hbm2ddl.auto" value="validate"/>
          <property name="hibernate.show_sql" value="true"/>
          <property name="hibernate.format_sql" value="true"/>
-         <!-- <property name="hibernate.default_batch_fetch_size" value="15"/> -->
+         <property name="hibernate.default_batch_fetch_size" value="15"/>
          <property name="jboss.entity.manager.factory.jndi.name" value="java:/himemysqltestEntityManagerFactory"/>
       </properties>
    </persistence-unit>
