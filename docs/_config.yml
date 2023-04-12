@@ -1,4 +1,5 @@
-remote_theme: mmistakes/minimal-mistakes@4.24.0
+#remote_theme: mmistakes/minimal-mistakes@4.24.0
+remote_theme: javanance/mini
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 - jekyll-include-cache
